@@ -15,7 +15,7 @@ public class FormController {
     // 显示表单页面（如果用 Thymeleaf 或 JSP）
     @GetMapping("/")
     public String index() {
-        return "form";  // 对应 src/main/resources/templates/form.html
+        return "forward:/chat/index.html";
     }
 
     // 处理表单提交
