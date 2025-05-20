@@ -1,4 +1,4 @@
-com\example\formtomysql\controller\FormController.class
-com\example\formtomysql\entity\UserMessage.class
-com\example\formtomysql\repository\UserMessageRepository.class
-com\example\formtomysql\FormToMysqlApplication.class
+com/example/formtomysql/controller/FormController.class
+com/example/formtomysql/FormToMysqlApplication.class
+com/example/formtomysql/entity/UserMessage.class
+com/example/formtomysql/repository/UserMessageRepository.class

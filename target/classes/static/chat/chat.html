@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="icon" href="Icon/icon.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="jQuery/Animation/jquery-ui.min.css">
+  <link rel="stylesheet" href="Bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="Bootstrap/B-icon/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/chat_animation.css">
+  <style>
+
+
+
+    /* 搜索到的消息高亮 */
+    .bubble.highlight,
+    .bubble-other.highlight {
+      background-color: #fffa8b !important;
+      transition: background-color 0.5s ease;
+    }
+
+
+
+
+
+
+    /* 默认状态：半透明 + 默认箭头 */
+    /*
+    .settings-menu .dropdown-item[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed !important;
+      pointer-events: auto;  }/* 保留 hover 能力 */
+
+
+    /* hover 时：浅灰背景 + 禁止符号 */
+    /*
+    .settings-menu .dropdown-item[disabled]:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      cursor: not-allowed;   }/* 禁止符号 */
+
+    /*
+    .settings-menu .dr      opdown-item[disabled]{
+      cursor: not-allowed !important;
+      pointer-events: auto;
+    }
+    .settings-menu .dropdown-item[disabled]:hover{
+      cursor: not-allowed !important;
+    }
+
+     */
+
+    .settings-menu .dropdown-item[disabled],
+    .settings-menu .dropdown-item.disabled {
+      cursor: not-allowed !important;
+      pointer-events: auto;
+      background-color: transparent !important;
+      color: #79848e !important;
+    }
+    .settings-menu .dropdown-item[disabled]:hover,
+    .settings-menu .dropdown-item.disabled:hover {
+      cursor: not-allowed !important;
+      background-color: transparent !important;
+    }
+
+
+    /* —— 调整菜单项字体颜色 —— */
+    /* “重命名群聊” & “管理成员” 灰色 */
+    #chatSettings #renameGroup,
+    #chatSettings #manageMembers {
+      color: #888888;    /* 灰色字体 */
+    }
+
+    /* “退出群聊” & “清空聊天记录” 红色 */
+    #chatSettings #leaveGroup,
+    #chatSettings #clearHistory {
+      color: #e74c3c;    /* 红色字体 */
+    }
+
+    /* 可选：hover 时红色项更深，灰色项保持不变 */
+
+    #chatSettings #leaveGroup:hover,
+    #chatSettings #clearHistory:hover {
+      background-color: rgba(231, 76, 60, 0.1);
+    }
+
+    /*
+    #chatSettings #renameGroup:hover,
+    #chatSettings #manageMembers:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+     */
+
+    /* 群聊设置弹出菜单 */
+    .settings-menu {
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      display: none;
+      flex-direction: column;
+      background-color:  #ffffff;
+      border: 1px solid #e1e4ea;
+      /* background-color: #ffffff; */
+      /* border: 1px solid #e1e4ea; */
+
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 2000;
+    }
+
+    .settings-menu .dropdown-item {
+      padding: 8px 12px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 0.9rem;
+      color: green;
+      cursor: pointer;
+    }
+    .settings-menu .dropdown-item:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+
+    /* “您已退出群聊” 提示 */
+    .left-notice {
+      text-align: center;
+      padding: 2rem;
+      color: #e74c3c;
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    /* “聊天记录已清空” 提示 */
+    .clear-notice {
+      text-align: center;
+      padding: 2rem;
+      color: #636e72;
+      font-size: 1.1rem;
+    }
+
+
+
+
+    /*--------------*/
+    /* —— 高端“粒子感”阴影 —— */
+    .func-btn {
+      position: relative;
+      z-index: 1;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+
+      /* 多层蓝色散射光晕 */
+      box-shadow:
+        0 0 8px rgba(52, 152, 219, 0.3),
+        0 0 16px rgba(52, 152, 219, 0.2),
+        0 0 24px rgba(52, 152, 219, 0.1);
+
+      overflow: visible;
+    }
+
+    .func-btn::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+
+      /* 四个小“粒子”散射在按钮周围 */
+
+
+      transform: translate(-50%, -50%);
+    }
+
+
+    #member-list li:hover{
+      transition: all 0.1s;
+      background-color: rgba(255,255,255,0.5);
+    }
+
+    /* —— 名称水平居中到气泡正上方 —— */
+    .bubble-c .name-tag,
+    .bubble-c-other .name-tag-other {
+      align-self: center !important;
+      margin-bottom: 0.2rem;  /* 给气泡留一点间距 */
+    }
+
+
+    /* 按钮放在输入框内部最右侧 */
+    #ipt {
+      /* 给按钮留出空间，防止遮挡文字 */
+      padding-right: 3rem;
+    }
+
+    #sendButton {
+      /* 覆盖原有定位，放在输入框内侧 */
+      position: absolute !important;
+      top: 50%      !important;
+      right: 0.75rem!important;
+      transform: translateY(-50%) !important;
+
+      /* 圆形（可自行调整大小/颜色） */
+      width: 4rem;
+      height: 3rem;
+      border-radius: 30px;
+      border: none;
+      padding: 0;
+
+      /* 中心对齐按钮内容 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      /* 增大文字/图标 */
+      font-size: 1rem ;
+
+
+
+
+    }
+
+    /* 离线状态：头像 & 名字灰度化 */
+    .offline img,
+    .offline .member-name {
+      filter: grayscale(100%);
+      opacity: 0.6;
+    }
+
+
+    .name-tag{
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+      margin-left: 40px;
+      color: #333;
+    }
+    .bubble-c{
+      margin-right: 20px;
+      margin-top: 8px;
+    }
+    .bubble{
+      max-width: 100%;
+      word-wrap: break-word;
+      border-radius: 20px;
+      border-bottom-right-radius: 0;
+      position: relative;
+    }
+    .stamp{
+      position: absolute;
+      top: calc(100% + 0.2em);
+      right: 1rem;
+      font-size: 0.7rem;
+      color: #666;
+    }
+    /*--------------*/
+    .name-tag-other{
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+      margin-left: 40px;
+      color: #333;
+    }
+    .bubble-c-other{
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+    .bubble-other{
+      max-width: 100%;
+      word-wrap: break-word;
+      border-radius: 20px;
+      border-bottom-left-radius: 0;
+      position: relative;
+      background-color: #e8e8e8;
+      color: #333;
+    }
+    .stamp-other{
+      position: absolute;
+      bottom: -18px;
+      left: 15px;
+      font-size: 0.7rem;
+      color: #666;
+    }
+    /*--------------*/
+
+
+
+  </style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <!--左边导航栏-->
+    <nav id='msgBox' class="col-md-2" >
+
+      <div class="container">
+        <div style="height: 50px;"></div>
+
+
+
+
+
+
+        <!-- 左上：查找 -->
+        <button
+          id="searchBtn"
+          class="btn btn-light position-absolute func-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#searchModal"
+          title="Search messages"
+          style="top: 10px; left: 10px; z-index: 1000; box-shadow: #aaaaaa 0px 0px 5px;">
+          <i class="bi bi-search" style="font-size: 1rem;"></i>
+        </button>
+
+
+        <!-- 右上：分屏 & 撰写 -->
+        <div style="position: absolute; top: 10px; right: 10px; z-index: 1000; display: flex; gap: 0.5rem;">
+          <button style="box-shadow: #aaaaaa 0px 0px 5px;" id="splitBtn" class="btn btn-light func-btn" data-bs-toggle="tooltip" title="分屏视图">
+            <i class="bi bi-layout-split" style="font-size: 1rem;"></i>
+          </button>
+          <button
+            style="box-shadow: #aaaaaa 0px 0px 5px;"
+            id="composeBtn"
+            class="btn btn-light func-btn"
+            data-bs-toggle="tooltip" title="撰写新消息">
+            <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
+          </button>
+        </div>
+
+
+        <!-- 在成员列表框上方添加标题 -->
+        <h5 class="px-3 mb-2" style="font-weight: 600; color: #333;">Group chat members</h5>
+        <!-- 群聊标题下面：成员列表框 -->
+        <!-- 美化后的成员框 -->
+        <div id="member-box" class="member-box bg-white shadow-sm p-0">
+          <!-- 头部统计 -->
+          <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
+            <small class="text-muted" style="font-size:0.75rem;">Total <span class="fw-bold">6</span></small>
+            <small class="text-success" style="font-size:0.75rem;">Online <span class="fw-bold">3</span></small>
+          </div>
+          <!-- 列表 -->
+          <ul class="list-unstyled mb-0" id="member-list">
+            <!-- 群主 -->
+            <li class="member-item d-flex justify-content-between align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
+              <div class="d-flex align-items-center">
+                <img src="Icon/icon.jpg" alt="成员头像" class="rounded-circle me-2 avatar">
+                <span class="member-name">poor_three</span>
+              </div>
+              <span class="role-badge role-owner">Owner</span>
+            </li>
+            <!-- 管理员 -->
+            <li class="member-item d-flex justify-content-between align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
+              <div class="d-flex align-items-center">
+                <img src="Icon/tou2.jpg" alt="成员头像" class="rounded-circle me-2 avatar">
+                <span class="member-name">poor_four</span>
+              </div>
+              <span class="role-badge role-admin">Admin</span>
+            </li>
+            <!-- 在线用户 -->
+            <li class="member-item d-flex align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
+              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <span class="member-name">张三</span>
+            </li>
+            <!-- 离线用户 -->
+            <li class="member-item offline d-flex align-items-center px-3 py-2" >
+              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <span class="member-name">李四</span>
+            </li>
+            <!-- 在线用户 -->
+            <li class="member-item d-flex align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
+              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <span class="member-name">张三</span>
+            </li>
+            <!-- 离线用户 -->
+            <li class="member-item offline d-flex align-items-center px-3 py-2" >
+              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <span class="member-name">李四</span>
+            </li>
+          </ul>
+        </div>
+
+
+
+
+
+
+
+
+      </div>
+    </nav>
+    <!--消息区域-->
+    <div class="col-md-10" style="margin-left: 16.66%; overflow-y: auto; padding: 1rem;">
+      <nav class="container-fluid bg-light" id="top_nav">
+        <div class="d-flex justify-content-between align-items-center px-3" style="height:50px;">
+          <!-- 左侧 “群聊” -->
+          <h1 class="h5 mb-0">Chat</h1>
+          <!-- 右侧设置按钮（保持你原来的样式） -->
+          <button
+            id="settingsBtn"
+            class="btn p-0 d-flex justify-content-center align-items-center"
+            style="width:36px; height:36px; border-radius:50%; background-color:rgba(0,0,0,0.1);">
+            <i class="bi bi-gear-fill" style="font-size:18px; color:#333;"></i>
+          </button>
+        </div>
+        <div id="chatSettings" class="settings-menu">
+          <button class="dropdown-item disabled" id="renameGroup" disabled="disabled">Rename group chat</button>
+          <button class="dropdown-item disabled" id="manageMembers" disabled="disabled">Managing Members</button>
+          <hr>
+          <button class="dropdown-item" id="leaveGroup">Exit group chat</button>
+          <button class="dropdown-item" id="clearHistory">Clear chat history</button> `
+        </div>
+
+
+      </nav>
+
+      <!-- 搜索消息 Modal -->
+      <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="searchModalLabel">Search Chat History</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group">
+                <input type="text"
+                       id="searchInput"
+                       class="form-control"
+                       placeholder="Enter keyword...">
+                <button class="btn btn-primary" id="searchConfirmBtn">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+              <div id="searchResultInfo" class="mt-2 text-muted" style="display:none;">
+                <!-- 搜索结果状态 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#quitModal">111</button>
+      <!-- 退出群聊 Modal -->
+      <div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="quitModalLabel">Sure</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h3>Are you sure!?</h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="quitBtn">Quit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id='message' class="container-fluid" style="">
+        <div style="height: 50px;"></div>
+      </div>
+      <!--底部消息栏-->
+      <div id="ipt_bar" class="text-center" >
+        <div class="container text-center">
+          <div class="position-relative">。
+            <input type="text" class="form-control pe-5" placeholder="Please enter your message......" id="ipt" style="">
+
+
+
+            <button class="btn btn-primary position-absolute top-0 end-0" style="" id="sendButton">
+              Send
+            </button>
+          </div>
+          <!-- 新：表情包面板（放在 body 底部即可） -->
+          <div id="stickerPicker" class="position-absolute bg-white border rounded shadow-sm p-2" style="display:none; width:240px; max-height:200px; overflow:auto; z-index:3000;">
+            <!-- 你可以动态生成这些 <img> 或手写 -->
+            <img src="stickers/1.png" data-id="1" class="sticker-thumb me-1 mb-1" style="width:48px;cursor:pointer;">
+            <img src="stickers/2.gif" data-id="2" class="sticker-thumb me-1 mb-1" style="width:48px;cursor:pointer;">
+            <img src="stickers/3.png" data-id="3" class="sticker-thumb me-1 mb-1" style="width:48px;cursor:pointer;">
+            <!-- … -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="jQuery/jquery-3.7.1.min.js"></script>
+<script src="jQuery/Animation/jquery-ui.min.js"></script>
+<script src="Bootstrap/bootstrap.bundle.min.js"></script>
+
+<script type="module" src="js/chat.js"></script>
+<script type="module" src="js/chat_function.js"></script>
+<script src="js/chat_animation.js"></script>
+</body>
+</html>

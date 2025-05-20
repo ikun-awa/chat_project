@@ -1,0 +1,36 @@
+nohup: ignoring input
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.5)
+
+2025-05-20 03:13:43.344  INFO 576238 --- [           main] c.e.formtomysql.FormToMysqlApplication   : Starting FormToMysqlApplication v0.0.1-SNAPSHOT using Java 21.0.7 on ikun-server with PID 576238 (/root/form_ceshi/target/form-to-mysql-0.0.1-SNAPSHOT.jar started by root in /root/form_ceshi)
+2025-05-20 03:13:43.352  INFO 576238 --- [           main] c.e.formtomysql.FormToMysqlApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-05-20 03:13:46.327  INFO 576238 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-20 03:13:46.586  INFO 576238 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 206 ms. Found 1 JPA repository interfaces.
+2025-05-20 03:13:49.289  INFO 576238 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-05-20 03:13:49.343  INFO 576238 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-20 03:13:49.346  INFO 576238 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2025-05-20 03:13:49.696  INFO 576238 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-20 03:13:49.697  INFO 576238 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6121 ms
+2025-05-20 03:13:51.081  INFO 576238 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-20 03:13:51.297  INFO 576238 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2025-05-20 03:13:52.017  INFO 576238 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-05-20 03:13:52.453  INFO 576238 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-20 03:13:53.193  INFO 576238 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-20 03:13:53.259  INFO 576238 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-05-20 03:13:55.662  INFO 576238 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-05-20 03:13:55.682  INFO 576238 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 03:13:57.040  WARN 576238 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-20 03:13:58.499  INFO 576238 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2025-05-20 03:13:58.544  INFO 576238 --- [           main] c.e.formtomysql.FormToMysqlApplication   : Started FormToMysqlApplication in 16.966 seconds (JVM running for 18.803)
+2025-05-20 03:17:02.379  INFO 576238 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-20 03:17:02.381  INFO 576238 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-05-20 03:17:02.387  INFO 576238 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2025-05-20 03:52:50.574  INFO 576238 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 03:52:50.582  INFO 576238 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-05-20 03:52:50.598  INFO 576238 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
