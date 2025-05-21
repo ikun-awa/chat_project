@@ -226,7 +226,7 @@ $('#composeModal').on('shown.bs.modal', function() {
 
   document.getElementById('splitBtn').addEventListener('click', function() {
   // 跳回首页
-  window.location.href = '/wocao/index.html'; // 或者 'index.html'，看你的文件结构
+  window.location.href = '/wocao/index1.html'; // 或者 'index1.html'，看你的文件结构
 });
 
 
