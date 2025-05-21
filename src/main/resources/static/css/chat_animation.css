@@ -1,0 +1,10 @@
+#settingsBtn{
+  transition: all 0.4s ease-in-out;
+}
+#settingsBtn:hover{
+  transform: rotate(90deg);
+}
+
+#settingsBtn:active{
+  background: #0a3622;
+}

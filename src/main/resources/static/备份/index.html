@@ -1,0 +1,249 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>叼毛</title>
+    <link rel="icon" href="../Icon/icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../jQuery/Animation/jquery-ui.min.css">
+
+    <link rel="stylesheet" href="../Bootstrap/bootstrap.minB.css">
+    <style>
+      #kun{
+        scale: 200%;
+        transition: all 0.5s;
+      }
+      #kun:hover{
+        rotate: 390deg;
+      }
+      #kaishi{
+        height: 400px;
+        background-color: rgba(255, 23, 23, 0.5);
+      }
+      #biaoti{
+        transform: translate(0px, 100px);
+      }
+      #zhu_tou:not(:focus){
+        transition: all 0.5s;
+      }
+      #zhu_tou:hover{
+        scale: 210%;
+        transition: all 0.5s;
+      }
+      #home_name:hover{
+        transition: all 0.5s;
+        scale: 110%;
+      }
+      #zhu_hang{
+        transform: translate(0px, 60px);
+
+      }
+      .an{
+        background-color: transparent;
+        color: white;
+        border-color: #cdbfe3;
+        border-radius: 5px;
+        font-weight: 400;
+        padding: 12px 30px;
+        font-size: 20px;
+      }
+      .an:hover{
+        color: #0461be;
+        background-color: white;
+        border-color: white;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <!--导航栏-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="transition: all 0.5s;" id="navbar">
+      <div class="container">
+        <a class="navbar-brand d-flex" href="/wocao/index.html">
+          <img src="Icon/icon.jpg" width="40" height="40" class="d-inline-block align-top" alt="" id="zhu_tou" style="transition: all 0.65s">
+          <h3 class="lead" style="padding-left: 20px; transform: translate(0px, 10px);">在线聊天室</h3>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-nowrap" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" id="home_name">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item" style="margin-right: 140%;">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+            <li class="nav-item mr-3">
+              <input type="button" class="btn btn-default btn-primary btn-block" value="Login" id="aa1" data-toggle="modal" data-target="#login">
+              <!--登录按钮-->
+            </li>
+            <li class="nav-item">
+              <input type="button" class="btn btn-default btn-info btn-block" value="Register" id="aa2" data-toggle="modal" data-target="#register">
+              <!--注册按钮-->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--开头标题-->
+    <div class="container-fluid" id="zhu_hang">
+      <div class="row" id="kaishi">
+        <div class="col-md-2"></div>
+        <div class="col-md-5" id="biaoti">
+          <h1 class="">聊天室</h1>
+          <h3 class="lead">666</h3>
+          <a class="btn btn-outline-inverse btn-lg an active" href="#join">加入我们</a>
+        </div>
+        <div class="col-md-5">
+          <img src="img/2.jpg" class="img-fluid img rounded" id="kun">
+        </div>
+      </div>
+    </div>
+
+    <!--登录模态框-->
+    <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="form-group" id="deng_ti">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="name_d">用户名</label>
+                <input type="text" class="form-control" id="name_d" aria-describedby="emailHelp" name="name">
+              </div>
+              <div class="form-group">
+                <label for="pass_d">密码</label>
+                <input type="password" class="form-control" id="pass_d" aria-describedby="emailHelp" name="pass">
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!--注册模态框-->
+    <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Register
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/></svg>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="form" id="zhu_ti">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="name_z">
+                  Your gorgeous name:
+                </label>
+                <input type="text" class="form-control" id="name_z" aria-describedby="emailHelp" name="name">
+                <div class="invalid-feedback">
+                  Bad boy, no fake name
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="pass_z">
+                  Poor password:
+                </label>
+                <input type="password" class="form-control" id="pass_z" aria-describedby="emailHelp" name="pass">
+                <div class="invalid-feedback">
+                  Bad boy, no fake name
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="pass">Your gender:</label>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="male_z" aria-describedby="emailHelp" name="gender" value="male">
+                  <label for="male_z" class="form-check-label">
+                    I'm a <i>Male</i>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="female_z" aria-describedby="emailHelp" name="gender" value="female">
+                  <label for="female_z" class="form-check-label">
+                    I'm a <i>Female</i>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="walmart_bag_z" aria-describedby="emailHelp" name="gender" value="walmart_bag">
+                  <label for="walmart_bag_z" class="form-check-label">
+                    I'm a <i>Walmart Bag</i>~
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="ti_z" aria-describedby="emailHelp" name="gender" value="thailand">
+                  <label for="ti_z" class="form-check-label">
+                    I went to Thailand~
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="des">
+                  Comment to yourself
+                </label>
+                <textarea class="form-control" rows="3" id="des" name="comment"></textarea>
+                <div class="invalid-feedback">
+                  Bad boy, no fake name
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="trail-container"></div>
+    <div style="height: 10000px"></div>
+
+
+
+
+    <script src="../jQuery/jquery-3.7.1.min.js"></script>
+    <script src="../jQuery/Animation/jquery-ui.min.js"></script>
+    <script src="../Bootstrap/bootstrap.bundle.minB.js"></script>
+
+
+
+    <script src="../js/xiao_guo.js"></script>
+    <script src="../js/submit.js"></script>
+    <script src="../js/animation.js"></script>
+  </body>
+</html>
