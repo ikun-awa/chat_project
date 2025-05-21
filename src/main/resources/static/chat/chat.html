@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link rel="icon" href="Icon/icon.jpg" type="image/x-icon">
-  <link rel="stylesheet" href="jQuery/Animation/jquery-ui.min.css">
-  <link rel="stylesheet" href="Bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="Bootstrap/B-icon/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="css/chat.css">
-  <link rel="stylesheet" href="css/chat_animation.css">
+  <link rel="icon" href="../Icon/icon.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="../jQuery/Animation/jquery-ui.min.css">
+  <link rel="stylesheet" href="../Bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../Bootstrap/B-icon/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../css/chat.css">
+  <link rel="stylesheet" href="../css/chat_animation.css">
   <style>
 
 
@@ -412,9 +412,18 @@
           <button class="dropdown-item disabled" id="renameGroup" disabled="disabled">Rename group chat</button>
           <button class="dropdown-item disabled" id="manageMembers" disabled="disabled">Managing Members</button>
           <hr>
-          <button class="dropdown-item" id="leaveGroup">Exit group chat</button>
-          <button class="dropdown-item" id="clearHistory">Clear chat history</button> `
+          <button
+            class="dropdown-item"
+            id="leaveGroup"
+            data-bs-toggle="modal"
+            data-bs-target="#quitModal"
+          >
+            Exit group chat
+          </button>
+          <button class="dropdown-item" id="clearHistory">Clear chat history</button>
         </div>
+
+
 
 
       </nav>
@@ -445,25 +454,8 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#quitModal">111</button>
-      <!-- 退出群聊 Modal -->
-      <div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="quitModalLabel">Sure</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <h3>Are you sure!?</h3>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="quitBtn">Quit</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
 
 
       <div id='message' class="container-fluid" style="">
@@ -495,14 +487,32 @@
   </div>
 </div>
 
+<div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="quitModalLabel">Confirm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Are you sure you want to leave this group?</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="quitBtn">Leave</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
 
+<script src="../jQuery/jquery-3.7.1.min.js"></script>
+<script src="../jQuery/Animation/jquery-ui.min.js"></script>
+<script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 
-<script src="jQuery/jquery-3.7.1.min.js"></script>
-<script src="jQuery/Animation/jquery-ui.min.js"></script>
-<script src="Bootstrap/bootstrap.bundle.min.js"></script>
-
-<script type="module" src="js/chat.js"></script>
-<script type="module" src="js/chat_function.js"></script>
-<script src="js/chat_animation.js"></script>
+<script type="module" src="../js/chat.js"></script>
+<script type="module" src="../js/chat_function.js"></script>
+<script src="../js/chat_animation.js"></script>
 </body>
 </html>

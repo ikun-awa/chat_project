@@ -42,7 +42,7 @@ document.getElementById('manageMembers').addEventListener('click', () => {
 // 退出群聊
 document.getElementById('leaveGroup').addEventListener('click', e => {
   e.stopPropagation();           // 防止冒泡关闭菜单
-  if (!confirm('确定要退出此群聊吗？')) return;
+  //if (!confirm('确定要退出此群聊吗？')) return;
 
   // 1. 关闭设置菜单
   document.getElementById('chatSettings').style.display = 'none';
