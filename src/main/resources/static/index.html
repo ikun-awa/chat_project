@@ -398,7 +398,7 @@
             <label for="name_z" class="form-label">
               Username
             </label>
-            <input type="text" class="form-control" id="name_z" aria-describedby="emailHelp" name="name" placeholder="King of Fall Resistance" required>
+            <input type="text" class="form-control" id="name_z" aria-describedby="emailHelp" name="username" placeholder="King of Fall Resistance" required>
             <div class="form-text">
               Your gorgeous name
             </div>
@@ -415,7 +415,7 @@
             <label for="pass_z" class="form-label">
               Password
             </label>
-            <input type="password" class="form-control" id="pass_z" aria-describedby="emailHelp" name="pass" required>
+            <input type="password" class="form-control" id="pass_z" aria-describedby="emailHelp" name="password" required>
             <div class="form-text">
               Poor password
             </div>
@@ -510,7 +510,7 @@
 
 
 <script>
-  document.getElementById('deng_ti').addEventListener('submit', async function(e) {
+  document.getElementById('zhu_ti').addEventListener('submit', async function(e) {
     e.preventDefault();
     const form = e.target;
     const data = new URLSearchParams(new FormData(form));

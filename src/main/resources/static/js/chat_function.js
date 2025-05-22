@@ -50,9 +50,12 @@ document.getElementById('leaveGroup').addEventListener('click', e => {
   // 2. 用红色提示替换消息区内容
   document.getElementById('message').innerHTML =
     '<div class="left-notice">You have left the group chat</div>';
+  /*
   setTimeout(() => {
     window.location.href = 'lobby.html';
   },1000);
+
+   */
 
   // 3. 隐藏输入区并禁用所有按钮
   document.getElementById('ipt_bar').style.display = 'none';
