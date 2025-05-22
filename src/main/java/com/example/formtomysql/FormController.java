@@ -1,6 +1,7 @@
 package com.example.formtomysql.controller;
 
 import com.example.formtomysql.entity.UserMessage;
+import com.example.formtomysql.entity.Gender;
 import com.example.formtomysql.repository.UserMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
