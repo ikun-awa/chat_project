@@ -1,7 +1,7 @@
 package com.example.formtomysql;
 
 import com.example.formtomysql.entity.Gender;
-import com.example.formtomysql.entity.User;
+import com.example.formtomysql.entity.UserMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
