@@ -550,12 +550,12 @@
         if (!form.checkValidity()) {
           event.preventDefault();
           event.stopPropagation();
-          console.log('1');
+          console.log('非法表单');
         }
         else{
           $('#spin_z').css('display', 'inline-block');
 
-          event.preventDefault();
+          //event.preventDefault();
           const form = event.target;
           const data = new URLSearchParams(new FormData(form));
           const resp = await fetch('/submit', {
@@ -564,7 +564,7 @@
           });
           document.getElementById('result').textContent = await resp.text();
           form.reset();
-          console.log('2');
+          console.log('合法表单');
         }
 
         form.classList.add('was-validated');
