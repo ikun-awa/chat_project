@@ -1,8 +1,6 @@
 package chat.duang.formtomysql.entity;
 
 import javax.persistence.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user_message")     // 映射到你刚才改名后的表
