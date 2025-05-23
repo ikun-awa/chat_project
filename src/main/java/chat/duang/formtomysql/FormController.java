@@ -21,6 +21,9 @@ public class FormController {
     @Autowired
     private UserMessageRepository repo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/")
     public String index() {
         return "forward:/index.html";
