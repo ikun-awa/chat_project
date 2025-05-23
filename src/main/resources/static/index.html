@@ -547,6 +547,42 @@
 
 <script>
   //登录信息处理
+
+  (async function () {
+    'use strict';
+    const deng_ti = document.getElementById('deng_ti');
+    deng_ti.querySelectorAll('.needs-validation').forEach(formEl => {
+      formEl.addEventListener('submit', async event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!formEl.checkValidity()) {
+          console.log('非法表单');
+        } else {
+          $('#spin_d').show();
+          try {
+            const data = new URLSearchParams(new FormData(formEl));
+            const resp = await fetch('/login', { method: 'POST', body: data });
+            if (resp.ok) {
+              window.location.assign('./lobby/lobby.html');
+            } else {
+              const msg = await resp.text();
+              alert(`登录失败：${msg}`);
+            }
+          } catch (err) {
+            console.error(err);
+            alert('网络错误，请稍后再试');
+          } finally {
+            $('#spin_d').hide();
+          }
+        }
+        formEl.classList.add('was-validated');
+      }, false);
+    });
+  })();
+
+
+
+  /*
   (function () {
     'use strict';
     const deng_ti = document.getElementById('deng_ti');
@@ -579,6 +615,8 @@
       }, false);
     });
   })();
+
+   */
 
   //注册信息处理
   (function () {
