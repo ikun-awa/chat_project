@@ -316,25 +316,32 @@
         <h5 class="modal-title" id="exampleModalLabel">Login</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <!--
+
       <form class="form-group" id="deng_ti">
         <div class="modal-body">
           <div class="form-group">
             <label for="name_d">用户名</label>
-            <input type="text" class="form-control" id="name_d" aria-describedby="emailHelp" name="name">
+            <input type="text" class="form-control" id="name_d" aria-describedby="emailHelp" name="username">
           </div>
           <div class="form-group">
             <label for="pass_d">密码</label>
-            <input type="password" class="form-control" id="pass_d" aria-describedby="emailHelp" name="pass">
+            <input type="password" class="form-control" id="pass_d" aria-describedby="emailHelp" name="password">
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+            <i class="bi bi-backspace-reverse"></i>
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;" id="spin_d"></span>
+            Submit
+            <i class="bi bi-check2-circle"></i>
+          </button>
         </div>
       </form>
-      -->
-      <h1>发送消息到 MySQL</h1>
+
+      <!--
       <form id="deng_ti" class="form-group">
 
         <div class="modal-body">
@@ -355,7 +362,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-
+      -->
 
         <!--
         <label>
@@ -368,9 +375,7 @@
         </label><br><br>
         <button type="submit">提交</button>
         -->
-      </form>
 
-      <pre id="result"></pre>
 
     </div>
   </div>
@@ -541,9 +546,45 @@
 <script src="./js/animation.js"></script>
 
 <script>
+  //登录信息处理
   (function () {
     'use strict';
-    var forms = document.querySelectorAll('.needs-validation');
+    const deng_ti = document.getElementById('deng_ti');
+    const forms = deng_ti.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', async function (event) {
+
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('非法表单');
+        }
+        else{
+          $('#spin_d').css('display', 'inline-block');
+
+          event.preventDefault();
+          const form = event.target;
+          const data = new URLSearchParams(new FormData(form));
+          const resp = await fetch('/login', {
+            method: 'POST',
+            body: data
+          });
+          //document.getElementById('result').textContent = await resp.text();
+          form.reset();
+          console.log('合法表单');
+          window.location.assign('./lobby/lobby.html');
+        }
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+
+  //注册信息处理
+  (function () {
+    'use strict';
+    const zhu_ti = document.getElementById('zhu_ti');
+    const forms = zhu_ti.querySelectorAll('.needs-validation');
     Array.prototype.slice.call(forms).forEach(function (form) {
       form.addEventListener('submit', async function (event) {
 
@@ -555,16 +596,17 @@
         else{
           $('#spin_z').css('display', 'inline-block');
 
-          //event.preventDefault();
+          event.preventDefault();
           const form = event.target;
           const data = new URLSearchParams(new FormData(form));
           const resp = await fetch('/submit', {
             method: 'POST',
             body: data
           });
-          document.getElementById('result').textContent = await resp.text();
+          //document.getElementById('result').textContent = await resp.text();
           form.reset();
           console.log('合法表单');
+          window.location.assign('./lobby/lobby.html');
         }
 
         form.classList.add('was-validated');

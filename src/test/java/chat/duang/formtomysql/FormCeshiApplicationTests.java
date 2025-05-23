@@ -1,4 +1,4 @@
-package com.example.formtomysql;
+package chat.duang.formtomysql;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

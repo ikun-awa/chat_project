@@ -1,8 +1,9 @@
-package com.example.formtomysql.repository;
+package chat.duang.formtomysql;
 
-import com.example.formtomysql.entity.UserMessage;
+import chat.duang.formtomysql.entity.UserMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserMessageRepository extends JpaRepository<UserMessage, Long> {
+    Optional<UserMessage> findByUsername(String username);
 }
 
