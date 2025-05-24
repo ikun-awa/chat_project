@@ -8,23 +8,43 @@
       event.preventDefault();
       if (!form.checkValidity()) {
         event.stopPropagation();
-        console.log('非法表单');
       } else {
         $('#spin_z').show();
         const data = new URLSearchParams(new FormData(form));
-        await fetch('/submit', { method: 'POST', body: data });
-        form.reset();
-        console.log('合法表单');
-        alert('Good boy, you hava successfully registered!');
-        setTimeout(() => {
-          window.location.assign('../lobby/lobby.html');
-        },500);
+        try {
+          const resp = await fetch('/submit', {
+            method: 'POST',
+            body: data
+          });
+          if (resp.ok) {
+            //注册成功
+            alert('Good boy, you have successfully registered!');
+            setTimeout(() => {
+              window.location.assign('../lobby/lobby.html');
+            }, 500);
+            //用户名重复
+          } else if (resp.status === 409) {
+            const msg = await resp.text();
+            alert('Poor register：' + msg);
+          } else {
+            // 其他错误
+            const msg = await resp.text();
+            alert(`Poor register（${resp.status}）：${msg}`);
+          }
+        } catch (err) {
+          console.error(err);
+          alert('poor internet');
+        } finally {
+          $('#spin_z').hide();
+        }
       }
       form.classList.add('was-validated');
     }, false);
+
   });
 })();
 
+//检查重复用户名
 const usernameInput = document.getElementById('name_z');
 const feedback = document.getElementById('usernameFeedback');
 
