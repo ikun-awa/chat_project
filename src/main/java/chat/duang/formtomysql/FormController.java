@@ -14,10 +14,13 @@ public class FormController {
     @Autowired
     private UserMessageRepository repo;
 
+    /*
     @GetMapping("/")
     public String index() {
         return "forward:/index.html";
     }
+
+     */
 
     // 注册：直接存储明文密码
     @PostMapping("/submit")
