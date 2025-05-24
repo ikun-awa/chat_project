@@ -45,11 +45,13 @@
     #kun:hover{
       transform: scale(2) rotate(390deg);
     }
-    #kai_shi{
+    #kai_shi {
       height: 400px;
-      background-color: transparent;
-      opacity: 0;
+      background: linear-gradient(135deg, #6DD5FA 0%, #FFFFFF 100%);
+      opacity: 1;
+      padding: 2rem 0;
     }
+
     #biao_ti{
       transform: translate(0px, 100px);
 
@@ -125,7 +127,7 @@
     }
 
     /* —— 半圆装饰（可选） —— */
-    .curved-blocks .col-md-2::before {
+   /* .curved-blocks .col-md-2::before {
       content: "";
       position: absolute;
       top: -50px;
@@ -328,27 +330,36 @@
       </div>
     </div>
   </div>
-  <div class="row curved-blocks" style="height: 100%;">
+  <div class="row curved-blocks" style="height: 100%; margin-left: 180px;">
 
-  <div class="col-md-1"></div>
-    <div class="col-md-2" style="background: #8ebaff; height: 300px; transform: translateY(0px); transition: all .2s ease-in-out; opacity: 0; position: relative" id="kuai_1">
-      <div style="
-      width: 100%;height: 150px;background: #e74c3c;border-top-left-radius: 200px;border-top-right-radius: 200px;rotate: 90deg; position: absolute; display: inline; top: 90px; left: -90px;
-      " id="kuai_t"></div>
-      <h3 class="display-1" style="margin: 20px;"></h3>
-      <p class="lead"></p>
+
+  <!-- 第一块（#kuai_1） -->
+    <div class="col-md-2 block" id="kuai_1">
+      <i class="bi bi-chat-dots-fill display-4 mb-2"></i>
+      <h3 class="fw-bold">聊天室</h3>
+      <p>随时随地加入话题，让你的声音被听见。</p>
+      <a href="chat.html" class="btn btn-light btn-sm">立即进入</a>
     </div>
-    <div class="col-md-2" style="background: #103d80; height: 300px; transform: translateY(-30px); transition: all .2s ease-in-out; opacity: 0;" id="kuai_2">
-      <h3 class="display-1" style="margin: 20px;"></h3>
-      <p class="lead"></p>
+
+    <!-- 第二块（#kuai_2） -->
+    <div class="col-md-2 block" id="kuai_2">
+      <i class="bi bi-file-earmark-arrow-up-fill display-4 mb-2"></i>
+      <h3 class="fw-bold">文件传输</h3>
+      <p>快速安全地分享图片、文档、甚至大文件。</p>
+      <a href="upload.html" class="btn btn-light btn-sm">上传文件</a>
     </div>
-    <div class="col-md-2" style="background: #162742; height: 300px; transform: translateY(20px); transition: all .2s ease-in-out; opacity: 0;" id="kuai_3">
-      <h3 class="display-1" style="margin: 20px;"></h3>
-      <p class="lead"></p>
+
+    <!-- 第三块（#kuai_3） -->
+    <div class="col-md-2 block" id="kuai_3">
+      <i class="bi bi-bell-fill display-4 mb-2"></i>
+      <h3 class="fw-bold">实时通知</h3>
+      <p>新消息、好友上线，第一时间提醒你。</p>
+      <a href="notify.html" class="btn btn-light btn-sm">查看通知</a>
     </div>
-    <div class="col-md-5"></div>
+
+
+
   </div>
-</div>
 
 
 
