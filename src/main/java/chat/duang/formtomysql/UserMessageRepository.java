@@ -6,5 +6,6 @@ import java.util.Optional;
 
 public interface UserMessageRepository extends JpaRepository<UserMessage, Long> {
     Optional<UserMessage> findByUsername(String username);
+    boolean existsByUsername(String username);
 }
 

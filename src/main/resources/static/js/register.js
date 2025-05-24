@@ -25,6 +25,24 @@
   });
 })();
 
+const usernameInput = document.getElementById('name_z');
+const feedback = document.getElementById('usernameFeedback');
+
+usernameInput.addEventListener('blur', async () => {
+  const username = usernameInput.value.trim();
+  if (!username) return;
+  const resp = await fetch(`/check-username?username=${encodeURIComponent(username)}`);
+  const {exists} = await resp.json();
+  if (exists) {
+    feedback.textContent = '用户名已被占用';
+    usernameInput.classList.add('is-invalid');
+  } else {
+    feedback.textContent = '用户名可用';
+    usernameInput.classList.remove('is-invalid');
+    usernameInput.classList.add('is-valid');
+  }
+});
+
 //年龄更新
 $('#age_z').on('input', function () {
   $('#age_label').text('Your age are: ' + $(this).val());
