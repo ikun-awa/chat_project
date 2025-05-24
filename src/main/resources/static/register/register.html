@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="../css/register.css">
     <link rel="stylesheet" href="../Bootstrap/B-icon/bootstrap-icons.min.css">
     <style>
+        body{
+          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
         .auth-wrapper {
             min-height: 100vh;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
         .auth-card {
             border: none;
@@ -33,11 +35,9 @@
             box-shadow: 0 0 0 3px rgba(4, 97, 190, 0.25);
         }
         .toggle-password {
-            cursor: pointer;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
+          cursor: pointer;
         }
+
     </style>
 </head>
 <body>
@@ -51,15 +51,18 @@
         </div>
     </nav>
 
+
+    <img src="../gif/cat.gif" alt="Loading animation" style="transform: translateX(-100px) translateY(-500px);">
+
     <!-- 注册主体 -->
-    <div class="auth-wrapper d-flex align-items-center">
+    <div class="auth-wrapper d-flex align-items-center" style="margin-top: 4em; margin-bottom: 4em;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="auth-card bg-white">
                         <div class="auth-header">
-                            <h2 class="mb-3">加入我们</h2>
-                            <p class="mb-0">立即注册，开启聊天之旅</p>
+                            <h2 class="mb-3">Join us</h2>
+                            <p class="mb-0">To register, that means you are a person</p>
                         </div>
 
                         <form id="form_z" class="p-4 p-md-5 needs-validation" novalidate>
@@ -75,7 +78,7 @@
 
                             <div class="text-center mb-4 position-relative">
                                 <hr class="bg-secondary">
-                                <span class="px-3 bg-white position-absolute top-50 start-50 translate-middle">或</span>
+                                <span class="px-3 bg-white position-absolute top-50 start-50 translate-middle">or</span>
                             </div>
 
                             <!-- 注册表单 -->
@@ -90,28 +93,42 @@
                                     </svg>
                                   </span>
                                   <input type="text" name="username" class="form-control form-control-lg ps-4" id="name_z" placeholder="请输入用户名" required>
+                                  <div class="invalid-feedback">
+                                    <i class="bi bi-x"></i>
+                                    Bad boy, no blank
+                                  </div>
+                                  <div class="valid-feedback">
+                                    <i class="bi bi-check-lg"></i>
+                                    Good boy!
+                                  </div>
                                 </div>
-                                <div class="invalid-feedback">请输入用户名</div>
                               </div>
                               <!--密码-->
                               <div class="col-12 position-relative">
                                 <label for="pass_z" class="form-label">Password</label>
-                                <div class="input-group">
+                                <div class="input-group mb-3">
                                   <span class="input-group-text bg-transparent">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
                                       <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
                                     </svg>
                                   </span>
                                   <input type="password" name="password" class="form-control form-control-lg ps-4" id="pass_z" required>
-                                  <button type="button" class="btn btn-link text-secondary toggle-password">
+                                  <button type="button" class="input-group-text btn btn-link text-secondary toggle-password" id="pass_z_toggle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                       <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
                                       <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/>
                                       <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                     </svg>
                                   </button>
+                                  <div class="invalid-feedback">
+                                    <i class="bi bi-x"></i>
+                                    Bad boy, no blank
+                                  </div>
+                                  <div class="valid-feedback">
+                                    <i class="bi bi-check-lg"></i>
+                                    Good boy!
+                                  </div>
                                 </div>
-                                <div class="invalid-feedback">请输入密码</div>
                               </div>
                               <hr style="margin-top: 2rem;">
                               <!--性别-->
@@ -167,29 +184,35 @@
                                   Good boy!
                                 </div>
                               </div>
-
-
-
+                              <!--好人-->
                               <div class="col-12">
                                   <div class="form-check">
                                       <input class="form-check-input" type="checkbox" id="terms" required>
                                       <label class="form-check-label" for="terms">
                                           I already know <a href="#" class="text-decoration-none">I am a good person</a>
                                       </label>
-                                      <div class="invalid-feedback">必须同意条款才能注册</div>
+                                      <div class="invalid-feedback">
+                                        <i class="bi bi-x"></i>
+                                        You must to commit you are a good person
+                                      </div>
+                                      <div class="valid-feedback">
+                                        <i class="bi bi-check-lg"></i>
+                                        Good boy!
+                                      </div>
                                   </div>
                               </div>
-
-
+                              <!--注册按钮-->
                               <div class="col-12">
                                   <button type="submit" class="btn btn-primary btn-lg w-100 py-3 gradient-btn">
-                                      立即注册
+                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;" id="spin_z"></span>
+                                      Register
+                                      <i class="bi bi-check2-circle"></i>
                                   </button>
                               </div>
-
+                              <!--已有账户-->
                               <div class="col-12 text-center mt-3">
-                                  <span>已有账户？</span>
-                                  <a href="../static/login/login.html" class="text-decoration-none fw-bold">立即登录</a>
+                                  <span>Already have an account?</span>
+                                  <a href="../login/login.html" class="text-decoration-none fw-bold">Login</a>
                               </div>
                             </div>
                         </form>
