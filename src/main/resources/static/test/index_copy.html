@@ -188,7 +188,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="navbar">
   <div class="container">
     <!-- Brand + 折叠按钮 -->
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
+    <a class="navbar-brand d-flex align-items-center" href="/wocao/index.html">
       <img src="Icon/icon.jpg" width="40" height="40" class="rounded me-2 zhu_tou" alt="头像1">
       <img src="Icon/tou2.jpg" width="40" height="40" class="rounded me-2 zhu_tou" alt="头像2">
       <span class="lead">在线聊天室</span>
@@ -218,7 +218,7 @@
           <button class="btn nav-link p-0" id="btn-notify" title="通知">
             <i class="bi bi-bell-fill"></i>
             <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
-                  id="notify-badge" style="display:none;">0</span>
+                  id="notify-badge" style="display:none">0</span>
           </button>
           <div id="notify-panel"></div>
         </li>
@@ -227,12 +227,12 @@
       <!-- 右侧：Login / Register -->
       <ul class="navbar-nav ms-auto">
         <li class="nav-item me-2">
-          <button class="btn btn-primary" onclick="window.location.assign('./login/login.html');">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
             Login
           </button>
         </li>
         <li class="nav-item">
-          <button class="btn btn-info" onclick="window.location.assign('./register/register.html');">
+          <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#register">
             Register
           </button>
         </li>
@@ -350,6 +350,223 @@
   </div>
 </div>
 
+<!--登录模态框-->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form class="form-group" id="deng_ti">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name_d">用户名</label>
+            <input type="text" class="form-control" id="name_d" aria-describedby="emailHelp" name="username">
+          </div>
+          <div class="form-group">
+            <label for="pass_d">密码</label>
+            <input type="password" class="form-control" id="pass_d" aria-describedby="emailHelp" name="password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+            <i class="bi bi-backspace-reverse"></i>
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;" id="spin_d"></span>
+            Submit
+            <i class="bi bi-check2-circle"></i>
+          </button>
+        </div>
+      </form>
+
+      <!--
+      <form id="deng_ti" class="form-group">
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name_d">用户名</label>
+            <input type="text" class="form-control" id="name_d" aria-describedby="emailHelp" name="username">
+          </div>
+          <div class="form-group">
+            <label for="pass_d">密码</label>
+            <input type="password" class="form-control" id="pass_d" aria-describedby="emailHelp" name="content">
+          </div>
+        </div>
+
+
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      -->
+
+        <!--
+        <label>
+          用户名：
+          <input type="text" name="username" required />
+        </label><br><br>
+        <label>
+          内容：
+          <textarea name="content" rows="4" cols="40" required></textarea>
+        </label><br><br>
+        <button type="submit">提交</button>
+        -->
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!--注册模态框-->
+<div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Register
+          <i class="bi bi-clipboard-plus-fill" id="zhu_biao"></i>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="form needs-validation" id="zhu_ti" novalidate>
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label for="name_z" class="form-label">
+              Username
+            </label>
+            <input type="text" class="form-control" id="name_z" aria-describedby="emailHelp" name="username" placeholder="King of Fall Resistance" required>
+            <div class="form-text">
+              Your gorgeous name
+            </div>
+            <div class="invalid-feedback">
+              <i class="bi bi-x"></i>
+              Bad boy, no blank
+            </div>
+            <div class="valid-feedback">
+              <i class="bi bi-check-lg"></i>
+              Good boy!
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="pass_z" class="form-label">
+              Password
+            </label>
+            <input type="password" class="form-control" id="pass_z" aria-describedby="emailHelp" name="password" required>
+            <div class="form-text">
+              Poor password
+            </div>
+            <div class="invalid-feedback">
+              <i class="bi bi-x"></i>
+              Bad boy, no blank
+            </div>
+            <div class="valid-feedback">
+              <i class="bi bi-check-lg"></i>
+              Good boy!
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Your gender:</label>
+            <div class="form-check" >
+              <input type="radio" class="form-check-input" id="male_z" aria-describedby="emailHelp" name="gender" value="male">
+              <label for="male_z" class="form-check-label">
+                I'm a <i>Male</i>
+              </label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="female_z" aria-describedby="emailHelp" name="gender" value="female">
+              <label for="female_z" class="form-check-label">
+                I'm a <i>Female</i>
+              </label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="walmart_bag_z" aria-describedby="emailHelp" name="gender" value="walmart_bag" checked>
+              <label for="walmart_bag_z" class="form-check-label">
+                I'm a <i>Walmart Bag</i>~
+              </label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="ti_z" aria-describedby="emailHelp" name="gender" value="thailand">
+              <label for="ti_z" class="form-check-label">
+                I went to Thailand~
+              </label>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="age_z" class="form-label">
+              Ages
+            </label>
+            <input type="range" class="form-range" min="0" max="200" step="1" value="100" id="age_z" name="age">
+            <div class="form-text" id="age_label">
+              Your age are: 100
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="des" class="form-label">
+              Comment to yourself
+            </label>
+            <textarea class="form-control" rows="3" id="des" name="comment" placeholder="I'm a good person" required></textarea>
+            <div class="invalid-feedback">
+              <i class="bi bi-x"></i>
+              Bad boy, no blank
+            </div>
+            <div class="valid-feedback">
+              <i class="bi bi-check-lg"></i>
+              Good boy!
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+            <i class="bi bi-backspace-reverse"></i>
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;" id="spin_z"></span>
+            Submit
+            <i class="bi bi-check2-circle"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+</div>
+-->
+
+
+
+
+
+
+
+
+<script>
+  /*
+  document.getElementById('zhu_ti').addEventListener('submit', async function(e) {
+
+  });
+
+   */
+</script>
+
+
+
 
 
 
@@ -362,7 +579,9 @@
 <script src="./jQuery/jquery-3.7.1.min.js"></script>
 <script src="./jQuery/Animation/jquery-ui.min.js"></script>
 <script src="./Bootstrap/bootstrap.bundle.min.js"></script>
+<script>
 
+</script>
 
 <script src="./js/xiao_guo.js"></script>
 <script src="./js/submit.js"></script>
