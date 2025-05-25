@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "user_message",
+@Table(name = "user_info",
         uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class UserMessage {
     /*
