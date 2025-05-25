@@ -37,7 +37,9 @@
         .toggle-password {
           cursor: pointer;
         }
-
+        .form-control::placeholder {
+          color: rgba(0, 0, 0, 0.4) !important;
+        }
     </style>
 </head>
 <body>
@@ -96,12 +98,12 @@
                                       <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7 1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm2 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
                                     </svg>
                                   </span>
-                                  <input type="text" name="username" class="form-control form-control-lg ps-4" id="name_z" placeholder="请输入用户名" required maxlength="20">
+                                  <input type="text" name="username" class="form-control form-control-lg ps-4" id="name_z" placeholder="poor name" required maxlength="20">
                                   <div class="invalid-feedback" id="usernameFeedback">
                                     <i class="bi bi-x"></i>
                                     Bad boy, no blank
                                   </div>
-                                  <div class="valid-feedback">
+                                  <div class="valid-feedback" id="usernameGoodFeedback">
                                     <i class="bi bi-check-lg"></i>
                                     Good boy!
                                   </div>
@@ -116,7 +118,7 @@
                                       <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
                                     </svg>
                                   </span>
-                                  <input type="password" name="password" class="form-control form-control-lg ps-4" id="pass_z" required maxlength="20">
+                                  <input type="password" name="password" class="form-control form-control-lg ps-4" id="pass_z" required maxlength="20" placeholder="poor password">
                                   <button type="button" class="input-group-text btn btn-link text-secondary toggle-password" id="pass_z_toggle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                       <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
@@ -178,7 +180,7 @@
                                 <label for="des" class="form-label">
                                   Comment to yourself
                                 </label>
-                                <textarea class="form-control" rows="3" id="des" name="comment" placeholder="I'm a good person" required maxlength="100"></textarea>
+                                <textarea class="form-control" rows="3" id="des" name="comment" required maxlength="100">I am a good person</textarea>
                                 <div class="invalid-feedback">
                                   <i class="bi bi-x"></i>
                                   Bad boy, no blank

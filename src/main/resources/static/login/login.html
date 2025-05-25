@@ -34,11 +34,9 @@
       transform: translateY(-50%);
       color: #6c757d;
     }
-    input::placeholder {
-      opacity:0.1;
-    }
-    input::-webkit-input-placeholder {
-      opacity:0.1;
+
+    .form-control::placeholder {
+      color: rgba(0, 0, 0, 0.4) !important;
     }
   </style>
 </head>
@@ -154,8 +152,8 @@
                 </div>
 
                 <div class="col-12 text-center mt-3">
-                  <span>没有账户？</span>
-                  <a href="../register/register.html" class="text-decoration-none fw-bold">立即注册</a>
+                  <span>Don't have an account?</span>
+                  <a href="../register/register.html" class="text-decoration-none fw-bold">Register</a>
                 </div>
               </div>
             </form>

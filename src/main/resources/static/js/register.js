@@ -47,17 +47,17 @@
 //检查重复用户名
 const usernameInput = document.getElementById('name_z');
 const feedback = document.getElementById('usernameFeedback');
-
+const goodFeedback = document.getElementById('usernameGoodFeedback');
 usernameInput.addEventListener('blur', async () => {
   const username = usernameInput.value.trim();
   if (!username) return;
   const resp = await fetch(`/check-username?username=${encodeURIComponent(username)}`);
   const {exists} = await resp.json();
   if (exists) {
-    feedback.textContent = '用户名已被占用';
+    feedback.textContent = 'This poor name have already been registered!';
     usernameInput.classList.add('is-invalid');
   } else {
-    feedback.textContent = '用户名可用';
+    feedback.textContent = 'This poor name is available';
     usernameInput.classList.remove('is-invalid');
     usernameInput.classList.add('is-valid');
   }
