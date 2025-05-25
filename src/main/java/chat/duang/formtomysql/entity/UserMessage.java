@@ -18,12 +18,12 @@ public class UserMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "bad boy: VoidException, between 1-20")
     @Size(min = 1, max = 20, message = "bad boy: LengthException, between 1-20")
     @Column(nullable = false, length = 100, unique = true)
     private String username;
 
-    @NotNull
+    @NotBlank(message = "bad boy: VoidException, between 1-20")
     @Size(min = 1, max = 20, message = "bad boy: LengthException, between 1-20")
     @Column(nullable = false, length = 255)
     private String password;
@@ -32,11 +32,11 @@ public class UserMessage {
     @Column(nullable = false, length = 20)
     private Gender gender;
 
-    @NotBlank
+    @NotNull(message = "bad boy: VoidException")
     @Column(nullable = false)
     private Integer age;
 
-    @NotBlank
+    @NotBlank(message = "bad boy: VoidException, between 1-100")
     @Size(min = 1, max = 100, message = "bad boy: LengthException, between 1-100")
     @Column(columnDefinition = "TEXT")
     private String comment;
