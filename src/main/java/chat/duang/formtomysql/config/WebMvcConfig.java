@@ -9,11 +9,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // “/” → index.html
+        // 根路径 → index.html
         registry.addViewController("/").setViewName("forward:/index.html");
-        // “/login” → login.html
+
+        // 登录页 → static/login/login.html
         registry.addViewController("/login").setViewName("forward:/login/login.html");
-        // “/register” → register.html
+
+        // 注册页 → static/register/register.html
         registry.addViewController("/register").setViewName("forward:/register/register.html");
+
+        // 聊天大厅 → static/lobby/lobby.html
+        registry.addViewController("/lobby").setViewName("forward:/lobby/lobby.html");
     }
 }
