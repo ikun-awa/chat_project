@@ -31,7 +31,7 @@ public class FormController {
     }
 
     // 注册：直接存储明文密码
-    @PostMapping("/submit")
+    @PostMapping("/api/submit")
     public ResponseEntity<String> handleSubmit(@RequestParam String username,
                                                @RequestParam String password,
                                                @RequestParam Gender gender,
@@ -51,7 +51,7 @@ public class FormController {
     }
 
     // 登录验证：明文比对
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<String> login(@RequestParam String username,
                                         @RequestParam String password) {
         Optional<UserMessage> userOpt = repo.findByUsername(username);

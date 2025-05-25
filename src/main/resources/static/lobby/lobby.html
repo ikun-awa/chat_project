@@ -60,27 +60,26 @@
 
 
   //群聊组
-  $(function() {
-    const renderGroups = groups => {
-      $('#groupList').empty();
-      groups.forEach(g => {
-        const card = $(`
-          <div class="col-sm-6 col-md-4 mb-3">
-            <div class="card group-card" data-id="${g.id}">
-              <div class="card-body d-flex align-items-center">
-                <img src="../Icon/icon.jpg" class="group-icon rounded" width="40" height="40">
-                <h5 class="card-title mb-0 ms-2">${g.name}</h5>
-              </div>
-              <div class="card-footer text-center">${g.description || ''}</div>
+
+  const renderGroups = groups => {
+    $('#groupList').empty();
+    groups.forEach(g => {
+      const card = $(`
+        <div class="col-sm-6 col-md-4 mb-3">
+          <div class="card group-card" data-id="${g.id}">
+            <div class="card-body d-flex align-items-center">
+              <img src="../Icon/icon.jpg" class="group-icon rounded" width="40" height="40">
+              <h5 class="card-title mb-0 ms-2">${g.name}</h5>
             </div>
-          </div>`);
-        card.on('click', () => {
-          window.location.href = `../chat/chat.html?groupId=${g.id}`;
-        });
-        $('#groupList').append(card);
+            <div class="card-footer text-center">${g.description || ''}</div>
+          </div>
+        </div>`);
+      card.on('click', () => {
+        window.location.href = `../chat/chat.html?groupId=${g.id}`;
       });
-    };
-  });
+      $('#groupList').append(card);
+    });
+  };
 
   fetch('/api/chat-rooms')
     .then(res => res.json())

@@ -14,7 +14,7 @@
       if (spinner) spinner.style.display = 'inline-block';
       try {
         const data = new URLSearchParams(new FormData(form));
-        const resp = await fetch('/login', {
+        const resp = await fetch('/api/login', {
           method: 'POST',
           body: data
         });

@@ -12,7 +12,7 @@
         $('#spin_z').show();
         const data = new URLSearchParams(new FormData(form));
         try {
-          const resp = await fetch('/submit', {
+          const resp = await fetch('/api/submit', {
             method: 'POST',
             body: data
           });
