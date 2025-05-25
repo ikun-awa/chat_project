@@ -20,7 +20,7 @@
         });
         if (resp.ok) {
           // 登录成功，跳转大堂
-          window.location.assign('../lobby/lobby.html');
+          window.location.assign('../lobby');
         } else {
           // 4. 修正模板字符串
           const msg = await resp.text();

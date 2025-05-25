@@ -20,7 +20,7 @@
             //注册成功
             alert('Good boy, you have successfully registered!');
             setTimeout(() => {
-              window.location.assign('../lobby/lobby.html');
+              window.location.assign('../lobby');
             }, 500);
             //用户名重复
           } else if (resp.status === 409) {
