@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    /* 覆盖层，保证在最上方，不阻碍底层交互 */
+    #scroll-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* 通用滚动图片样式 */
+    .scroll-img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 100%;                    /* 起点：画面右侧外 */
+      animation-name: scroll-left;   /* 使用相同的关键帧 */
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;  /* 无限循环 */
+    }
+
+    /* 第一张：20s 滑完一次，立即重头再来 */
+    .scroll-img-1 {
+      animation-duration: 20s;       /* 20 秒完成一次 */
+      animation-delay: 0s;           /* 立即开始 */
+    }
+
+    /* 第二张：30s 滑完一次，首次延迟 2s 再开始 */
+    .scroll-img-2 {
+      animation-duration: 40s;       /* 30 秒完成一次 */
+      animation-delay: 2s;           /* 首次延迟两秒 */
+    }
+
+    /* 关键帧：从 right 外完全滑到 left 外 */
+    @keyframes scroll-left {
+      from { left: 100%;   }
+      to   { left: -100%;  }
+    }
+  </style>
+</head>
+<body>
+<!-- 覆盖层 -->
+<div id="scroll-overlay">
+  <img src="../gif/ride.gif"   class="scroll-img scroll-img-1" alt="滚动图1">
+  <img src="../gif/orange.GIF" class="scroll-img scroll-img-2" alt="滚动图2">
+</div>
+</body>
+</html>

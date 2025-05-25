@@ -24,11 +24,11 @@
         } else {
           // 4. 修正模板字符串
           const msg = await resp.text();
-          alert(`登录失败：${msg}`);
+          alert(`Login failed: ${msg}`);
         }
       } catch (err) {
         console.error(err);
-        alert('网络错误，请稍后再试');
+        alert('poor internet');
       } finally {
         if (spinner) spinner.style.display = 'none';
       }

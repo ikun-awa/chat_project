@@ -38,7 +38,7 @@ public class FormController {
                                                @RequestParam Integer age,
                                                @RequestParam String comment) {
         if (repo.existsByUsername(username)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("用户名已存在，请换一个");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ExistingException: bad boy no using same name");
         }
         UserMessage msg = new UserMessage();
         msg.setUsername(username);
@@ -58,7 +58,7 @@ public class FormController {
         if (userOpt.isPresent() && userOpt.get().getPassword().equals(password)) {
             return ResponseEntity.ok("登录成功");
         } else {
-            return ResponseEntity.status(401).body("用户名或密码错误");
+            return ResponseEntity.status(401).body("InvalidException: Wrong username or password");
         }
     }
 }

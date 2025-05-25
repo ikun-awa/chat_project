@@ -7,6 +7,7 @@
   <link href="../Bootstrap/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/register.css">
   <link rel="stylesheet" href="../Bootstrap/B-icon/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../css/lr-animation.css">
   <style>
     .auth-wrapper {
       min-height: 100vh;
@@ -17,6 +18,7 @@
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       margin-top: 5rem;
+      overflow: hidden;
     }
     .auth-header {
       background: linear-gradient(45deg, #0461be, #0294A5);
@@ -42,7 +44,7 @@
 </head>
 <body>
   <!-- 导航栏 (与主界面一致) -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="box-shadow: 0 0 15px #e8e8e8">
     <div class="container">
       <a class="navbar-brand d-flex" href="../index.html">
         <img src="../Icon/icon.jpg" width="40" height="40" class="d-inline-block align-top" alt="Logo">
@@ -50,6 +52,15 @@
       </a>
     </div>
   </nav>
+
+  <img src="../gif/cat.gif" alt="I am a cat" id="gif-1" class="gif">
+  <img src="../gif/dance.GIF" alt="I am a cat" id="gif-2" class="gif">
+  <img src="../gif/basketball.GIF" alt="I am a cat" id="gif-3" class="gif">
+  <div id="scroll-overlay">
+    <img src="../gif/ride.gif"   class="scroll-img scroll-img-1" alt="I am a cat" id="gif-5">
+    <img src="../gif/orange.GIF" class="scroll-img scroll-img-2" alt="I am a cat" id="gif-7">
+  </div>
+  <img src="../gif/spider.gif" alt="I am a cat" id="gif-6" class="gif">
 
   <!-- 登录主体 -->
   <div class="auth-wrapper d-flex align-items-center">

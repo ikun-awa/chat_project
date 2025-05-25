@@ -6,45 +6,48 @@
     <title>注册 - 在线聊天室</title>
     <link rel="icon" href="../Icon/icon.jpg" type="image/x-icon">
     <link href="../Bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/register.css">
     <link rel="stylesheet" href="../Bootstrap/B-icon/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/lr-animation.css">
     <style>
-        body{
-          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-        .auth-wrapper {
-            min-height: 100vh;
-        }
-        .auth-card {
-            border: none;
-            border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .auth-header {
-            background: linear-gradient(45deg, #0461be, #0294A5);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-        .password-strength {
-            height: 3px;
-            transition: all 0.3s ease;
-        }
-        .form-control:focus {
-            box-shadow: 0 0 0 3px rgba(4, 97, 190, 0.25);
-        }
-        .toggle-password {
-          cursor: pointer;
-        }
-        .form-control::placeholder {
-          color: rgba(0, 0, 0, 0.4) !important;
-        }
+      body{
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      }
+      .auth-wrapper {
+        min-height: 100vh;
+      }
+      .auth-card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+      .auth-header {
+        background: linear-gradient(45deg, #0461be, #0294A5);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+      .password-strength {
+        height: 3px;
+        transition: all 0.3s ease;
+      }
+      .form-control:focus {
+        box-shadow: 0 0 0 3px rgba(4, 97, 190, 0.25);
+      }
+      .toggle-password {
+        cursor: pointer;
+      }
+      .form-control::placeholder {
+        color: rgba(0, 0, 0, 0.4) !important;
+      }
+    </style>
+    <style>
+
     </style>
 </head>
 <body>
     <!-- 导航栏 (与主界面保持一致) -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="box-shadow: 0 0 15px #e8e8e8">
         <div class="container">
             <a class="navbar-brand d-flex" href="../index.html">
                 <img src="../Icon/icon.jpg" width="40" height="40" class="d-inline-block align-top" alt="Logo">
@@ -54,10 +57,19 @@
     </nav>
 
 
-    <img src="../gif/cat.gif" alt="Loading animation" style="transform: translateX(-100px) translateY(-500px);">
+    <img src="../gif/cat.gif" alt="I am a cat" id="gif-1" class="gif">
+    <img src="../gif/dance.GIF" alt="I am a cat" id="gif-2" class="gif">
+    <img src="../gif/basketball.GIF" alt="I am a cat" id="gif-3" class="gif">
+    <div id="scroll-overlay">
+      <img src="../gif/ride.gif"   class="scroll-img scroll-img-1" alt="I am a cat" id="gif-5">
+      <img src="../gif/orange.GIF" class="scroll-img scroll-img-2" alt="I am a cat" id="gif-7">
+    </div>
+    <img src="../gif/spider.gif" alt="I am a cat" id="gif-6" class="gif">
+
+
 
     <!-- 注册主体 -->
-    <div class="auth-wrapper d-flex align-items-center" style="margin-top: 4em; margin-bottom: 4em;">
+    <div class="auth-wrapper d-flex align-items-center" style="margin-top: 7em; margin-bottom: 4em;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
@@ -230,6 +242,8 @@
     <script src="../jQuery/jquery-3.7.1.min.js"></script>
     <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
     <script src="../js/register.js"></script>
+
+
 </body>
 </html>
 
