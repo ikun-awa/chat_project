@@ -48,33 +48,45 @@
 <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 <script>
   // TODO: 这里改为从你后端接口获取
-
+  /*
   let groups = [
-    { id: 'g1', name: 'Family Chat' },
-    { id: 'g2', name: 'Office Talk' },
-    { id: 'g3', name: 'Gaming Buddies' }
+    { id: 'g1', name: 'Family Chat' , des: 'Official chat room' },
+    { id: 'g2', name: 'Office Talk' , des: 'private chat room' },
+    { id: 'g3', name: 'Gaming Buddies' , des: 'test chat room' }
   ];
 
+   */
+
+
+
   //群聊组
-  const renderGroups = () => {
-    const $list = $('#groupList').empty();
-    groups.forEach(g => {
-      const card = $(`
+  $(function() {
+    const renderGroups = groups => {
+      $('#groupList').empty();
+      groups.forEach(g => {
+        const card = $(`
           <div class="col-sm-6 col-md-4 mb-3">
             <div class="card group-card" data-id="${g.id}">
-              <div class="card-body">
-                <h5 class="card-title">${g.name}</h5>
+              <div class="card-body d-flex align-items-center">
+                <img src="../Icon/icon.jpg" class="group-icon rounded" width="40" height="40">
+                <h5 class="card-title mb-0 ms-2">${g.name}</h5>
               </div>
+              <div class="card-footer text-center">${g.description || ''}</div>
             </div>
-          </div>
-        `);
-      card.on('click', () => {
-        // 进入群聊页面，携带 groupId
-        window.location.href = `chat.html?groupId=${g.id}`;
+          </div>`);
+        card.on('click', () => {
+          window.location.href = `../chat/chat.html?groupId=${g.id}`;
+        });
+        $('#groupList').append(card);
       });
-      $list.append(card);
-    });
-  };
+    };
+  });
+  
+  fetch('/api/chat-rooms')
+    .then(res => res.json())
+    .then(data => renderGroups(data))
+    .catch(err => console.error('拉取聊天室列表失败', err));
+
 
   $(function() {
     renderGroups();
