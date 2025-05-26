@@ -6,9 +6,11 @@
   <link rel="icon" href="./Icon/icon.jpg" type="image/x-icon">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./jQuery/Animation/jquery-ui.min.css">
+
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
+
     /* —— 表情雨 —— */
     .falling-emoji {
       position: fixed;
@@ -23,6 +25,7 @@
       0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
+
 
     /* —— 烟花画布 —— */
     #fireworks-canvas {
@@ -54,6 +57,7 @@
       height: 5px;
       border-radius: 50%;
       background-color: currentColor;
+      /* 多重发光阴影，增强深度 */
       box-shadow:
         0 0 6px currentColor,
         0 0 12px currentColor,
@@ -83,6 +87,10 @@
       }
     }
 
+
+
+
+
     #emoji-wall h4 {
       color: #333;
     }
@@ -94,6 +102,7 @@
     .emoji-btn:hover {
       transform: scale(1.5);
     }
+
 
     #testimonials {
       background-color: #fff;
@@ -131,6 +140,7 @@
       text-decoration: underline;
     }
 
+
     /* 通知下拉面板 */
     #notify-panel {
       position: absolute;
@@ -157,8 +167,10 @@
       border-bottom: none;
     }
 
+
     #kun{
       transform: scale(50%);
+      /*transition: all 0.5s;*/
       opacity: 0;
     }
     #kun:hover{
@@ -173,6 +185,7 @@
 
     #biao_ti{
       transform: translate(0px, 100px);
+
     }
     .zhu_tou:not(:focus){
       transition: all 0.5s;
@@ -217,7 +230,7 @@
     }
 
     /* —— 三色块通用样式 —— */
-    .curved-blocks .col-md-2, .curved-blocks .col-md-3 {
+    .curved-blocks .col-md-2 {
       position: relative;
       padding: 1.5rem;
       margin-bottom: 2rem;
@@ -226,7 +239,7 @@
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
-      opacity: 1;
+      opacity: 1; /* 如果你之前是 0，就改成 1 */
       overflow: hidden;
     }
 
@@ -243,102 +256,182 @@
       background: linear-gradient(135deg, #43CEA2 0%, #185A9D 100%);
       transform: translateY(20px);
     }
-    #weather-widget {
-      background: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%);
+
+    /* —— 半圆装饰（可选） —— */
+   /* .curved-blocks .col-md-2::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     /* —— Hover 效果 —— */
-    .curved-blocks .col-md-2:hover, .curved-blocks .col-md-3:hover {
+    .curved-blocks .col-md-2:hover {
       transform: translateY(-10px) scale(1.05);
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
     /* —— 字体与间距微调 —— */
-    .curved-blocks h3 {
-      font-size: 1.8rem;
+    .curved-blocks .col-md-2 h3 {
+      font-size: 2.5rem;
       margin-bottom: 0.5rem;
     }
-    .curved-blocks p {
+    .curved-blocks .col-md-2 p {
       font-size: 1.1rem;
       line-height: 1.4;
     }
 
-    /* 天气小部件特定样式 */
-    .weather-card {
-      padding: 1.5rem;
-      text-align: center;
+
+    /* —— 只改半圆的朝向 —— */
+    #kuai_1 {
+      position: relative;
+      overflow: visible;
     }
 
-    .weather-card h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+    #kuai_1 #kuai_t {
+      top: calc(50% - 75px) !important;
+      left: -48px !important;  /* 往左再推一点 */
+      transform: rotate(-360deg) !important;
+      transform-origin: center center !important;
+      transition: left 0.3s ease, transform 0.3s ease !important;
     }
 
-    .weather-card p {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
+
+    #kuai_1:hover #kuai_t {
+      left: -90px !important;  /* hover 时继续突一点 */
     }
+
+
+
+
+
+
+
+
   </style>
+
 </head>
 <body tabindex="0">
 <!--导航栏-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="navbar">
   <div class="container">
+    <!-- Brand + 折叠按钮 -->
     <a class="navbar-brand d-flex align-items-center" href="index.html">
       <img src="Icon/icon.jpg" width="40" height="40" class="rounded me-2 zhu_tou" alt="头像1">
       <img src="Icon/tou2.jpg" width="40" height="40" class="rounded me-2 zhu_tou" alt="头像2">
       <span class="lead">在线聊天室</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- 折叠内容 -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- 左侧：Home / Link / 通知 -->
       <ul class="navbar-nav">
         <li class="nav-item" id="nav-home">
           <a class="nav-link" href="javascript:;">Home</a>
         </li>
+
         <li class="nav-item">
+          <!-- “Link” 保持你自己想要的 href，就不会被拦截 -->
           <a class="nav-link" href="https://www.google.com" target="_blank">Link</a>
         </li>
         <li class="nav-item position-relative" id="nav-notify">
           <button class="btn nav-link p-0" id="btn-notify" title="通知">
             <i class="bi bi-bell-fill"></i>
-            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="notify-badge" style="display:none;">0</span>
+            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+                  id="notify-badge" style="display:none;">0</span>
           </button>
           <div id="notify-panel"></div>
         </li>
       </ul>
+
+      <!-- 右侧：Login / Register -->
       <ul class="navbar-nav ms-auto">
         <li class="nav-item me-2">
-          <button class="btn btn-primary" onclick="window.location.assign('./login');">Login</button>
+          <button class="btn btn-primary" onclick="window.location.assign('./login');">
+            Login
+          </button>
         </li>
         <li class="nav-item">
-          <button class="btn btn-info" onclick="window.location.assign('./register');">Register</button>
+          <button class="btn btn-info" onclick="window.location.assign('./register');">
+            Register
+          </button>
         </li>
       </ul>
+
     </div>
   </div>
 </nav>
 
+
+
+
+
 <!--开头标题-->
 <div class="container-fluid" id="zhu_hang">
   <div class="row" id="kai_shi">
+
+
     <div class="col-md-1"></div>
     <div class="col-md-8" id="biao_ti">
       <div class="jumbotron" style="width: 60%;">
+        <!-- 改成你的励志标题 -->
         <h1 class="display-4">Rise and Shine</h1>
-        <p class="lead">Every sunrise is an invitation to brighten someone’s day. Embrace the challenge, trust your journey, and let your courage light the path ahead.</p>
+
+        <!-- 第一段励志文案 -->
+        <p class="lead">
+          Every sunrise is an invitation to brighten someone’s day. Embrace the challenge, trust your journey,
+          and let your courage light the path ahead.
+        </p>
+
         <hr class="my-4">
-        <p>Continue to push your limits, learn from every setback, and remember: the only limits that exist are the ones you place on yourself.</p>
+
+        <!-- 第二段补充文案 -->
+        <p>
+          Continue to push your limits, learn from every setback, and remember: the only limits that exist
+          are the ones you place on yourself.
+        </p>
+
+        <!-- 原来的按钮保持不变 -->
         <a class="btn btn-outline-inverse btn-lg an active" href="chat.html">Join us</a>
-        <a class="btn btn-primary btn-lg" href="#" data-bs-toggle="modal" data-bs-target="#learnMoreModal">Learn more</a>
+
+
+        <a class="btn btn-primary btn-lg" href="#" data-bs-toggle="modal" data-bs-target="#learnMoreModal">
+          Learn more
+        </a>
+
+
+
       </div>
-      <div class="modal fade" id="learnMoreModal" data-bs-backdrop="false" data-bs-keyboard="true" tabindex="-1" aria-labelledby="learnMoreLabel" aria-hidden="true">
+      <!-- Learn More Modal -->
+      <div class="modal fade"
+           id="learnMoreModal"
+           data-bs-backdrop="false"
+           data-bs-keyboard="true"
+           tabindex="-1"
+           aria-labelledby="learnMoreLabel"
+           aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="learnMoreLabel">About Our Chat</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close">
+              </button>
             </div>
             <div class="modal-body">
               <p>Welcome to our online chatroom! Here you can...</p>
@@ -347,24 +440,42 @@
                 <li>Use emojis and transfer files</li>
                 <li>Enjoy real-time notifications and management features</li>
               </ul>
+
+              </ul>
             </div>
           </div>
         </div>
       </div>
+
+
+
+      <!--
+      <h1 class="">聊天室</h1>
+      <h3 class="lead">666</h3>
+
+      -->
+
     </div>
     <div class="col-md-3">
       <img src="img/7.jpg" class="img-fluid img rounded d-inline" id="kun" alt="抽象艺术" style="display: inline-block;">
-      <div class="container"></div>
+      <!--
+      <img src="img/doge.png" class="img-fluid img rounded d-inline"  alt="抽象艺术" style="display: inline-block;">
+      -->
+      <div class="container ">
+
+      </div>
     </div>
   </div>
   <div class="row curved-blocks" style="height: 100%; margin-left: 180px;">
-    <!-- 第一块（#kuai_1） -->
+
+  <!-- 第一块（#kuai_1） -->
     <div class="col-md-2 block" id="kuai_1">
       <i class="bi bi-chat-dots-fill display-4 mb-2"></i>
       <h3 class="fw-bold">聊天室</h3>
       <p>随时随地加入话题，让你的声音被听见。</p>
       <a href="/chat" class="btn btn-light btn-sm">立即进入</a>
     </div>
+
     <!-- 第二块（#kuai_2） -->
     <div class="col-md-2 block" id="kuai_2">
       <i class="bi bi-file-earmark-arrow-up-fill display-4 mb-2"></i>
@@ -372,6 +483,7 @@
       <p>快速安全地分享图片、文档、甚至大文件。</p>
       <a href="#" class="btn btn-light btn-sm">上传文件</a>
     </div>
+
     <!-- 第三块（#kuai_3） -->
     <div class="col-md-2 block" id="kuai_3">
       <i class="bi bi-bell-fill display-4 mb-2"></i>
@@ -379,18 +491,8 @@
       <p>新消息、好友上线，第一时间提醒你。</p>
       <a href="#" class="btn btn-light btn-sm">查看通知</a>
     </div>
-    <!-- 天气小部件 -->
-    <div class="col-md-3 block" id="weather-widget">
-      <div class="weather-card">
-        <h3 class="fw-bold">实时天气</h3>
-        <div id="weather-info">
-          <p><strong>城市:</strong> <span id="city-name">加载中...</span></p>
-          <p><strong>温度:</strong> <span id="temperature">加载中...</span>°C</p>
-          <p><strong>天气:</strong> <span id="weather-description">加载中...</span></p>
-        </div>
-      </div>
-    </div>
   </div>
+  
   <!-- —— 社区表情墙 —— -->
   <section id="emoji-wall" class="text-center py-4">
     <h4 class="mb-3">发一个表情，表达你的心情</h4>
@@ -407,6 +509,7 @@
     <button id="trigger-emoji" class="btn btn-outline-primary">表情雨！</button>
     <button id="trigger-fireworks" class="btn btn-outline-warning">浪漫烟花！</button>
   </div>
+
 
   <section id="testimonials" class="py-5 bg-white">
     <div class="container">
@@ -439,6 +542,7 @@
     </div>
   </section>
 
+
   <section id="faq" class="py-5">
     <div class="container">
       <div class="row text-center mb-4">
@@ -447,34 +551,50 @@
           <p class="text-muted">快速解答你的疑惑</p>
         </div>
       </div>
+
       <div class="accordion" id="faqAccordion">
         <div class="accordion-item">
           <h2 class="accordion-header" id="faqHeading1">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1">如何创建一个新房间？</button>
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1">
+              如何创建一个新房间？
+            </button>
           </h2>
           <div id="faqCollapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">点击顶部“Join us”按钮，登录后即可在聊天室界面右上角创建新房间。</div>
+            <div class="accordion-body">
+              点击顶部“Join us”按钮，登录后即可在聊天室界面右上角创建新房间。
+            </div>
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="faqHeading2">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2">文件传输支持多大尺寸？</button>
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2">
+              文件传输支持多大尺寸？
+            </button>
           </h2>
           <div id="faqCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">单次上传文件大小上限为 100MB，支持多文件批量上传。</div>
+            <div class="accordion-body">
+              单次上传文件大小上限为 100MB，支持多文件批量上传。
+            </div>
           </div>
         </div>
+        <!-- 可继续添加更多问题项 -->
       </div>
     </div>
   </section>
 
+  <!-- FAQ 结束后，接着插入： -->
+
+  <!-- —— 行动呼吁区 —— -->
   <section id="cta" class="text-center py-5">
     <h2 class="display-6 mb-3">准备好加入我们了吗？</h2>
-    <p class="lead text-muted mb-4">创建你的专属聊天室，一起畅聊、分享与协作。</p>
+    <p class="lead text-muted mb-4">
+      创建你的专属聊天室，一起畅聊、分享与协作。
+    </p>
     <a href="/register" class="btn btn-primary btn-lg me-3">马上注册</a>
     <a href="/learn-more" class="btn btn-outline-primary btn-lg">了解更多</a>
   </section>
 
+  <!-- —— 联系我们区 —— -->
   <section id="contact" class="py-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -492,23 +612,36 @@
     </div>
   </section>
 
+  <!-- —— 页脚版权区 —— -->
   <footer id="footer" class="text-center py-4 mt-5">
     <p class="mb-2 text-muted">© 2025 在线聊天室. 保留所有权利。</p>
     <a href="/privacy" class="text-decoration-none me-3 text-muted">隐私政策</a>
     <a href="/terms" class="text-decoration-none text-muted">使用条款</a>
   </footer>
 
-  <div id="trail-container"></div>
 
-  <script src="./jQuery/jquery-3.7.1.min.js"></script>
-  <script src="./jQuery/Animation/jquery-ui.min.js"></script>
-  <script src="./Bootstrap/bootstrap.bundle.min.js"></script>
-  <script src="./js/xiao_guo.js"></script>
-  <script src="./js/submit.js"></script>
-  <script src="./js/animation.js"></script>
-  <script src="./js/exchange.js"></script>
-  <script>
-    
-  </script>
+
+
+
+<div id="trail-container"></div>
+
+
+<script src="./jQuery/jquery-3.7.1.min.js"></script>
+<script src="./jQuery/Animation/jquery-ui.min.js"></script>
+<script src="./Bootstrap/bootstrap.bundle.min.js"></script>
+
+
+<script src="./js/xiao_guo.js"></script>
+<script src="./js/submit.js"></script>
+<script src="./js/animation.js"></script>
+<script src="./js/exchange.js"></script>
+
+<script>
+
+
+</script>
+
+
+
 </body>
 </html>
