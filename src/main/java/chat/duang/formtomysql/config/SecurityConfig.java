@@ -1,56 +1,62 @@
 package chat.duang.formtomysql.config;
 
-import chat.duang.formtomysql.security.JwtAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-    @Autowired
-    private JwtAuthenticationFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 1. 禁用默认的 CSRF、Session 管理改为 Stateless（JWT 无 session）
+                // 1. 关闭 CSRF（如果不需要的话）
                 .csrf().disable()
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // 2. 静态资源、注册/登录接口和页面都放行
-                .authorizeHttpRequests(authz -> authz
-                        .antMatchers(
-                                "/", "/index.html",
-                                "/login", "/login.html",
-                                "/register", "/register.html",
-                                "/css/**", "/js/**", "/gif/**", "/Icon/**",
-                                "/api/auth/**"    // 注册 / 登录 API
-                        ).permitAll()
-                        // 3. 其余 /lobby/**、/chat/**、/api/lobby/**、/api/chat/** 都需要认证
-                        .antMatchers("/lobby/**", "/chat/**", "/api/lobby/**", "/api/chat/**")
-                        .authenticated()
-                        // 4. 其他接口视需求决定放行或拒绝
-                        .anyRequest().permitAll()
+                // 2. 关闭 HTTP Basic，否则它会优先返回 401
+                .httpBasic().disable()
+
+                // 3. 授权规则
+                .authorizeRequests()
+                // 静态资源和登录注册页放行
+                .antMatchers(
+                        "/", "/index.html",
+                        "/login", "/login/**",
+                        "/register", "/register/**",
+                        "/css/**", "/js/**", "/gif/**", "/Icon/**",
+                        "/favicon.ico",
+                        "/api/auth/**"       // 放行登录、注册 API
+                ).permitAll()
+                // 大厅和聊天接口必须登录
+                .antMatchers("/lobby/**", "/chat/**", "/api/lobby/**")
+                .authenticated()
+                // 其他请求禁止访问（根据需求也可以改成 .permitAll()）
+                .anyRequest().denyAll()
+                .and()
+
+                // 4. 表单登录
+                .formLogin()
+                .loginPage("/login")                   // 自定义登录页面 GET /login
+                .loginProcessingUrl("/api/auth/login") // 登录表单 POST 接口
+                .defaultSuccessUrl("/lobby", true)     // 登录成功默认跳转
+                .permitAll()
+                .and()
+
+                // 5. 注销
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .and()
+
+                // 6. 未登录时重定向到 /login
+                .exceptionHandling()
+                .authenticationEntryPoint(
+                        new LoginUrlAuthenticationEntryPoint("/login")
                 )
-
-                // 5. 添加我们自定义的 JWT Filter：在用户名/密码过滤器之前运行
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-
-                // 6. 登录失败时，对于 API 返回 401，而不是 Spring 的默认重定向；
-                //    对于页面访问未登录时，返回 302 重定向到 /login
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                );
+        ;
 
         return http.build();
     }
