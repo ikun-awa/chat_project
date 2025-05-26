@@ -10,6 +10,35 @@
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
+    #weather-widget {
+      background: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%);
+      color: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    #weather-widget:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .weather-card {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .weather-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .weather-card p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+
     /* —— 表情雨 —— */
     .falling-emoji {
       position: fixed;
@@ -491,6 +520,17 @@
       <a href="#" class="btn btn-light btn-sm">查看通知</a>
     </div>
   </div>
+  <div class="col-md-3 block" id="weather-widget">
+    <div class="weather-card">
+      <h3 class="fw-bold">实时天气</h3>
+      <div id="weather-info">
+        <p><strong>城市:</strong> <span id="city-name">加载中...</span></p>
+        <p><strong>温度:</strong> <span id="temperature">加载中...</span>°C</p>
+        <p><strong>天气:</strong> <span id="weather-description">加载中...</span></p>
+      </div>
+    </div>
+  </div>
+
   <!-- —— 社区表情墙 —— -->
   <section id="emoji-wall" class="text-center py-4">
     <h4 class="mb-3">发一个表情，表达你的心情</h4>

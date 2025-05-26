@@ -178,3 +178,32 @@ window.addEventListener('resize', () => {
     c.height = innerHeight;
   }
 });
+// 替换为您的 OpenWeatherMap API 密钥
+const API_KEY = 'YOUR_API_KEY_HERE';
+// 设置要显示天气的城市，例如 'Shanghai'
+const CITY = 'Shanghai';
+const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`;
+
+function fetchWeather() {
+  fetch(API_URL)
+    .then(response => response.json())
+    .then(data => {
+      if (data.cod === 200) {
+        document.getElementById('city-name').textContent = data.name;
+        document.getElementById('temperature').textContent = data.main.temp;
+        document.getElementById('weather-descriptionPARA').textContent = data.weather[0].description;
+      } else {
+        document.getElementById('weather-info').innerHTML = '<p>无法获取天气数据</p>';
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching weather data:', error);
+      document.getElementById('weather-info').innerHTML = '<p>获取天气数据失败</p>';
+    });
+}
+
+// 页面加载时获取天气数据
+document.addEventListener('DOMContentLoaded', fetchWeather);
+
+// 每小时更新一次天气数据
+setInterval(fetchWeather, 3600000); // 3600000 ms = 1 hour

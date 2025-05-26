@@ -41,21 +41,21 @@ public class AuthController {
         return ResponseEntity.ok("注册成功");
     }
 
-    @PostMapping("/api/login")
-    public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
-        String user = body.get("username");
-        String pass = body.get("password");
-
-        return repo.findByUsername(user)
-                .filter(u -> u.getPassword().equals(pass))
-                // 强制指定 Optional 的 map 返回类型为 ResponseEntity<?>
-                .<ResponseEntity<?>>map(u -> {
-                    String token = jwtUtil.generateToken(user);
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String password = body.get("password");
+        return repo.findByUsername(username)
+                .filter(u -> u.getPassword().equals(password))
+                .map(u -> {
+                    String token = jwtUtil.generateToken(username);
+                    // 登录成功：返回 { "token": "..." }
                     return ResponseEntity.ok(Map.of("token", token));
                 })
-                .orElse(ResponseEntity
-                        .status(401)
-                        .body("用户名或密码错误")
+                .orElseGet(() ->
+                        // 登录失败：也返回 Map<String,String>
+                        ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body(Map.of("error", "用户名或密码错误"))
                 );
     }
 }
