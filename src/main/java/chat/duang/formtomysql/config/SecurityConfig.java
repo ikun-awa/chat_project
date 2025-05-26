@@ -1,3 +1,4 @@
+/*
 package chat.duang.formtomysql.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -62,10 +63,12 @@ public class SecurityConfig {
     }
 }
 
+ */
 
 
 
-/*
+
+
 package chat.duang.formtomysql.config;
 
 import org.springframework.context.annotation.Bean;
@@ -136,5 +139,5 @@ public class SecurityConfig {
 }
 
 
- */
+
 
