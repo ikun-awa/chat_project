@@ -20,5 +20,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // 聊天大厅 → static/lobby/lobby.html
         registry.addViewController("/lobby").setViewName("forward:/lobby/lobby.html");
+
+        // 聊天页面 → static/chat/chat.html
+        registry.addViewController("/chat").setViewName("forward:/chat/chat.html");
     }
 }
