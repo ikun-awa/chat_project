@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                         .anyRequest().authenticated()
-                );
+                )
                 // 3. 登录与登出配置同原来
                 .formLogin(form -> form
                         .loginPage("/login")
