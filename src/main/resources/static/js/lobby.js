@@ -8,7 +8,7 @@ $(function() {
   }
 
   // 2. 拉取当前用户信息
-  fetch('/api/me', {
+  fetch('/api/auth/me', {
     headers: { 'Authorization': 'Bearer ' + token }
   })
     .then(res => {

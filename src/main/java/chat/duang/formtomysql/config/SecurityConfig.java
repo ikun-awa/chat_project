@@ -38,6 +38,7 @@ public class SecurityConfig {
                         "/css/**", "/js/**", "/Bootstrap/**",
                         "/gif/**", "/Icon/**", "/img/**",
                         "/jQuery/**",
+                        "/api/auth/me",
                         "/api/**"                         // API 全部放行，内部自己校验 JWT
                 ).permitAll()
                 .anyRequest().authenticated()

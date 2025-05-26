@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await resp.json();
       if (data.success) {
+        localStorage.setItem('jwtToken', data.token);
         // 登录成功，跳转到大厅
         window.location.href = '/lobby';
       } else {
