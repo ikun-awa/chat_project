@@ -19,7 +19,28 @@
 <nav class="navbar navbar-light bg-light fixed-top">
   <div class="container">
     <a class="navbar-brand" href="#">Chat Lobby</a>
-    <button id="logoutBtn" class="btn btn-outline-secondary">Logout</button>
+
+    <!-- 右侧：用户头像 + 下拉菜单 -->
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item dropdown">
+        <!-- 头像触发下拉 -->
+        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../Icon/icon.jpg" id="userAvatar" class="rounded-circle" width="32" height="32" alt="User">
+        </a>
+        <!-- 下拉菜单内容 -->
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style="min-width: 200px;">
+          <li class="px-3 py-2">
+            <strong id="menuUsername">——</strong><br>
+            <small id="menuGenderAge" class="text-muted">——</small>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li class="px-3">
+            <button id="logoutBtn" class="btn btn-sm btn-outline-danger w-100">Logout</button>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </nav>
 

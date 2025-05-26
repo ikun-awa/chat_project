@@ -53,14 +53,14 @@ public class FormController {
 
     // 登录验证：明文比对
     @PostMapping("/api/login")
-    public ResponseEntity<String> login(@RequestParam String username,
-                                        @RequestParam String password) {
-        Optional<UserMessage> userOpt = repo.findByUsername(username);
-        if (userOpt.isPresent() && userOpt.get().getPassword().equals(password)) {
-            return ResponseEntity.ok("登录成功");
-        } else {
-            return ResponseEntity.status(401).body("InvalidException: Wrong username or password");
+    public ResponseEntity<?> login(@RequestParam String username,
+                                   @RequestParam String password) {
+        Optional<UserMessage> opt = repo.findByUsername(username);
+        if (opt.isPresent() && opt.get().getPassword().equals(password)) {
+            String token = jwtUtil.generateToken(username);
+            // 将 token 放入响应体或响应头
+            return ResponseEntity.ok(Map.of("token", token));
         }
-    }
+        return ResponseEntity.status(401).body("用户名或密码错误");
 }
 
