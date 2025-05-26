@@ -44,40 +44,34 @@
 
 
 (async function() {
-  const form = document.getElementById('deng_ti');
+  'use strict';
+
+  // —— 一定要先获取这两个元素！否则 nameInput 是 undefined ——
   const nameInput = document.getElementById('name_d');
   const passInput = document.getElementById('pass_d');
+  const form      = document.getElementById('deng_ti');
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    // 构造 JSON Body
-    const body = {
-      username: nameInput.value,
-      password: passInput.value
+    const data = {
+      username: nameInput.value.trim(),
+      password: passInput.value.trim()
     };
 
-    try {
-      const resp = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(body)
-      });
+    const resp = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
 
-      const ct = resp.headers.get('Content-Type') || '';
-      if (resp.ok && ct.includes('application/json')) {
-        // 真正的 JSON 响应
-        const { token } = await resp.json();
-        localStorage.setItem('jwtToken', token);
-        window.location.href = '/lobby';
-      } else {
-        // 把 HTML 或者错误文本拿出来
-        const text = await resp.text();
-        alert(text);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('网络错误，请稍后重试');
+    if (resp.ok) {
+      const { token } = await resp.json();
+      localStorage.setItem('jwtToken', token);
+      window.location.href = '/lobby';
+    } else {
+      const text = await resp.text();
+      alert('登录失败：' + text);
     }
   });
 })();
