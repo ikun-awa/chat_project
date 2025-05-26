@@ -45,15 +45,17 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
         String user = body.get("username");
         String pass = body.get("password");
+
         return repo.findByUsername(user)
                 .filter(u -> u.getPassword().equals(pass))
-                .map(u -> {
+                // 强制指定 Optional 的 map 返回类型为 ResponseEntity<?>
+                .<ResponseEntity<?>>map(u -> {
                     String token = jwtUtil.generateToken(user);
                     return ResponseEntity.ok(Map.of("token", token));
                 })
                 .orElse(ResponseEntity
                         .status(401)
-                        .body("用户名或密码错误")  // 失败：返回 String
+                        .body("用户名或密码错误")
                 );
     }
 }
