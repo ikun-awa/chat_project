@@ -1,10 +1,10 @@
 package chat.duang.formtomysql.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -13,43 +13,40 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 1. 禁用 CSRF（如不需要）
+                // 1. 如不需要 CSRF，可禁用
                 .csrf().disable()
-
-                // 2. URL 授权
+                // 2. URL 授权配置
                 .authorizeRequests()
-                // —— 一定要先放行静态资源 ——
+                // —— 一定要先放行所有静态资源目录 ——
                 .antMatchers(
                         "/", "/index.html",
-                        "/login/", "/login/**",
-                        "/register/", "/register/**",
-                        "/css/**", "/js/**", "/gif/**", "/Icon/**",
+                        "/login/**", "/register/**",
+                        "/css/**", "/js/**",
+                        "/gif/**", "/Icon/**",
+                        "/Bootstrap/**", "/jQuery/**",
                         "/favicon.ico",
-                        // 放行登录/注册接口
+                        // 放行登录/注册的后端接口
                         "/api/auth/**"
                 ).permitAll()
-                // /lobby 和 /chat 访问需要认证
+                // 大厅和聊天接口必须登录后才能访问
                 .antMatchers("/lobby/**", "/chat/**", "/api/lobby/**").authenticated()
-                // 其他一律拒绝（或改成 anyRequest().permitAll()）
+                // 其他未列出的全部拒绝
                 .anyRequest().denyAll()
                 .and()
-
-                // 3. 表单登录配置
+                // 3. 表单登录
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/api/auth/login")
                 .defaultSuccessUrl("/lobby", true)
                 .permitAll()
                 .and()
-
-                // 4. 登出配置
+                // 4. 注销
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .and()
-
                 // 5. 未认证时重定向到登录页
                 .exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
