@@ -1,28 +1,37 @@
 package chat.duang.formtomysql.controller;
 
 import chat.duang.formtomysql.model.ChatMessage;
-import org.springframework.messaging.handler.annotation.*;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import chat.duang.formtomysql.repository.ChatMessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/chat")
 public class ChatController {
 
-    private final SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private ChatMessageRepository chatMessageRepository;
 
-    public ChatController(SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
+    // （你原来可能已经有的拉取历史记录接口）
+    @GetMapping("/history")
+    public List<ChatMessage> history() {
+        return chatMessageRepository.findAll();
     }
 
-    // 接收客户端发送到 /app/chat.sendMessage 的消息
-    @MessageMapping("/chat.sendMessage/{groupId}")
-    public void sendMessage(@DestinationVariable String groupId, ChatMessage msg) {
+    // —— 就在这里添加 ——
+    @PostMapping("/send")
+    public ChatMessage sendMessage(@RequestBody ChatMessage incoming) {
+        ChatMessage msg = new ChatMessage();
+        msg.setContent(incoming.getContent());
+        msg.setSender(incoming.getSender());
+        // 设置发送时间戳
         msg.setTimestamp(LocalDateTime.now());
-        // 广播到订阅了 /topic/group.{groupId} 的所有客户端
-        messagingTemplate.convertAndSend(
-                "/topic/group." + groupId, msg
-        );
+        return chatMessageRepository.save(msg);
     }
+    // —— 添加结束 ——
+
+    // （如果有其他接口也放在这里）
 }
