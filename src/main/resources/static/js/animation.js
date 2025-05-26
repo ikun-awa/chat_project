@@ -191,7 +191,7 @@ function fetchWeather() {
       if (data.cod === 200) {
         document.getElementById('city-name').textContent = data.name;
         document.getElementById('temperature').textContent = data.main.temp;
-        document.getElementById('weather-descriptionPARA').textContent = data.weather[0].description;
+        document.getElementById('weather-description').textContent = data.weather[0].description;
       } else {
         document.getElementById('weather-info').innerHTML = '<p>无法获取天气数据</p>';
       }

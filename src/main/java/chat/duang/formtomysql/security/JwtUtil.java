@@ -11,6 +11,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    // 和 application.properties 中的 key 一致
     @Value("${security.jwt.secret}")
     private String jwtSecret;
 
@@ -20,7 +21,6 @@ public class JwtUtil {
     public String generateToken(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
-
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
@@ -29,10 +29,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    // 解析并校验 token
     public String extractUsername(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(jwtSecret.getBytes())    // 这里用 jwtSecret
+                .setSigningKey(jwtSecret.getBytes())
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
