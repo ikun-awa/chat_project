@@ -62,5 +62,6 @@ public class FormController {
             return ResponseEntity.ok(Map.of("token", token));
         }
         return ResponseEntity.status(401).body("用户名或密码错误");
+    }
 }
 
