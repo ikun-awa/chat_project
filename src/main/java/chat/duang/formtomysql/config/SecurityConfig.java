@@ -12,7 +12,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // 放宽 URL 检查，避免 StrictHttpFirewall 导致的 404 拒绝
+    /** 放宽 URL 防火墙，避免 StrictHttpFirewall 导致的 404 拒绝 */
     @Bean
     public HttpFirewall httpFirewall() {
         return new DefaultHttpFirewall();
@@ -20,15 +20,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HttpFirewall firewall) throws Exception {
-        http.setSharedObject(HttpFirewall.class, firewall)
+        // 先注册自定义防火墙
+        http.setSharedObject(HttpFirewall.class, firewall);
+
+        // 再进行其他安全配置
+        http
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        "/", "/login", "/register",        // 页面
+                        "/", "/login", "/register",        // 前端页面
                         "/css/**", "/js/**", "/Bootstrap/**",
                         "/gif/**", "/Icon/**", "/img/**",
                         "/jQuery/**",
-                        "/api/**"                          // 放行所有 API
+                        "/api/**"                          // 放行所有 API 调用
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -38,6 +42,7 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .permitAll();
 
+        // 构建并返回 SecurityFilterChain
         return http.build();
     }
 }
