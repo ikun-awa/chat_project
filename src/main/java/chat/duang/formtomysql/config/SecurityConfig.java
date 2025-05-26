@@ -43,10 +43,6 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/lobby")
                         .permitAll()
                 )
-                .loginPage("/login")
-                .loginProcessingUrl("/api/auth/login")
-                .defaultSuccessUrl("/lobby", true)
-                .permitAll()
                 .and()
                 // 4. 注销
                 .logout()
