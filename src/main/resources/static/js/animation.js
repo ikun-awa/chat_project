@@ -63,3 +63,11 @@ $('#aa2').click(function () {
 $('#age_z').on('input', function () {
   $('#age_label').text('Your age are: ' + $(this).val());
 });
+
+
+  document.querySelectorAll('.emoji-btn').forEach(el => {
+  el.addEventListener('click', () => {
+    alert('你点击了表情：' + el.dataset.emoji);
+  });
+});
+

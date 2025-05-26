@@ -39,31 +39,33 @@
     form.classList.add('was-validated');
   }, false);
 })();
-
  */
+
+
 
 (async function() {
   const form = document.getElementById('deng_ti');
+  // 登录处理
   form.addEventListener('submit', async e => {
-    e.preventDefault(); e.stopPropagation();
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
-      return;
-    }
-    const data = new URLSearchParams(new FormData(form));
+    e.preventDefault();
+    const data = { username: nameInput.value, password: passInput.value };
     const resp = await fetch('/api/auth/login', {
       method: 'POST',
-      body: data
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(data)
     });
-    if (!resp.ok) {
-      alert('Login failed: ' + await resp.text());
-      return;
+    if (resp.ok) {
+      const { token } = await resp.json();
+      localStorage.setItem('jwtToken', token);
+      window.location.href = '/lobby';
+    } else {
+      alert(await resp.text());
     }
-    const { token } = await resp.json();
-    localStorage.setItem('jwtToken', token);
-    window.location.assign('/lobby');
-  }, false);
+  });
+
 })();
+
+
 
 
 

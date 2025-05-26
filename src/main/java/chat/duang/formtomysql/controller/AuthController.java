@@ -1,9 +1,14 @@
 package chat.duang.formtomysql.controller;
 
-import chat.duang.formtomysql.entity.user.UserMessage;
-import chat.duang.formtomysql.repository.user.UserMessageRepository;
+import chat.duang.formtomysql.entity.UserMessage;
+import chat.duang.formtomysql.entity.Gender;
+import chat.duang.formtomysql.repository.UserMessageRepository;
 import chat.duang.formtomysql.security.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -11,20 +16,39 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final UserMessageRepository repo;
-    private final JwtUtil jwtUtil;
 
-    public AuthController(UserMessageRepository repo, JwtUtil jwtUtil) {
-        this.repo = repo;
-        this.jwtUtil = jwtUtil;
+    @Autowired
+    private UserMessageRepository repo;
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestParam String username,
+                                           @RequestParam String password,
+                                           @RequestParam Gender gender,
+                                           @RequestParam Integer age,
+                                           @RequestParam String comment) {
+        if (repo.existsByUsername(username)) {
+            return ResponseEntity.status(409).body("用户名已存在");
+        }
+        UserMessage u = new UserMessage();
+        u.setUsername(username);
+        u.setPassword(password);
+        u.setGender(gender);
+        u.setAge(age);
+        u.setComment(comment);
+        repo.save(u);
+        return ResponseEntity.ok("注册成功");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String username,
-                                   @RequestParam String password) {
-        return repo.findByUsername(username)
-                .filter(u -> u.getPassword().equals(password))
-                .map(u -> ResponseEntity.ok(Map.of("token", jwtUtil.generateToken(username))))
+    public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
+        String user = body.get("username");
+        String pass = body.get("password");
+        return repo.findByUsername(user)
+                .filter(u -> u.getPassword().equals(pass))
+                .map(u -> Map.of("token", jwtUtil.generateToken(user)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(401).body("用户名或密码错误"));
     }
 }

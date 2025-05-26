@@ -58,6 +58,11 @@
 <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 <script>
 
+  const token = localStorage.getItem('jwtToken');
+  fetch('/api/lobby', { headers:{ 'Authorization':'Bearer '+token }});
+
+
+  /*
   // 页面加载时读取 /api/auth/me 获取用户信息
   document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('jwtToken');
@@ -74,6 +79,8 @@
       window.location.assign('/login');
     };
   });
+
+   */
 
 
   // TODO: 这里改为从你后端接口获取
