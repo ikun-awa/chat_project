@@ -26,6 +26,7 @@
     }
 
 
+    /* —— 烟花画布 —— */
     #fireworks-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -34,35 +35,46 @@
       z-index: 9999;
       background: transparent;
       mix-blend-mode: screen;
-      filter: blur(1px) brightness(1.2) saturate(1.2);
+      filter: blur(1px) brightness(1.4);
     }
 
-    /* 单个粒子：深粉色 + 发光效果 */
+    #fireworks-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      background: transparent;
+      mix-blend-mode: screen;
+      filter: blur(1px) brightness(1.5) saturate(1.5);
+    }
+
+    /* 单个粒子 */
     .firework-particle {
       position: absolute;
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background-color: deeppink;
-      color: deeppink;
+      background-color: currentColor;
+      /* 多重发光阴影，增强深度 */
       box-shadow:
-        0 0 6px deeppink,
-        0 0 12px deeppink,
-        0 0 18px deeppink;
+        0 0 6px currentColor,
+        0 0 12px currentColor,
+        0 0 18px currentColor;
       animation: glow 1s infinite alternate;
     }
 
-    /* 烟花背景柔光层 */
+    /* 烟花拖尾叠层 */
     #fireworks-canvas::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(255,20,147,0.05), transparent 70%);
+      background: radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 70%);
       pointer-events: none;
       mix-blend-mode: lighten;
     }
 
-    /* 粒子发光脉动 */
+    /* 微脉动动画 */
     @keyframes glow {
       from {
         opacity: 1;
@@ -73,7 +85,6 @@
         transform: scale(1.3);
       }
     }
-
 
 
 
