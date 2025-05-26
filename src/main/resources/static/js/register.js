@@ -1,48 +1,57 @@
-//注册信息处理
-(function () {
-  'use strict';
-  // 从整个 document 中选出所有 .needs-validation 表单
-  const forms = document.querySelectorAll('form.needs-validation');
-  forms.forEach(function (form) {
-    form.addEventListener('submit', async function (event) {
-      event.preventDefault();
-      if (!form.checkValidity()) {
-        event.stopPropagation();
-      } else {
-        $('#spin_z').show();
-        const data = new URLSearchParams(new FormData(form));
-        try {
-          const resp = await fetch('/api/submit', {
-            method: 'POST',
-            body: data
-          });
-          if (resp.ok) {
-            //注册成功
-            alert('Good boy, you have successfully registered!');
-            setTimeout(() => {
-              window.location.assign('../lobby');
-            }, 500);
-            //用户名重复
-          } else if (resp.status === 409) {
-            const msg = await resp.text();
-            alert('Poor register：' + msg);
-          } else {
-            // 其他错误
-            const msg = await resp.text();
-            alert(`Poor register（${resp.status}）：${msg}`);
-          }
-        } catch (err) {
-          console.error(err);
-          alert('poor internet');
-        } finally {
-          $('#spin_z').hide();
-        }
-      }
-      form.classList.add('was-validated');
-    }, false);
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('registerForm');
+  const spin = document.getElementById('spin_z');
 
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    // 表单校验样式
+    if (!form.checkValidity()) {
+      event.stopPropagation();
+      form.classList.add('was-validated');
+      return;
+    }
+
+    spin.style.display = 'block';
+    const formData = new FormData(form);
+
+    try {
+      const resp = await fetch('/register', {
+        method: 'POST',
+        body: formData
+        // Content-Type 不手动设置，浏览器会自动处理 multipart/form-data
+      });
+
+      if (!resp.ok) {
+        // 如果拿到 HTML 而不是 JSON，这里会捕获
+        throw new Error('状态码 ' + resp.status);
+      }
+
+      const result = await resp.json();
+      spin.style.display = 'none';
+
+      if (result.success) {
+        alert('注册成功，3 秒后跳转到登录页面');
+        setTimeout(() => window.location.href = '/login', 3000);
+      } else {
+        alert(result.message || '注册失败，请重试');
+      }
+
+    } catch (err) {
+      spin.style.display = 'none';
+      console.error('注册出错：', err);
+      // 如果 err 里有 response，可以尝试拿文本查看 HTML 错误页
+      let extra = '';
+      if (err.response) {
+        try {
+          extra = await err.response.text();
+        } catch {}
+      }
+      alert('注册异常：' + (extra || err.message));
+    } finally {
+      form.classList.add('was-validated');
+    }
   });
-})();
+});
 
 //检查重复用户名
 const usernameInput = document.getElementById('name_z');

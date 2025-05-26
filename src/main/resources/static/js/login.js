@@ -1,80 +1,41 @@
 //登录处理
-/*
-(function () {
-  'use strict';
-  const form = document.getElementById('deng_ti');
-  form.addEventListener('submit', async function (event) {
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('loginForm');
+
+  form.addEventListener('submit', async function(event) {
     event.preventDefault();
-    event.stopPropagation();
-    console.log('提交');
-    if (!form.checkValidity()) {
-      console.log('非法表单');
-    } else {
-      console.log('合法');
-      const spinner = document.getElementById('spin_z');
-      if (spinner) spinner.style.display = 'inline-block';
-      try {
-        const data = new URLSearchParams(new FormData(form));
-        const resp = await fetch('/api/login', {
-          method: 'POST',
-          body: data
-        });
-        if (resp.ok) {
-          const { token } = await resp.json();
-          localStorage.setItem('jwtToken', token);
-          // 登录成功，跳转大堂
-          window.location.assign('/lobby');
-        } else {
-          // 4. 修正模板字符串
-          const msg = await resp.text();
-          alert(`Login failed: ${msg}`);
-        }
-      } catch (err) {
-        console.error(err);
-        alert('poor internet');
-      } finally {
-        if (spinner) spinner.style.display = 'none';
-      }
-    }
     form.classList.add('was-validated');
-  }, false);
-})();
- */
 
+    if (!form.checkValidity()) {
+      event.stopPropagation();
+      return;
+    }
 
+    try {
+      const resp = await fetch('/login', {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form))
+        // 这里使用 URLSearchParams，与后端 @ModelAttribute 兼容
+      });
 
-(async function() {
-  'use strict';
+      if (!resp.ok) {
+        throw new Error('状态码 ' + resp.status);
+      }
 
-  // —— 一定要先获取这两个元素！否则 nameInput 是 undefined ——
-  const nameInput = document.getElementById('name_d');
-  const passInput = document.getElementById('pass_d');
-  const form      = document.getElementById('deng_ti');
+      const data = await resp.json();
+      if (data.success) {
+        // 登录成功，跳转到大厅
+        window.location.href = '/lobby';
+      } else {
+        alert(data.message || '用户名或密码错误');
+      }
 
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-
-    const data = {
-      username: nameInput.value.trim(),
-      password: passInput.value.trim()
-    };
-
-    const resp = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
-    });
-
-    if (resp.ok) {
-      const { token } = await resp.json();
-      localStorage.setItem('jwtToken', token);
-      window.location.href = '/lobby';
-    } else {
-      const text = await resp.text();
-      alert('登录失败：' + text);
+    } catch (err) {
+      console.error('登录出错：', err);
+      alert('登录异常：' + err.message);
     }
   });
-})();
+});
 
 
 
