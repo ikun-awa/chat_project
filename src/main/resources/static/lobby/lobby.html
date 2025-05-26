@@ -62,43 +62,7 @@
   const token = localStorage.getItem('jwtToken');
   fetch('/api/lobby', { headers:{ 'Authorization':'Bearer '+token }});
 
-
-  /*
-  // 页面加载时读取 /api/auth/me 获取用户信息
-  document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) return window.location.assign('/login');
-    fetch('/api/auth/me', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    })
-      .then(r => r.json())
-      .then(user => {
-        document.getElementById('usernameDisplay').textContent = user.username;
-      });
-    document.getElementById('logoutBtn').onclick = () => {
-      localStorage.removeItem('jwtToken');
-      window.location.assign('/login');
-    };
-  });
-
-   */
-
-
-  // TODO: 这里改为从你后端接口获取
-  /*
-  let groups = [
-    { id: 'g1', name: 'Family Chat' , des: 'Official chat room' },
-    { id: 'g2', name: 'Office Talk' , des: 'private chat room' },
-    { id: 'g3', name: 'Gaming Buddies' , des: 'test chat room' }
-  ];
-
-   */
-
-
-
-  //群聊组
-
-  const renderGroups = groups => {
+  const renderGroups = (groups = []) => {
     $('#groupList').empty();
     groups.forEach(g => {
       const card = $(`
