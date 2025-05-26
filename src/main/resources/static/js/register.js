@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('registerForm');
+  const form = document.getElementById('zhu_ti');
   const spin = document.getElementById('spin_z');
 
   form.addEventListener('submit', async function(event) {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(form);
 
     try {
-      const resp = await fetch('/register', {
+      const resp = await fetch('/api/auth/register', {
         method: 'POST',
         body: formData
         // Content-Type 不手动设置，浏览器会自动处理 multipart/form-data

@@ -1,6 +1,6 @@
 //登录处理
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('loginForm');
+  const form = document.getElementById('deng_ti');
 
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const resp = await fetch('/login', {
+      const resp = await fetch('/api/auth/login', {
         method: 'POST',
         body: new URLSearchParams(new FormData(form))
         // 这里使用 URLSearchParams，与后端 @ModelAttribute 兼容
@@ -36,10 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-
-
-
 
 
 //密码切换
