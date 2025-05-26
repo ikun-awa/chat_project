@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const resp = await fetch('/api/auth/login', {
+      const resp = await fetch('/api/login', {
         method: 'POST',
         body: new URLSearchParams(new FormData(form))
         // 这里使用 URLSearchParams，与后端 @ModelAttribute 兼容

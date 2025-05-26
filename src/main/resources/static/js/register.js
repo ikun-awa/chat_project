@@ -1,3 +1,4 @@
+//注册
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('zhu_ti');
   const spin = document.getElementById('spin_z');
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(form);
 
     try {
-      const resp = await fetch('/api/auth/register', {
+      const resp = await fetch('/api/submit', {
         method: 'POST',
         body: formData
         // Content-Type 不手动设置，浏览器会自动处理 multipart/form-data
@@ -60,7 +61,7 @@ const goodFeedback = document.getElementById('usernameGoodFeedback');
 usernameInput.addEventListener('blur', async () => {
   const username = usernameInput.value.trim();
   if (!username) return;
-  const resp = await fetch(`/check-username?username=${encodeURIComponent(username)}`);
+  const resp = await fetch(`/api/check-username?username=${encodeURIComponent(username)}`);
   const {exists} = await resp.json();
   if (exists) {
     feedback.textContent = 'This poor name have already been registered!';
