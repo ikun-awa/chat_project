@@ -1,4 +1,4 @@
-package chat.duang.formtomysql.entity;
+package chat.duang.formtomysql.entity.chat;
 
 import javax.persistence.*;
 

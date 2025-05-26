@@ -1,4 +1,4 @@
-package chat.duang.formtomysql.entity;
+package chat.duang.formtomysql.entity.user;
 
 public enum Gender {
     male,

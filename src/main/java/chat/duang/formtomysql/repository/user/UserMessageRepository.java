@@ -1,4 +1,4 @@
-package chat.duang.formtomysql;
+package chat.duang.formtomysql.user;
 
 import chat.duang.formtomysql.entity.UserMessage;
 import org.springframework.data.jpa.repository.JpaRepository;

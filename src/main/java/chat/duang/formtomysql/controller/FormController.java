@@ -1,4 +1,4 @@
-package chat.duang.formtomysql;
+package chat.duang.formtomysql.controller;
 
 import chat.duang.formtomysql.entity.UserMessage;
 import chat.duang.formtomysql.entity.Gender;

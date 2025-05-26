@@ -1,4 +1,4 @@
-package chat.duang.formtomysql.entity;
+package chat.duang.formtomysql.entity.user;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

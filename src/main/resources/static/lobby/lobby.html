@@ -81,10 +81,24 @@
     });
   };
 
-  fetch('/api/chat-rooms')
-    .then(res => res.json())
-    .then(data => renderGroups(data))
-    .catch(err => console.error('拉取聊天室列表失败', err));
+  $(function() {
+    fetch('/api/lobby')
+      .then(res => {
+        if (!res.ok) throw new Error('网络错误 ' + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (!Array.isArray(data)) {
+          console.error('后端返回的数据不是数组：', data);
+          return;
+        }
+        renderGroups(data);
+      })
+      .catch(err => {
+        console.error('拉取聊天室列表失败', err);
+        $('#groupList').html('<div class="text-danger">加载失败，请稍后重试</div>');
+      });
+  });
 
 
   $(function() {
