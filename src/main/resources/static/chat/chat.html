@@ -402,6 +402,21 @@
           <!-- 左侧 “群聊” -->
           <h1 class="h5 mb-0">Chat</h1>
           <!-- 右侧设置按钮（保持你原来的样式） -->
+
+          <!-- 新增头像下拉 -->
+          <div class="dropdown ms-auto" style="margin-right: 40px;">
+            <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
+              <img src="../Icon/icon.jpg" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+              <li>
+                <h6 class="dropdown-header" id="usernameDisplay">Loading…</h6>
+                <h6 class="dropdown-header" id="userMeta">Loading…</h6>
+              </li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </div>
+
           <button
             id="settingsBtn"
             class="btn p-0 d-flex justify-content-center align-items-center"
@@ -510,9 +525,12 @@
 <script src="../jQuery/jquery-3.7.1.min.js"></script>
 <script src="../jQuery/Animation/jquery-ui.min.js"></script>
 <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
+<script src="../websockets/sockjs.min.js"></script>
+<script src="../websockets/stomp.umd.min.js"></script>
 
 <script type="module" src="../js/chat.js"></script>
 <script type="module" src="../js/chat_function.js"></script>
 <script src="../js/chat_animation.js"></script>
+<script src="../js/chat_ws.js"></script>
 </body>
 </html>
