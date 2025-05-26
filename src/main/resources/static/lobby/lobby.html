@@ -114,11 +114,11 @@
       if (!name) return alert('Please enter a group name.');
       // TODO: 调用后端接口创建群组，拿到实际返回的 id
       const newId = 'g' + (groups.length + 1);
-      groups.push({ id: newId, name });
+      groups.push({id: newId, name});
       renderGroups();
       $('#newGroupName').val('');
     });
-
+  });
 
 </script>
 </body>
