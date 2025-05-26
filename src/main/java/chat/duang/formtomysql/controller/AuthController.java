@@ -22,7 +22,7 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public ResponseEntity<String> register(@RequestParam String username,
                                            @RequestParam String password,
                                            @RequestParam Gender gender,
@@ -41,14 +41,19 @@ public class AuthController {
         return ResponseEntity.ok("注册成功");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody Map<String,String> body) {
         String user = body.get("username");
         String pass = body.get("password");
         return repo.findByUsername(user)
                 .filter(u -> u.getPassword().equals(pass))
-                .map(u -> Map.of("token", jwtUtil.generateToken(user)))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(401).body("用户名或密码错误"));
+                .map(u -> {
+                    String token = jwtUtil.generateToken(username);
+                    return ResponseEntity.ok(Map.of("token", token));
+                })
+                .orElse(ResponseEntity
+                        .status(401)
+                        .body("用户名或密码错误")  // 失败：返回 String
+                );
     }
 }

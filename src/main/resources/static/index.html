@@ -10,21 +10,23 @@
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
-    /* 落下的 emoji 样式 */
+    /* —— 表情雨 —— */
     .falling-emoji {
       position: fixed;
-      font-size: 2rem;
+      font-size: 1.5rem;
       pointer-events: none;
       will-change: transform, opacity;
-      animation: fall 3s linear forwards;
+      animation: fall 6s linear forwards;
+      opacity: 1;
     }
 
     @keyframes fall {
       0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
 
-    /* 烟花画布覆盖全屏 */
+
+    /* —— 烟花画布 —— */
     #fireworks-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -32,6 +34,14 @@
       pointer-events: none;
       z-index: 9999;
     }
+
+    /* —— 浪漫烟花粒子 —— */
+    .firework-particle {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+    }
+
 
 
 
@@ -402,7 +412,9 @@
     </div>
     <div class="col-md-3">
       <img src="img/7.jpg" class="img-fluid img rounded d-inline" id="kun" alt="抽象艺术" style="display: inline-block;">
+      <!--
       <img src="img/doge.png" class="img-fluid img rounded d-inline"  alt="抽象艺术" style="display: inline-block;">
+      -->
       <div class="container ">
 
       </div>
@@ -445,6 +457,11 @@
       <span class="emoji-btn" data-emoji="🎉">🎉</span>
     </div>
   </section>
+  <!-- 示例触发按钮 -->
+  <div class="text-center py-4">
+    <button id="trigger-emoji" class="btn btn-outline-primary">表情雨！</button>
+    <button id="trigger-fireworks" class="btn btn-outline-warning">浪漫烟花！</button>
+  </div>
 
 
   <section id="testimonials" class="py-5 bg-white">
@@ -555,7 +572,29 @@
     <a href="/terms" class="text-decoration-none text-muted">使用条款</a>
   </footer>
 
-
+  <script>
+    // 页面 DOM 就绪后，启动表情雨
+    window.addEventListener('DOMContentLoaded', () => {
+      const emojis = ['😊','😂','😍','👍','🎉','😎','🤩','🤔','🙌','🌟'];
+      // 每隔 300ms 生成一颗表情
+      setInterval(() => {
+        const span = document.createElement('span');
+        span.className = 'falling-emoji';
+        // 随机选 emoji
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        // 随机水平位置
+        span.style.left = (Math.random() * 100) + 'vw';
+        // 随机大小：1rem~2rem
+        const size = Math.random() + 1;
+        span.style.fontSize = size + 'rem';
+        // 随机动画时长：4s~7s
+        span.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        document.body.appendChild(span);
+        // 动画完成后自动移除
+        span.addEventListener('animationend', () => span.remove());
+      }, 300);
+    });
+  </script>
 
 
 
