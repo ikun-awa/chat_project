@@ -1,13 +1,4 @@
-package chat.duang.formtomysql.config;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
+// SecurityConfig.java
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -15,41 +6,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 1. 如不需要 CSRF，可禁用
                 .csrf().disable()
-                // 2. URL 授权配置
-                .authorizeRequests()
-                // —— 一定要先放行所有静态资源目录 ——
-                .antMatchers(
-                        "/", "/index.html",
-                        "/login/**", "/register/**",
-                        "/css/**", "/js/**",
-                        "/gif/**", "/Icon/**",
-                        "/Bootstrap/**", "/jQuery/**",
-                        "/favicon.ico",
-                        // 放行登录/注册的后端接口
-                        "/api/auth/**"
-                ).permitAll()
-                // 大厅和聊天接口必须登录后才能访问
-                .antMatchers("/lobby/**", "/chat/**", "/api/lobby/**").authenticated()
-                // 其他未列出的全部拒绝
-                .anyRequest().denyAll()
-                .and()
-                // 3. 表单登录
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/api/auth/login")
-                .defaultSuccessUrl("/lobby", true)
-                .permitAll()
-                .and()
-                // 4. 注销
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .and()
-                // 5. 未认证时重定向到登录页
-                .exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+                .authorizeRequests(authz -> authz
+                        .antMatchers(
+                                "/", "/index.html", "/login/**", "/register/**",
+                                "/css/**", "/js/**", "/gif/**", "/Icon/**", "/favicon.ico",
+                                "/api/auth/**"    // 放行注册/登录 REST 接口
+                        ).permitAll()
+                        .antMatchers("/lobby/**","/chat/**","/api/lobby/**").authenticated()
+                        .anyRequest().denyAll()
+                )
+                // 删除下面这段，避免 /api/auth/login 被 Spring Security 接管
+                // .formLogin(form -> form
+                //     .loginPage("/login")
+                //     .loginProcessingUrl("/api/auth/login")
+                //     .defaultSuccessUrl("/lobby")
+                //     .permitAll()
+                // )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+                );
 
         return http.build();
     }
