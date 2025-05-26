@@ -1,7 +1,7 @@
 package chat.duang.formtomysql.controller;
 
-import chat.duang.formtomysql.entity.UserMessage;
-import chat.duang.formtomysql.entity.Gender;
+import chat.duang.formtomysql.entity.user.UserMessage;
+import chat.duang.formtomysql.entity.user.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
