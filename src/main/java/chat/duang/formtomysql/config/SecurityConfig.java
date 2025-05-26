@@ -43,7 +43,6 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/lobby")
                         .permitAll()
                 )
-                .and()
                 // 4. 注销
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
