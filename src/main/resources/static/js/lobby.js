@@ -17,8 +17,8 @@ $(function() {
     })
     .then(user => {
       // 3. 填充下拉菜单
-      $('#menuUsername').text(user.username);
-      $('#menuGenderAge').text(`${user.gender} · ${user.age} 岁`);
+      $('#usernameDisplay').text(user.username);
+      $('#userMeta').text(`${user.gender} · ${user.age} 岁`);
       // 如果后端返回 avatar URL：
       if (user.avatarUrl) {
         $('#userAvatar').attr('src', user.avatarUrl);

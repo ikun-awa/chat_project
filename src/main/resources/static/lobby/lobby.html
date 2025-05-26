@@ -27,7 +27,10 @@
         <img src="/Icon/icon.jpg" width="32" height="32" class="rounded-circle">
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-        <li><h6 class="dropdown-header" id="usernameDisplay">Loading…</h6></li>
+        <li>
+          <h6 class="dropdown-header" id="usernameDisplay">Loading…</h6>
+          <h6 class="dropdown-header" id="userMeta">Loading…</h6>
+        </li>
         <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
       </ul>
     </div>
@@ -115,14 +118,6 @@
       renderGroups();
       $('#newGroupName').val('');
     });
-
-    // 退出登录
-    $('#logoutBtn').on('click', () => {
-      // TODO: 清理登录状态（Cookie/Token），然后跳回登录页面
-      window.location.href = 'index.html';
-    });
-  });
-
 
 
 </script>
