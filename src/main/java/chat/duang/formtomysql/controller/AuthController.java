@@ -1,7 +1,7 @@
 package chat.duang.formtomysql.controller;
 
-import chat.duang.formtomysql.entity.UserMessage;
-import chat.duang.formtomysql.repository.UserMessageRepository;
+import chat.duang.formtomysql.entity.user.UserMessage;
+import chat.duang.formtomysql.repository.user.UserMessageRepository;
 import chat.duang.formtomysql.security.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
