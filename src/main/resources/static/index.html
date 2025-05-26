@@ -10,6 +10,31 @@
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
+    /* 落下的 emoji 样式 */
+    .falling-emoji {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* 烟花画布覆盖全屏 */
+    #fireworks-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+
+
     #emoji-wall h4 {
       color: #333;
     }

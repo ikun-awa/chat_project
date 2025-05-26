@@ -1,7 +1,7 @@
 package chat.duang.formtomysql.security;
 
-import chat.duang.formtomysql.entity.UserMessage;
-import chat.duang.formtomysql.repository.UserMessageRepository;
+import chat.duang.formtomysql.entity.user.UserMessage;
+import chat.duang.formtomysql.repository.user.UserMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
