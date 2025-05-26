@@ -1,33 +1,54 @@
-package chat.duang.formtomysql.config;
+package chat.duang.formtomysql.security;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.filter.OncePerRequestFilter;
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.util.StringUtils;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.IOException;
 
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtUtil jwtUtil;
-    private final CustomUserDetailsService userDetailsService;
+public class JwtAuthenticationFilter extends GenericFilterBean {
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, CustomUserDetailsService uds) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = uds;
+    private final JwtTokenProvider tokenProvider;
+
+    public JwtAuthenticationFilter(JwtTokenProvider provider) {
+        this.tokenProvider = provider;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-            throws java.io.IOException, javax.servlet.ServletException {
-        String header = req.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
-            String username = jwtUtil.validateToken(token);
-            var userDetails = userDetailsService.loadUserByUsername(username);
-            var auth = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest request = (HttpServletRequest) req;
+        String bearer = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer ")) {
+            String token = bearer.substring(7);
+            if (tokenProvider.validateToken(token)) {
+                String username = tokenProvider.getUsername(token);
+                // 这里从 Spring 容器获取 UserDetailsService
+                UserDetails userDetails =
+                        ((UserDetailsService) getBean(request, UserDetailsService.class))
+                                .loadUserByUsername(username);
+
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities()
+                        );
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
         }
         chain.doFilter(req, res);
+    }
+
+    // 简单工具：从 SpringContext 拿 Bean
+    private Object getBean(HttpServletRequest req, Class<?> cls) {
+        return WebApplicationContextUtils
+                .getRequiredWebApplicationContext(
+                        req.getServletContext()
+                ).getBean(cls);
     }
 }

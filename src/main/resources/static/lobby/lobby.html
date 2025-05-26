@@ -20,27 +20,16 @@
   <div class="container">
     <a class="navbar-brand" href="#">Chat Lobby</a>
 
-    <!-- 右侧：用户头像 + 下拉菜单 -->
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item dropdown">
-        <!-- 头像触发下拉 -->
-        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
-           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="../Icon/icon.jpg" id="userAvatar" class="rounded-circle" width="32" height="32" alt="User">
-        </a>
-        <!-- 下拉菜单内容 -->
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style="min-width: 200px;">
-          <li class="px-3 py-2">
-            <strong id="menuUsername">——</strong><br>
-            <small id="menuGenderAge" class="text-muted">——</small>
-          </li>
-          <li><hr class="dropdown-divider"></li>
-          <li class="px-3">
-            <button id="logoutBtn" class="btn btn-sm btn-outline-danger w-100">Logout</button>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <!-- 新增头像下拉 -->
+    <div class="dropdown ms-auto">
+      <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
+        <img src="/Icon/icon.jpg" width="32" height="32" class="rounded-circle">
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+        <li><h6 class="dropdown-header" id="usernameDisplay">Loading…</h6></li>
+        <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -68,6 +57,25 @@
 <script src="../jQuery/jquery-3.7.1.min.js"></script>
 <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 <script>
+
+  // 页面加载时读取 /api/auth/me 获取用户信息
+  document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) return window.location.assign('/login');
+    fetch('/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+      .then(r => r.json())
+      .then(user => {
+        document.getElementById('usernameDisplay').textContent = user.username;
+      });
+    document.getElementById('logoutBtn').onclick = () => {
+      localStorage.removeItem('jwtToken');
+      window.location.assign('/login');
+    };
+  });
+
+
   // TODO: 这里改为从你后端接口获取
   /*
   let groups = [
