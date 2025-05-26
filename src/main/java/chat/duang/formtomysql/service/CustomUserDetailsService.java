@@ -1,4 +1,4 @@
-package chat.duang.formtomysql.security;
+package chat.duang.formtomysql.service;
 
 import chat.duang.formtomysql.entity.user.UserMessage;
 import chat.duang.formtomysql.repository.user.UserMessageRepository;
