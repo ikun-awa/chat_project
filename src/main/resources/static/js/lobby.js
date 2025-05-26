@@ -28,12 +28,12 @@ $(function() {
       console.error(err);
       // token 过期或无效，跳登录
       localStorage.removeItem('jwtToken');
-      window.location.assign('/login');
+      window.location.assign('/');
     });
 
   // 4. 退出登录
   $('#logoutBtn').on('click', () => {
     localStorage.removeItem('jwtToken');
-    window.location.assign('/login');
+    window.location.assign('/');
   });
 });
