@@ -2,59 +2,46 @@ package chat.duang.formtomysql.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
-import org.springframework.security.web.firewall.FirewalledRequest;
-import org.springframework.security.web.firewall.RequestRejectedException;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import chat.duang.formtomysql.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // 1) 使用 DefaultHttpFirewall：放宽对 URL 的检查
+    // 放宽默认 URL 防火墙检查（解决 RequestRejectedException 问题）
     @Bean
     public HttpFirewall httpFirewall() {
         return new DefaultHttpFirewall();
     }
 
-    // 若仍需使用 StrictHttpFirewall，可按需开启以下选项：
-    /*
     @Bean
-    public HttpFirewall httpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowSemicolon(true);
-        firewall.setAllowUrlEncodedSlash(true);
-        firewall.setAllowBackSlash(true);
-        return firewall;
-    }
-    */
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, HttpFirewall firewall) throws Exception {
-        // 将自定义防火墙注册到 Spring Security
+    public SecurityFilterChain filterChain(HttpSecurity http, HttpFirewall firewall,
+                                           JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+        // 注入自定义防火墙
         http.setSharedObject(HttpFirewall.class, firewall);
 
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/", "/login", "/register",
-                                "/css/**", "/js/**", "/Bootstrap/**",
-                                "/gif/**", "/Icon/**", "/img/**", "/jQuery/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login").permitAll()
-                )
-                .logout(logout -> logout.permitAll());
+                .csrf().disable()
+                .authorizeRequests()                                           // 使用老版 DSL 以兼容 antMatchers
+                .antMatchers(
+                        "/", "/login", "/register",
+                        "/css/**", "/js/**", "/Bootstrap/**",
+                        "/gif/**", "/Icon/**", "/img/**", "/jQuery/**"
+                ).permitAll()                                              // 放行静态资源与登录注册页
+                .anyRequest().authenticated()                             // 其余请求需认证
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()                      // 自定义登录页
+                .and()
+                .logout().permitAll();                                    // 放行退出接口
 
-        return http.build();
-    }
-}
+        // 在用户名密码过滤器前加入 JWT 过滤器
+        http.addFilterBefore(
+                jwtAuthenticationFilter,
