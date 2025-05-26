@@ -12,40 +12,43 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // 关闭 CSRF（根据项目需求，可酌情开启）
+                .csrf().disable()
+
                 // 1. URL 授权配置
-                .authorizeHttpRequests(authz -> authz
-                        // 以下路径无需认证，任意用户（未登录/已登录）都可访问
-                        .requestMatchers(
-                                "/",                       // 根目录
-                                "/index.html",             // 门面首页
-                                "/register/**",            // 注册页及其资源
-                                "/login/**",               // 登录页及其资源
-                                "/favicon.ico"             // 图标
-                        ).permitAll()
-                        // 访问 /lobby/** 和 /chat/** 必须认证（登录）
-                        .requestMatchers("/lobby/**", "/chat/**").authenticated()
-                        // 其他一律放行（或根据需要改成 denyAll）
-                        .anyRequest().permitAll()
-                )
-                // 2. 登录配置：指定自定义登录页、登录成功后默认跳转 /lobby
-                .formLogin(form -> form
-                        // 点击登录按钮后，前端页面应该指向 /login（GET） 来获取登录页面
-                        .loginPage("/login")
-                        // 表单提交处理的接口（可根据后端实际路径调整）
-                        .loginProcessingUrl("/api/auth/login")
-                        // 登录成功后跳转
-                        .defaultSuccessUrl("/lobby")
-                        .permitAll()
-                )
+                .authorizeRequests()
+                // 以下路径无需认证，任意用户（未登录/已登录）都可访问
+                .antMatchers(
+                        "/",                       // 根目录
+                        "/index.html",             // 门面首页
+                        "/register/**",            // 注册页及其静态资源
+                        "/login/**",               // 登录页及其静态资源
+                        "/favicon.ico"             // 图标
+                ).permitAll()
+                // 访问 /lobby/** 和 /chat/** 必须认证（登录）
+                .antMatchers("/lobby/**", "/chat/**").authenticated()
+                // 其他所有请求一律放行（根据需要也可以改为 .denyAll()）
+                .anyRequest().permitAll()
+                .and()
+
+                // 2. 登录配置：指定自定义登录页、处理 URL、成功后跳转
+                .formLogin()
+                .loginPage("/login")                   // 用户访问需要登录的页面时，会被重定向到这里
+                .loginProcessingUrl("/api/auth/login") // 提交用户名、密码的处理接口
+                .defaultSuccessUrl("/lobby", true)     // 登录成功后总是跳转到 /lobby
+                .permitAll()
+                .and()
+
                 // 3. 注销配置：登出后跳回首页
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
-                )
-                // 4. 异常处理：未认证时，不返回 403，而是重定向到 /login
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-                );
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .and()
+
+                // 4. 异常处理：未认证时不返回 403，而是重定向到 /login
+                .exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
 
         return http.build();
     }
