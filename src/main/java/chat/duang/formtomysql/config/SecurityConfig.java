@@ -45,3 +45,9 @@ public class SecurityConfig {
         // 在用户名密码过滤器前加入 JWT 过滤器
         http.addFilterBefore(
                 jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+        );
+
+        return http.build();
+    }
+}
