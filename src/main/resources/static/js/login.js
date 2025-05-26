@@ -44,25 +44,37 @@
 
 
 (async function() {
-  const form = document.getElementById('deng_ti');
+  const form      = document.getElementById('deng_ti');
+  const nameInput = document.getElementById('name_d');   // <input id="name_d" …>
+  const passInput = document.getElementById('pass_d');   // <input id="pass_d" …>
+
   // 登录处理
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const data = { username: nameInput.value, password: passInput.value };
-    const resp = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(data)
-    });
-    if (resp.ok) {
-      const { token } = await resp.json();
-      localStorage.setItem('jwtToken', token);
-      window.location.href = '/lobby';
-    } else {
-      alert(await resp.text());
+
+    const data = {
+      username: nameInput.value,
+      password: passInput.value
+    };
+
+    try {
+      const resp = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (resp.ok) {
+        const { token } = await resp.json();
+        localStorage.setItem('jwtToken', token);
+        window.location.href = '/lobby';
+      } else {
+        alert(await resp.text());
+      }
+    } catch (err) {
+      console.error(err);
+      alert('网络错误，请稍后重试');
     }
   });
-
 })();
 
 
