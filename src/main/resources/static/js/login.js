@@ -44,15 +44,15 @@
 
 
 (async function() {
-  const form      = document.getElementById('deng_ti');
-  const nameInput = document.getElementById('name_d');   // <input id="name_d" …>
-  const passInput = document.getElementById('pass_d');   // <input id="pass_d" …>
+  const form = document.getElementById('deng_ti');
+  const nameInput = document.getElementById('name_d');
+  const passInput = document.getElementById('pass_d');
 
-  // 登录处理
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    const data = {
+    // 构造 JSON Body
+    const body = {
       username: nameInput.value,
       password: passInput.value
     };
@@ -60,15 +60,20 @@
     try {
       const resp = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
       });
-      if (resp.ok) {
+
+      const ct = resp.headers.get('Content-Type') || '';
+      if (resp.ok && ct.includes('application/json')) {
+        // 真正的 JSON 响应
         const { token } = await resp.json();
         localStorage.setItem('jwtToken', token);
         window.location.href = '/lobby';
       } else {
-        alert(await resp.text());
+        // 把 HTML 或者错误文本拿出来
+        const text = await resp.text();
+        alert(text);
       }
     } catch (err) {
       console.error(err);
@@ -76,6 +81,7 @@
     }
   });
 })();
+
 
 
 
