@@ -48,7 +48,7 @@ public class AuthController {
         return repo.findByUsername(user)
                 .filter(u -> u.getPassword().equals(pass))
                 .map(u -> {
-                    String token = jwtUtil.generateToken(username);
+                    String token = jwtUtil.generateToken(user);
                     return ResponseEntity.ok(Map.of("token", token));
                 })
                 .orElse(ResponseEntity

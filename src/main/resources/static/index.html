@@ -572,29 +572,7 @@
     <a href="/terms" class="text-decoration-none text-muted">使用条款</a>
   </footer>
 
-  <script>
-    // 页面 DOM 就绪后，启动表情雨
-    window.addEventListener('DOMContentLoaded', () => {
-      const emojis = ['😊','😂','😍','👍','🎉','😎','🤩','🤔','🙌','🌟'];
-      // 每隔 300ms 生成一颗表情
-      setInterval(() => {
-        const span = document.createElement('span');
-        span.className = 'falling-emoji';
-        // 随机选 emoji
-        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        // 随机水平位置
-        span.style.left = (Math.random() * 100) + 'vw';
-        // 随机大小：1rem~2rem
-        const size = Math.random() + 1;
-        span.style.fontSize = size + 'rem';
-        // 随机动画时长：4s~7s
-        span.style.animationDuration = (Math.random() * 3 + 4) + 's';
-        document.body.appendChild(span);
-        // 动画完成后自动移除
-        span.addEventListener('animationend', () => span.remove());
-      }, 300);
-    });
-  </script>
+
 
 
 
