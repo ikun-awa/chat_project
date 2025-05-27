@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
-    /* 表情雨元素 */
     .falling-emoji {
       position: fixed;
       top: -2rem;
@@ -27,15 +26,6 @@
         opacity: 0;
       }
     }
-    /* —— 表情雨 —— */
-    .falling-emoji {
-      position: fixed;
-      font-size: 1.5rem;
-      pointer-events: none;
-      will-change: transform, opacity;
-      animation: fall 6s linear forwards;
-      opacity: 1;
-    }
 
     @keyframes fall {
       0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
@@ -43,17 +33,7 @@
     }
 
 
-    /* — — 烟花画布 —— */
-    #fireworks-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
-      background: transparent;
-      mix-blend-mode: screen;
-      filter: blur(1px) brightness(1.4);
-    }
+
 
     #fireworks-canvas {
       position: fixed;
@@ -72,12 +52,13 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background-color: currentColor;
-      /* 多重发光阴影，增强深度 */
+      /* Change this to black or a very dark color */
+      background-color: #000; /* Black */
+      /* Multiple shadow colors for depth, also changed to black/dark */
       box-shadow:
-        0 0 6px currentColor,
-        0 0 12px currentColor,
-        0 0 18px currentColor;
+        0 0 300px #000, /* Black */
+        0 0 300px #000, /* Black */
+        0 0 300px #000; /* Black */
       animation: glow 1s infinite alternate;
     }
 
@@ -86,7 +67,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 70%);
+      background: radial-gradient(circle at center, rgba(255,255,255,1), transparent 0%);
       pointer-events: none;
       mix-blend-mode: lighten;
     }
@@ -340,7 +321,7 @@
     <a class="navbar-brand d-flex align-items-center" href="index.html">
       <img src="Icon/icon.jpg" width="40" height="40" class="rounded me-2 zhu_tou" alt="头像1">
       <img src="Icon/tou2.jpg" width="40" height="40" class="rounded me-2 zhu_tou" alt="头像2">
-      <span class="lead">在线聊天室</span>
+      <span class="lead">Online Chat Room</span>
     </a>
 
     <button class="navbar-toggler" type="button"
@@ -486,25 +467,25 @@
     <!-- 第一块（#kuai_1） -->
     <div class="col-md-2 block" id="kuai_1">
       <i class="bi bi-chat-dots-fill display-4 mb-2"></i>
-      <h3 class="fw-bold">聊天室</h3>
-      <p>随时随地加入话题，让你的声音被听见。</p>
-      <a href="/chat" class="btn btn-light btn-sm">立即进入</a>
+      <h3 class="fw-bold">chat room</h3>
+      <p>Join the conversation anytime, anywhere and make your voice heard.</p>
+      <a href="/chat" class="btn btn-light btn-sm">Enter now</a>
     </div>
 
     <!-- 第二块（#kuai_2） -->
     <div class="col-md-2 block" id="kuai_2">
       <i class="bi bi-file-earmark-arrow-up-fill display-4 mb-2"></i>
-      <h3 class="fw-bold">文件传输</h3>
-      <p>快速安全地分享图片、文档、甚至大文件。</p>
-      <a href="#" class="btn btn-light btn-sm">上传文件</a>
+      <h3 class="fw-bold">File Transfer</h3>
+      <p>Share images, documents, and even large files quickly and securely.</p>
+      <a href="#" class="btn btn-light btn-sm">Upload filesUpload files</a>
     </div>
 
     <!-- 第三块（#kuai_3） -->
     <div class="col-md-2 block" id="kuai_3">
       <i class="bi bi-bell-fill display-4 mb-2"></i>
-      <h3 class="fw-bold">实时通知</h3>
-      <p>新消息、好友上线，第一时间提醒你。</p>
-      <a href="#" class="btn btn-light btn-sm">查看通知</a>
+      <h3 class="fw-bold">Real-time inform</h3>
+      <p>You will be notified of new messages and friends online at the first time.</p>
+      <a href="#" class="btn btn-light btn-sm">View notifications</a>
     </div>
 
     <!-- 新增右侧区域：表情墙 + 触发按钮 + 烟花 & 表情雨 -->
@@ -539,27 +520,27 @@
     <div class="container">
       <div class="row text-center mb-4">
         <div class="col">
-          <h2 class="display-6">用户心声</h2>
-          <p class="text-muted">听听他们怎么说</p>
+          <h2 class="display-6">User Voice</h2>
+          <p class="text-muted">Hear what they say</p>
         </div>
       </div>
       <div class="row gx-4 gy-4">
         <div class="col-md-4">
           <blockquote class="blockquote">
-            <p>“这个聊天室让我和团队协作效率提升了50%！”</p>
-            <footer class="blockquote-footer">产品经理，<cite title="Source Title">Alice</cite></footer>
+            <p>“This chat room has increased my team collaboration efficiency by 50%!”</p>
+            <footer class="blockquote-footer">Product Manager,<cite title="Source Title">Frank,Johnson</cite></footer>
           </blockquote>
         </div>
         <div class="col-md-4">
           <blockquote class="blockquote">
-            <p>“界面简洁，功能丰富，每天工作必备！”</p>
-            <footer class="blockquote-footer">自由撰稿人，<cite title="Source Title">Bob</cite></footer>
+            <p>"The interface is simple and functional, a must-have for daily work!"</p>
+            <footer class="blockquote-footer">Freelance writer,<cite title="Source Title">Frank,Johnson</cite></footer>
           </blockquote>
         </div>
         <div class="col-md-4">
           <blockquote class="blockquote">
-            <p>“端到端加密让我非常放心地分享敏感信息。”</p>
-            <footer class="blockquote-footer">安全研究员，<cite title="Source Title">Carol</cite></footer>
+            <p>“End-to-end encryption makes me feel very comfortable sharing sensitive information.”</p>
+            <footer class="blockquote-footer">Security Researcher,<cite title="Source Title">Frank,Johnson</cite></footer>
           </blockquote>
         </div>
       </div>
@@ -571,8 +552,8 @@
     <div class="container">
       <div class="row text-center mb-4">
         <div class="col">
-          <h2 class="display-6">常见问题</h2>
-          <p class="text-muted">快速解答你的疑惑</p>
+          <h2 class="display-6">Frequently asked questions</h2>
+          <p class="text-muted">Quick answers to your questions</p>
         </div>
       </div>
 
@@ -580,24 +561,24 @@
         <div class="accordion-item">
           <h2 class="accordion-header" id="faqHeading1">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1">
-              如何创建一个新房间？
+              How do I create a new room?
             </button>
           </h2>
           <div id="faqCollapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              点击顶部“Join us”按钮，登录后即可在聊天室界面右上角创建新房间。
+              Click the "Join us" button at the top and create a new room in the upper right corner of the chat room interface after logging in.
             </div>
           </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="faqHeading2">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2">
-              文件传输支持多大尺寸？
+              What file sizes are supported for transfer?
             </button>
           </h2>
           <div id="faqCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              单次上传文件大小上限为 100MB，支持多文件批量上传。
+              The maximum size of a single upload file is 100MB, and batch uploading of multiple files is supported.
             </div>
           </div>
         </div>
@@ -610,27 +591,27 @@
 
   <!-- —— 行动呼吁区 —— -->
   <section id="cta" class="text-center py-5">
-    <h2 class="display-6 mb-3">准备好加入我们了吗？</h2>
+    <h2 class="display-6 mb-3">Are you ready to join us?</h2>
     <p class="lead text-muted mb-4">
-      创建你的专属聊天室，一起畅聊、分享与协作。
+      Create your own chat room to chat, share and collaborate.
     </p>
-    <a href="/register" class="btn btn-primary btn-lg me-3">马上注册</a>
-    <a href="/learn-more" class="btn btn-outline-primary btn-lg">了解更多</a>
+    <a href="/register" class="btn btn-primary btn-lg me-3">Register Now</a>
+    <a href="/learn-more" class="btn btn-outline-primary btn-lg">learn more</a>
   </section>
 
   <!-- —— 联系我们区 —— -->
   <section id="contact" class="py-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h3 class="h5 mb-3 text-center">有疑问？联系我们</h3>
+        <h3 class="h5 mb-3 text-center">Have questions? Contact us</h3>
         <form id="contactForm">
           <div class="mb-3">
-            <input type="email" class="form-control" placeholder="你的邮箱" required>
+            <input type="email" class="form-control" placeholder="your email" required>
           </div>
           <div class="mb-3">
-            <textarea class="form-control" rows="3" placeholder="请输入你的问题或建议" required></textarea>
+            <textarea class="form-control" rows="3" placeholder="Please enter your questions or suggestions" required></textarea>
           </div>
-          <button type="submit" class="btn btn-success w-100">发送消息</button>
+          <button type="submit" class="btn btn-success w-100">Send Message</button>
         </form>
       </div>
     </div>
@@ -638,9 +619,9 @@
 
   <!-- —— 页脚版权区 —— -->
   <footer id="footer" class="text-center py-4 mt-5">
-    <p class="mb-2 text-muted">© 2025 在线聊天室. 保留所有权利。</p>
-    <a href="/privacy" class="text-decoration-none me-3 text-muted">隐私政策</a>
-    <a href="/terms" class="text-decoration-none text-muted">使用条款</a>
+    <p class="mb-2 text-muted">© 2025 Live Chat Rooms. All rights reserved.</p>
+    <a href="/privacy" class="text-decoration-none me-3 text-muted">Privacy Policy</a>
+    <a href="/terms" class="text-decoration-none text-muted">terms of use</a>
   </footer>
 
 

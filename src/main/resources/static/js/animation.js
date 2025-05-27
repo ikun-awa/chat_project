@@ -208,30 +208,27 @@ document.addEventListener('DOMContentLoaded', fetchWeather);
 // 每小时更新一次天气数据
 setInterval(fetchWeather, 3600000); // 3600000 ms = 1 hour
 $(function(){
-  // 可下拉更多 emojis
   const EMOJIS = ['😊','😂','😍','👍','🎉','🥳','😎','🤔','🙌','🔥'];
 
-  // 触发表情雨
   $('#trigger-emoji').on('click', function() {
-    // 每次雨滴数量
+    // 一次性生成 30 个表情雨粒子
     const count = 30;
     for (let i = 0; i < count; i++) {
-      createEmoji();
+      // 随机延迟，让它们看起来更自然
+      setTimeout(createEmoji, Math.random() * 500);
     }
   });
 
   function createEmoji() {
-    // 随机选择一个 emoji
     const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
-    // 随机水平位置
-    const x = Math.random() * 100; // 百分比
-    const $el = $('<div class="falling-emoji">').text(emoji)
+    const x = Math.random() * 100; // vw 单位
+    const $el = $('<div class="falling-emoji">')
+      .text(emoji)
       .css('left', x + 'vw');
 
-    // 加入页面
     $('body').append($el);
 
-    // 动画结束后移除
+    // 动画结束后清理
     $el.on('animationend webkitAnimationEnd', function() {
       $(this).remove();
     });
