@@ -97,3 +97,20 @@ $(function(){
     });
   });
 });
+$(function(){
+  const $items = $('#announcement-board .announcement-list li');
+  let idx = 0;
+  if (!$items.length) return;
+
+  // 显示第一条
+  $items.eq(0).show();
+
+  // 每 3 秒切换一次
+  setInterval(() => {
+    $items.eq(idx)
+      .fadeOut(300, function() {
+        idx = (idx + 1) % $items.length;
+        $items.eq(idx).fadeIn(300);
+      });
+  }, 3000);
+});

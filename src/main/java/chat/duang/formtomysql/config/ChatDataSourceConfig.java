@@ -18,6 +18,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @EnableTransactionManagement
 // 1⃣️ 指定哪个包下的 Repository 要用这个数据源
 // 2⃣️ 指定实体扫描的位置
+@EnableJpaRepositories(
+        basePackages = "chat.duang.formtomysql.repository.chat",
+        entityManagerFactoryRef = "chatEntityManagerFactory",
+        transactionManagerRef   = "chatTransactionManager"
+)
+@EntityScan(basePackages = "chat.duang.formtomysql.model")   // ← 改成 model 包
 public class ChatDataSourceConfig {
 
     // 3⃣️ 把 application.properties 中的 chat.datasource.* 装载到这个 Bean
@@ -42,8 +48,7 @@ public class ChatDataSourceConfig {
             EntityManagerFactoryBuilder builder) {
         return builder
                 .dataSource(chatDataSource())
-                // 实体类所在包
-                .packages("chat.duang.formtomysql.entity.chat")
+                .packages("chat.duang.formtomysql.model")        // ← 这里也改
                 .persistenceUnit("chat")
                 .build();
     }
