@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.*;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Configuration
 @EnableTransactionManagement
