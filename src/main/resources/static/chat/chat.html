@@ -13,14 +13,31 @@
   <style>
 
 
-
+    /* 样式调整 */
+    #group-info, #recent-activities {
+      background-color: #f8f9fa;
+      border-radius: 0.5rem;
+    }
+    #manage-group {
+      width: 100%;
+    }
     /* 搜索到的消息高亮 */
     .bubble.highlight,
     .bubble-other.highlight {
       background-color: #fffa8b !important;
       transition: background-color 0.5s ease;
     }
-
+    /* 在 <style> 标签内添加 */
+    .modal-content {
+      border-radius: 0.5rem;
+    }
+    .modal-header {
+      background-color: #f8f9fa;
+    }
+    .modal-body {
+      font-size: 1rem;
+      color: #333;
+    }
 
 
 
@@ -385,7 +402,21 @@
             </li>
           </ul>
         </div>
-
+        <!-- 在 member-box 下方添加 -->
+        <div id="group-info" class="mt-3 p-3 bg-light rounded">
+          <h5>群聊信息</h5>
+          <p><strong>名称：</strong> 群聊名称</p>
+          <p><strong>描述：</strong> 群聊描述</p>
+          <p><strong>创建时间：</strong> 2023年1月1日</p>
+        </div>
+        <button id="manage-group" class="btn btn-primary mt-2 w-100">管理群聊</button>
+        <div id="recent-activities" class="mt-3 p-3 bg-light rounded">
+          <h5>最近活动</h5>
+          <ul class="list-unstyled">
+            <li>新成员“张三”加入群聊</li>
+            <li>管理员发布了新公告</li>
+          </ul>
+        </div>
 
 
 
@@ -434,10 +465,9 @@
             data-bs-toggle="modal"
             data-bs-target="#quitModal"
           >
-            Exit group chat 
+            Exit group chat
           </button>
-          <button class="dropdown-item" id="clearHistory">Clear chat history</button>
-        </div>
+          <button class="dropdown-item" id="clearHistory" data-bs-toggle="modal" data-bs-target="#clearHistoryModal">Clear chat history</button>
 
 
 
@@ -470,6 +500,24 @@
         </div>
       </div>
 
+      <!-- 清空聊天记录确认弹窗 -->
+      <div class="modal fade" id="clearHistoryModal" tabindex="-1" aria-labelledby="clearHistoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="clearHistoryModalLabel">确认清空聊天记录</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>您确定要清空所有聊天记录吗？此操作无法撤销。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-danger" id="confirmClearHistory">确认</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
