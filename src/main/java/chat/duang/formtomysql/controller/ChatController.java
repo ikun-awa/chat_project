@@ -1,7 +1,7 @@
 package chat.duang.formtomysql.controller;
 
 import chat.duang.formtomysql.model.ChatMessage;
-import chat.duang.formtomysql.repository.ChatMessageRepository;
+import chat.duang.formtomysql.repository.chat.ChatMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
