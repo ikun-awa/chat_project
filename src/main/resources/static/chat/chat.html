@@ -79,9 +79,12 @@
       background-color: #f8f9fa;
       border-radius: 0.5rem;
     }
+    /* 将管理群聊按钮上移、并与成员列表保持 1rem 间距 */
     #manage-group {
+      margin-top: 1rem;      /* 原来可能是 mt-2，改成 mt-3 相当于 1rem */
       width: 100%;
     }
+
     /* 搜索到的消息高亮 */
     .bubble.highlight,
     .bubble-other.highlight {
@@ -433,12 +436,20 @@
 
         <!-- 在 member-box 下方添加 -->
         <div id="group-info" class="mt-3 p-3 bg-light rounded">
-          <h5>群聊信息</h5>
-          <p><strong>名称：</strong> 群聊名称</p>
-          <p><strong>描述：</strong> 群聊描述</p>
-          <p><strong>创建时间：</strong> 2023年1月1日</p>
+          <h5>Group Information</h5>
+          <p><strong>Name:</strong> Chat Name</p>
+          <p><strong>Description:</strong> Chat Description</p>
+          <p><strong>Created On:</strong> January 1, 2023</p>
         </div>
-        <button id="manage-group" class="btn btn-primary mt-2 w-100">管理群聊</button>
+
+        <button
+          id="manage-group"
+          class="btn btn-outline-primary rounded-pill shadow-sm w-100 mt-3"
+        >
+          <i class="bi bi-people-fill me-2"></i>Manage Group
+        </button>
+
+
         <!-- 在成员列表框上方添加标题 -->
         <h5 class="px-3 mb-2" style="font-weight: 600; color: #333;">Group chat members</h5>
         <!-- 群聊标题下面：成员列表框 -->
@@ -490,17 +501,17 @@
           </ul>
         </div>
 
-        <!-- 公告栏 -->
-        <div id="announcement-board" class="mt-3 p-3 bg-light rounded" style="height: 150px; overflow: hidden; position: relative;">
-          <h5>公告栏</h5>
-          <ul class="list-unstyled announcement-list" style="position: absolute; top: 2.5rem; width: 100%; animation: scrollUp 10s linear infinite;">
-            <li>新成员 “张三” 加入群聊</li>
-            <li>管理员发布了新公告</li>
-            <li>定于今晚 8 点举行线上答疑</li>
-            <li>请在明天中午前完成资料提交</li>
-            <!-- 可以继续添加更多公告 -->
-          </ul>
-        </div>
+        <!-- 公告栏 --><div id="announcement-board" class="mt-3 p-3 bg-light rounded" style="height: 150px; overflow: hidden; position: relative;">
+        <h5>Announcements</h5>
+        <ul class="list-unstyled announcement-list" style="position: absolute; top: 2.5rem; width: 100%; animation: scrollUp 10s linear infinite;">
+          <li>New member “Alice” has joined the group chat</li>
+          <li>The admin has posted a new announcement</li>
+          <li>Live Q&A session tonight at 8 PM</li>
+          <li>Please submit your documents by tomorrow noon</li>
+          <!-- Add more announcements as needed -->
+        </ul>
+      </div>
+
 
 
 
