@@ -70,3 +70,30 @@ document.getElementById('quitBtn').addEventListener('click', function() {
   const modal = bootstrap.Modal.getInstance(document.getElementById('quitModal'));
   modal.hide();
 });
+
+
+$(function(){
+  $('#renameConfirmBtn').click(function(){
+    const newName = $('#renameInput').val().trim();
+    if(!newName){
+      alert('名称不能为空');
+      return;
+    }
+    $.ajax({
+      url: '/api/chat/rename',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ chatId: CURRENT_CHAT_ID, name: newName }),
+      success(){
+        // 更新标题和群聊信息展示
+        $('#top_nav h1').text(newName);
+        $('#group-info p:contains("名称：")')
+          .html('<strong>名称：</strong>' + newName);
+        $('#renameModal').modal('hide');
+      },
+      error(){
+        alert('重命名失败，请重试');
+      }
+    });
+  });
+});

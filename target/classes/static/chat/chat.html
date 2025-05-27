@@ -2,24 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <title>Title</title>
-  <link rel="icon" href="Icon/icon.jpg" type="image/x-icon">
-  <link rel="stylesheet" href="jQuery/Animation/jquery-ui.min.css">
-  <link rel="stylesheet" href="Bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="Bootstrap/B-icon/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="css/chat.css">
-  <link rel="stylesheet" href="css/chat_animation.css">
+  <link rel="icon" href="./Icon/icon.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="./jQuery/Animation/jquery-ui.min.css">
+  <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="./css/chat.css">
+  <link rel="stylesheet" href="./css/chat_animation.css">
   <style>
 
 
-
+    /* 样式调整 */
+    #group-info, #recent-activities {
+      background-color: #f8f9fa;
+      border-radius: 0.5rem;
+    }
+    #manage-group {
+      width: 100%;
+    }
     /* 搜索到的消息高亮 */
     .bubble.highlight,
     .bubble-other.highlight {
       background-color: #fffa8b !important;
       transition: background-color 0.5s ease;
     }
-
+    /* 在 <style> 标签内添加 */
+    .modal-content {
+      border-radius: 0.5rem;
+    }
+    .modal-header {
+      background-color: #f8f9fa;
+    }
+    .modal-body {
+      font-size: 1rem;
+      color: #333;
+    }
 
 
 
@@ -349,7 +367,7 @@
             <!-- 群主 -->
             <li class="member-item d-flex justify-content-between align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
               <div class="d-flex align-items-center">
-                <img src="Icon/icon.jpg" alt="成员头像" class="rounded-circle me-2 avatar">
+                <img src="../Icon/icon.jpg" alt="成员头像" class="rounded-circle me-2 avatar">
                 <span class="member-name">poor_three</span>
               </div>
               <span class="role-badge role-owner">Owner</span>
@@ -357,34 +375,48 @@
             <!-- 管理员 -->
             <li class="member-item d-flex justify-content-between align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
               <div class="d-flex align-items-center">
-                <img src="Icon/tou2.jpg" alt="成员头像" class="rounded-circle me-2 avatar">
+                <img src="../Icon/tou2.jpg" alt="成员头像" class="rounded-circle me-2 avatar">
                 <span class="member-name">poor_four</span>
               </div>
               <span class="role-badge role-admin">Admin</span>
             </li>
             <!-- 在线用户 -->
             <li class="member-item d-flex align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
-              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <img src="../Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
               <span class="member-name">张三</span>
             </li>
             <!-- 离线用户 -->
             <li class="member-item offline d-flex align-items-center px-3 py-2" >
-              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <img src="../Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
               <span class="member-name">李四</span>
             </li>
             <!-- 在线用户 -->
             <li class="member-item d-flex align-items-center px-3 py-2 border-bottom" style="border-color:#eee;">
-              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <img src="../Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
               <span class="member-name">张三</span>
             </li>
             <!-- 离线用户 -->
             <li class="member-item offline d-flex align-items-center px-3 py-2" >
-              <img src="Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
+              <img src="../Icon/icon.jpg" alt="用户头像" class="rounded-circle me-2 avatar">
               <span class="member-name">李四</span>
             </li>
           </ul>
         </div>
-
+        <!-- 在 member-box 下方添加 -->
+        <div id="group-info" class="mt-3 p-3 bg-light rounded">
+          <h5>群聊信息</h5>
+          <p><strong>名称：</strong> 群聊名称</p>
+          <p><strong>描述：</strong> 群聊描述</p>
+          <p><strong>创建时间：</strong> 2023年1月1日</p>
+        </div>
+        <button id="manage-group" class="btn btn-primary mt-2 w-100">管理群聊</button>
+        <div id="recent-activities" class="mt-3 p-3 bg-light rounded">
+          <h5>最近活动</h5>
+          <ul class="list-unstyled">
+            <li>新成员“张三”加入群聊</li>
+            <li>管理员发布了新公告</li>
+          </ul>
+        </div>
 
 
 
@@ -401,6 +433,21 @@
           <!-- 左侧 “群聊” -->
           <h1 class="h5 mb-0">Chat</h1>
           <!-- 右侧设置按钮（保持你原来的样式） -->
+
+          <!-- 新增头像下拉 -->
+          <div class="dropdown ms-auto" style="margin-right: 40px;">
+            <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown">
+              <img src="../Icon/icon.jpg" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+              <li>
+                <h6 class="dropdown-header" id="usernameDisplay">Loading…</h6>
+                <h6 class="dropdown-header" id="userMeta">Loading…</h6>
+              </li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </div>
+
           <button
             id="settingsBtn"
             class="btn p-0 d-flex justify-content-center align-items-center"
@@ -412,9 +459,17 @@
           <button class="dropdown-item disabled" id="renameGroup" disabled="disabled">Rename group chat</button>
           <button class="dropdown-item disabled" id="manageMembers" disabled="disabled">Managing Members</button>
           <hr>
-          <button class="dropdown-item" id="leaveGroup">Exit group chat</button>
-          <button class="dropdown-item" id="clearHistory">Clear chat history</button> `
-        </div>
+          <button
+            class="dropdown-item"
+            id="leaveGroup"
+            data-bs-toggle="modal"
+            data-bs-target="#quitModal"
+          >
+            Exit group chat
+          </button>
+          <button class="dropdown-item" id="clearHistory" data-bs-toggle="modal" data-bs-target="#clearHistoryModal">Clear chat history</button>
+
+
 
 
       </nav>
@@ -445,25 +500,26 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#quitModal">111</button>
-      <!-- 退出群聊 Modal -->
-      <div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
+      <!-- 清空聊天记录确认弹窗 -->
+      <div class="modal fade" id="clearHistoryModal" tabindex="-1" aria-labelledby="clearHistoryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="quitModalLabel">Sure</h5>
+              <h5 class="modal-title" id="clearHistoryModalLabel">确认清空聊天记录</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <h3>Are you sure!?</h3>
+              <p>您确定要清空所有聊天记录吗？此操作无法撤销。</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="quitBtn">Quit</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-danger" id="confirmClearHistory">确认</button>
             </div>
           </div>
         </div>
       </div>
+
+
 
 
       <div id='message' class="container-fluid" style="">
@@ -472,7 +528,7 @@
       <!--底部消息栏-->
       <div id="ipt_bar" class="text-center" >
         <div class="container text-center">
-          <div class="position-relative">。
+          <div class="position-relative">
             <input type="text" class="form-control pe-5" placeholder="Please enter your message......" id="ipt" style="">
 
 
@@ -495,14 +551,34 @@
   </div>
 </div>
 
+<div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="quitModalLabel">Confirm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Are you sure you want to leave this group?</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="quitBtn">Leave</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-<script src="jQuery/jquery-3.7.1.min.js"></script>
-<script src="jQuery/Animation/jquery-ui.min.js"></script>
-<script src="Bootstrap/bootstrap.bundle.min.js"></script>
+<script src="./jQuery/jquery-3.7.1.min.js"></script>
+<script src="./jQuery/Animation/jquery-ui.min.js"></script>
+<script src="./Bootstrap/bootstrap.bundle.min.js"></script>
+<script src="./websockets/sockjs.min.js"></script>
+<script src="./websockets/stomp.umd.min.js"></script>
 
-<script type="module" src="js/chat.js"></script>
-<script type="module" src="js/chat_function.js"></script>
-<script src="js/chat_animation.js"></script>
+<script type="module" src="../js/chat.js"></script>
+<script type="module" src="../js/chat_function.js"></script>
+<script src="./js/chat_animation.js"></script>
+<script src="./js/chat_ws.js"></script>
 </body>
 </html>

@@ -344,36 +344,41 @@
           </button>
           <button
             id="renameGroupBtn"
-            class="btn btn-light func-btn mt-3"
+            class="btn btn-light func-btn"
             title="更改群聊名称"
-            style="box-shadow: #aaaaaa 0px 0px 5px;"
             data-bs-toggle="modal"
             data-bs-target="#renameModal"
+            style="box-shadow: #aaaaaa 0 0 5px;"
           >
-            <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
+            <i class="bi bi-pencil-square" style="font-size:1rem;"></i>
           </button>
-
-          <!-- 重命名群聊 Modal -->
-          <div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="renameModalLabel">更改群聊名称</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="input-group">
-                    <input type="text" id="renameInput" class="form-control" placeholder="请输入新的群聊名称">
-                    <button class="btn btn-primary" id="renameConfirmBtn">确定</button>
-                  </div>
+        </div>
+        <div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="renameModalLabel">更改群聊名称</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <div class="input-group">
+                  <input type="text" id="renameInput" class="form-control" placeholder="请输入新的群聊名称">
+                  <button class="btn btn-primary" id="renameConfirmBtn">确定</button>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-
-
-          <!-- 在成员列表框上方添加标题 -->
+        <!-- 在 member-box 下方添加 -->
+        <div id="group-info" class="mt-3 p-3 bg-light rounded">
+          <h5>群聊信息</h5>
+          <p><strong>名称：</strong> 群聊名称</p>
+          <p><strong>描述：</strong> 群聊描述</p>
+          <p><strong>创建时间：</strong> 2023年1月1日</p>
+        </div>
+        <button id="manage-group" class="btn btn-primary mt-2 w-100">管理群聊</button>
+        <!-- 在成员列表框上方添加标题 -->
         <h5 class="px-3 mb-2" style="font-weight: 600; color: #333;">Group chat members</h5>
         <!-- 群聊标题下面：成员列表框 -->
         <!-- 美化后的成员框 -->
@@ -423,13 +428,7 @@
             </li>
           </ul>
         </div>
-        <!-- 在 member-box 下方添加 -->
-        <div id="group-info" class="mt-3 p-3 bg-light rounded">
-          <h5>群聊信息</h5>
-          <p><strong>名称：</strong> 群聊名称</p>
-          <p><strong>描述：</strong> 群聊描述</p>
-          <p><strong>创建时间：</strong> 2023年1月1日</p>
-        </div>
+
         <button id="manage-group" class="btn btn-primary mt-2 w-100">管理群聊</button>
         <div id="recent-activities" class="mt-3 p-3 bg-light rounded">
           <h5>最近活动</h5>
