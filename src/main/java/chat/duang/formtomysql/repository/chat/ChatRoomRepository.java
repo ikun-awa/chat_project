@@ -1,6 +1,6 @@
 package chat.duang.formtomysql.repository.chat;
 
-import chat.duang.formtomysql.entity.chat.ChatRoom;
+import chat.duang.formtomysql.model.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

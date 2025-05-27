@@ -11,7 +11,22 @@
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
+    /* 表情雨元素 */
+    .falling-emoji {
+      position: fixed;
+      top: -2rem;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: fall 4s linear forwards;
+      will-change: transform, opacity;
+    }
 
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
     /* —— 表情雨 —— */
     .falling-emoji {
       position: fixed;
@@ -467,9 +482,8 @@
       </div>
     </div>
   </div>
-  <div class="row curved-blocks" style="height: 100%; margin-left: 180px;">
-
-  <!-- 第一块（#kuai_1） -->
+  <div class="row curved-blocks" style="margin-left: 180px;">
+    <!-- 第一块（#kuai_1） -->
     <div class="col-md-2 block" id="kuai_1">
       <i class="bi bi-chat-dots-fill display-4 mb-2"></i>
       <h3 class="fw-bold">聊天室</h3>
@@ -492,23 +506,32 @@
       <p>新消息、好友上线，第一时间提醒你。</p>
       <a href="#" class="btn btn-light btn-sm">查看通知</a>
     </div>
-  </div>
 
-  <!-- —— 社区表情墙 —— -->
-  <section id="emoji-wall" class="text-center py-4">
-    <h4 class="mb-3">发一个表情，表达你的心情</h4>
-    <div class="d-flex justify-content-center gap-4 fs-1">
-      <span class="emoji-btn" data-emoji="😊">😊</span>
-      <span class="emoji-btn" data-emoji="😂">😂</span>
-      <span class="emoji-btn" data-emoji="😍">😍</span>
-      <span class="emoji-btn" data-emoji="👍">👍</span>
-      <span class="emoji-btn" data-emoji="🎉">🎉</span>
+    <!-- 新增右侧区域：表情墙 + 触发按钮 + 烟花 & 表情雨 -->
+    <div class="col-md-6">
+      <!-- 表情墙 -->
+      <section id="emoji-wall" class="text-center py-4">
+        <h4 class="mb-3">Drop an emoji</h4>
+        <div class="d-flex justify-content-center gap-4 fs-1">
+          <span class="emoji-btn" data-emoji="😊">😊</span>
+          <span class="emoji-btn" data-emoji="😂">😂</span>
+          <span class="emoji-btn" data-emoji="😍">😍</span>
+          <span class="emoji-btn" data-emoji="👍">👍</span>
+          <span class="emoji-btn" data-emoji="🎉">🎉</span>
+        </div>
+      </section>
+
+      <!-- 触发按钮 -->
+      <div class="text-center py-4">
+        <button id="trigger-emoji" class="btn btn-outline-primary">Emoji Rain</button>
+        <button id="trigger-fireworks" class="btn btn-outline-warning">Fireworks</button>
+      </div>
+
+      <!-- 烟花画布 -->
+      <canvas id="fireworks-canvas"></canvas>
+      <!-- 表情雨容器 -->
+      <div id="trail-container"></div>
     </div>
-  </section>
-  <!-- 示例触发按钮 -->
-  <div class="text-center py-4">
-    <button id="trigger-emoji" class="btn btn-outline-primary">表情雨！</button>
-    <button id="trigger-fireworks" class="btn btn-outline-warning">浪漫烟花！</button>
   </div>
 
 
