@@ -343,16 +343,37 @@
             <i class="bi bi-layout-split" style="font-size: 1rem;"></i>
           </button>
           <button
+            id="renameGroupBtn"
+            class="btn btn-light func-btn mt-3"
+            title="更改群聊名称"
             style="box-shadow: #aaaaaa 0px 0px 5px;"
-            id="composeBtn"
-            class="btn btn-light func-btn"
-            data-bs-toggle="tooltip" title="撰写新消息">
+            data-bs-toggle="modal"
+            data-bs-target="#renameModal"
+          >
             <i class="bi bi-pencil-square" style="font-size: 1rem;"></i>
           </button>
-        </div>
+
+          <!-- 重命名群聊 Modal -->
+          <div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="renameModalLabel">更改群聊名称</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="input-group">
+                    <input type="text" id="renameInput" class="form-control" placeholder="请输入新的群聊名称">
+                    <button class="btn btn-primary" id="renameConfirmBtn">确定</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
-        <!-- 在成员列表框上方添加标题 -->
+
+          <!-- 在成员列表框上方添加标题 -->
         <h5 class="px-3 mb-2" style="font-weight: 600; color: #333;">Group chat members</h5>
         <!-- 群聊标题下面：成员列表框 -->
         <!-- 美化后的成员框 -->
