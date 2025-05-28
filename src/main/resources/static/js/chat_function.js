@@ -17,11 +17,11 @@ document.addEventListener('click', () => {
 
 // 菜单项回调示例
 document.getElementById('renameGroup').addEventListener('click', () => {
-  const newName = prompt('请输入新的群聊名称：');
-  if (newName) alert('已将群聊重命名为：' + newName);
+  const newName = prompt('Please enter a new group chat name:');
+  if (newName) alert('Renamed group chats to:' + newName);
 });
 document.getElementById('manageMembers').addEventListener('click', () => {
-  alert('打开“管理成员”对话框（示例）');
+  alert('Open the Manage Members dialog box (example)');
 });
 
 
@@ -29,30 +29,25 @@ document.getElementById('manageMembers').addEventListener('click', () => {
 const sendButton = document.getElementById('sendButton');
 const inputEl = document.getElementById('ipt');
 
-sendButton.addEventListener('click', () => {
-  const text = inputEl.value.trim();
-  if (!text) {
-    alert('必须填写内容');
+// In your send message handler
+document.getElementById('sendButton').addEventListener('click', function() {
+  const messageInput = document.getElementById('ipt');
+  const message = messageInput.value.trim();
+
+  if (!message) {
+    // Show empty message modal
+    const emptyMessageModal = new bootstrap.Modal(document.getElementById('emptyMessageModal'));
+    emptyMessageModal.show();
     return;
   }
-  appendMyMessage(text);
-  inputEl.value = '';
-});
 
-inputEl.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    const text = inputEl.value.trim();
-    if (!text) {
-      alert('必须填写内容');
-      return;
-    }
-    appendMyMessage(text);
-    inputEl.value = '';
-  }
+
+  // Proceed with sending message
+  // ... your existing send logic ...
 });
 // 清空聊天记录确认事件
 document.getElementById('confirmClearHistory').addEventListener('click', function() {
-  document.getElementById('message').innerHTML = '<div class="clear-notice">聊天记录已清空</div>';
+  document.getElementById('message').innerHTML = '<div class="clear-notice">Chat history cleared</div>';
   const modal = bootstrap.Modal.getInstance(document.getElementById('clearHistoryModal'));
   modal.hide();
 });

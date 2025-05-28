@@ -11,6 +11,49 @@
   <link rel="stylesheet" href="./Bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="./Bootstrap/B-icon/bootstrap-icons.min.css">
   <style>
+
+    /* 1. 定义关键帧：从 0° 旋转到 360°，再回到 0° */
+    @keyframes initial-spin {
+      0% {
+        transform: translateY(var(--orig-y)) rotate(0deg);
+      }
+      50% {
+        transform: translateY(var(--orig-y)) rotate(360deg);
+      }
+      100% {
+        transform: translateY(var(--orig-y)) rotate(0deg);
+      }
+    }
+
+    /* 2. 为每个 color-block 设置其原始下移值为 CSS 变量，并使用动画 */
+    .color-block {
+      /* 保留原来下移 */
+      --orig-y: 0px;             /* #kuai_1 */
+      opacity: 1;                /* 已经可见 */
+
+      /* 播放一次 initial-spin */
+      animation: initial-spin 1s ease-in-out both;
+    }
+
+    /* 3. 如果某些块本身有自定义下移，如 #kuai_2、#kuai_3，覆盖它们的 --orig-y 变量 */
+    #kuai_1 { --orig-y: 0px; }
+    #kuai_2 { --orig-y: -20px; }
+    #kuai_3 { --orig-y: 20px; }
+
+
+    /* 给三色块加上平滑的过渡 */
+    .curved-blocks .col-md-2 {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* 鼠标移入时，块体向上平移并放大 */
+    .curved-blocks .col-md-2:hover {
+      transform: translateY(-20px) scale(1.1);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+
+
+
     .falling-emoji {
       position: fixed;
       top: -2rem;
@@ -34,7 +77,7 @@
 
 
 
-
+    /* 1. 让画布正常显示黑色、去掉提亮/模糊/饱和效果 */
     #fireworks-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -42,47 +85,38 @@
       pointer-events: none;
       z-index: 9999;
       background: transparent;
-      mix-blend-mode: screen;
-      filter: blur(1px) brightness(1.5) saturate(1.5);
+      mix-blend-mode: normal !important;  /* 关闭“screen”模式 */
+      filter: none !important;            /* 去掉 blur/brightness/saturate */
     }
 
-    /* 单个粒子 */
+    /* 2. 取消背景光晕层 */
+    #fireworks-canvas::before {
+      display: none !important;
+    }
+
+    /* 3. 纯黑色烟花粒子 */
     .firework-particle {
       position: absolute;
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      /* Change this to black or a very dark color */
-      background-color: #000; /* Black */
-      /* Multiple shadow colors for depth, also changed to black/dark */
-      box-shadow:
-        0 0 300px #000, /* Black */
-        0 0 300px #000, /* Black */
-        0 0 300px #000; /* Black */
+      background-color: #000 !important;  /* 纯黑 */
+      box-shadow: none !important;        /* 无任何光晕扩散 */
       animation: glow 1s infinite alternate;
     }
 
-    /* 烟花拖尾叠层 */
-    #fireworks-canvas::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(255,255,255,1), transparent 0%);
-      pointer-events: none;
-      mix-blend-mode: lighten;
-    }
-
-    /* 微脉动动画 */
+    /* 4. 保证 pulsate 动画也不降低不透明度 */
     @keyframes glow {
       from {
         opacity: 1;
         transform: scale(1);
       }
       to {
-        opacity: 0.6;
+        opacity: 1;    /* 保持全不透明 */
         transform: scale(1.3);
       }
     }
+
 
 
 
@@ -164,15 +198,19 @@
       border-bottom: none;
     }
 
+    #kun {
+      width: 200px;            /* 保持原始尺寸 */
+      height: auto;
+      transform: translateY(50px);   /* 向下移动 50px */
+      transition: transform 0.5s ease;
+    }
 
-    #kun{
-      transform: scale(50%);
-      /*transition: all 0.5s;*/
-      opacity: 0;
+    #kun:hover {
+      transform: translateY(60px) rotate(390deg);  /* 保持 50px 下移，再做旋转 */
     }
-    #kun:hover{
-      transform: scale(2) rotate(390deg);
-    }
+
+
+
     #kai_shi {
       height: 400px;
       background: linear-gradient(135deg, #6DD5FA 0%, #FFFFFF 100%);
@@ -463,9 +501,11 @@
       </div>
     </div>
   </div>
+
+
   <div class="row curved-blocks" style="margin-left: 180px;">
     <!-- 第一块（#kuai_1） -->
-    <div class="col-md-2 block" id="kuai_1">
+    <div class="col-md-2 block color-block" id="kuai_1">
       <i class="bi bi-chat-dots-fill display-4 mb-2"></i>
       <h3 class="fw-bold">chat room</h3>
       <p>Join the conversation anytime, anywhere and make your voice heard.</p>
@@ -473,7 +513,7 @@
     </div>
 
     <!-- 第二块（#kuai_2） -->
-    <div class="col-md-2 block" id="kuai_2">
+    <div class="col-md-2 block color-block" id="kuai_2">
       <i class="bi bi-file-earmark-arrow-up-fill display-4 mb-2"></i>
       <h3 class="fw-bold">File Transfer</h3>
       <p>Share images, documents, and even large files quickly and securely.</p>
@@ -481,7 +521,7 @@
     </div>
 
     <!-- 第三块（#kuai_3） -->
-    <div class="col-md-2 block" id="kuai_3">
+    <div class="col-md-2 block color-block" id="kuai_3">
       <i class="bi bi-bell-fill display-4 mb-2"></i>
       <h3 class="fw-bold">Real-time inform</h3>
       <p>You will be notified of new messages and friends online at the first time.</p>

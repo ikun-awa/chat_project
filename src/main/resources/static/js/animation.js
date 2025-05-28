@@ -234,3 +234,30 @@ $(function(){
     });
   }
 });
+$(function(){
+  // 1. 先把原 transform 存到 data 里
+  $('.curved-blocks .col-md-2').each(function(){
+    var orig = $(this).css('transform');
+    // IE/老浏览器可能拿到的是 'none'
+    $(this).data('origTransform', orig === 'none' ? '' : orig);
+  });
+
+  // 2. hover 时叠加 scale
+  $('.curved-blocks .col-md-2').hover(
+    function(){
+      var orig = $(this).data('origTransform');
+      $(this).css({
+        'transform': (orig ? orig + ' ' : '') + 'scale(1.1)',
+        'transition': 'transform 0.3s ease'
+      });
+    },
+    function(){
+      var orig = $(this).data('origTransform');
+      $(this).css({
+        'transform': orig,
+        'transition': 'transform 0.3s ease'
+      });
+    }
+  );
+});
+

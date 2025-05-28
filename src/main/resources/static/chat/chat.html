@@ -421,13 +421,13 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="renameModalLabel">更改群聊名称</h5>
+                <h5 class="modal-title" id="renameModalLabel">Change group chat name</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
                 <div class="input-group">
-                  <input type="text" id="renameInput" class="form-control" placeholder="请输入新的群聊名称">
-                  <button class="btn btn-primary" id="renameConfirmBtn">确定</button>
+                  <input type="text" id="renameInput" class="form-control" placeholder="Please enter a new group chat name">
+                  <button class="btn btn-primary" id="renameConfirmBtn">Sure</button>
                 </div>
               </div>
             </div>
@@ -439,7 +439,7 @@
           <h5>Group Information</h5>
           <p><strong>Name:</strong> Chat Name</p>
           <p><strong>Description:</strong> Chat Description</p>
-          <p><strong>Created On:</strong> January 1, 2023</p>
+          <p><strong>Created On:</strong> May 27, 2025</p>
         </div>
 
         <button
@@ -542,7 +542,23 @@
               <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
             </ul>
           </div>
-
+          <!-- Empty Message Warning Modal -->
+          <div class="modal fade" id="emptyMessageModal" tabindex="-1" aria-labelledby="emptyMessageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="emptyMessageModalLabel">Empty Message</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Message content cannot be empty. Please enter some text before sending.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <button
             id="settingsBtn"
             class="btn p-0 d-flex justify-content-center align-items-center"
@@ -595,25 +611,24 @@
         </div>
       </div>
 
-      <!-- 清空聊天记录确认弹窗 -->
+      <!-- Clear Chat History Confirmation Modal -->
       <div class="modal fade" id="clearHistoryModal" tabindex="-1" aria-labelledby="clearHistoryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="clearHistoryModalLabel">确认清空聊天记录</h5>
+              <h5 class="modal-title" id="clearHistoryModalLabel">Clear Chat History</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p>您确定要清空所有聊天记录吗？此操作无法撤销。</p>
+              <p>Are you sure you want to clear all chat history? This action cannot be undone.</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-danger" id="confirmClearHistory">确认</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirmClearHistory">Confirm</button>
             </div>
           </div>
         </div>
       </div>
-
 
 
 
