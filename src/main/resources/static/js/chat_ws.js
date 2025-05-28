@@ -1,4 +1,4 @@
-import { sendMessage, receiveMessage, scrollToBottom } from './chat_function.js';
+import { receiveMessage } from './chat.js';
 
 let stompClient = null;
 let currentGroupId = new URLSearchParams(window.location.search).get('groupId') || '1';
@@ -38,6 +38,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') { sendWsMessage(); e.preventDefault(); }
   });
 });
+
+fetch('/api/auth/me', {
+  headers: { 'Authorization': 'Bearer ' + token }
+})
+  .then(res => {
+    if (!res.ok) throw new Error('无法获取用户信息');
+    return res.json();
+  })
+  .then(user => {
+    // 3. 填充下拉菜单
+    $('#usernameDisplay').text(user.username);
+    $('#userMeta').text(`${user.gender} · ${user.age} 岁`);
+    // 如果后端返回 avatar URL：
+    if (user.avatarUrl) {
+      $('#userAvatar').attr('src', user.avatarUrl);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    // token 过期或无效，跳登录
+    localStorage.removeItem('jwtToken');
+    window.location.assign('/');
+  });
 
 $('#logoutBtn').on('click', () => {
   localStorage.removeItem('jwtToken');

@@ -109,3 +109,4 @@ $(function(){
       });
   }, 3000);
 });
+export { sendMessage, receiveMessage, scrollToBottom };
