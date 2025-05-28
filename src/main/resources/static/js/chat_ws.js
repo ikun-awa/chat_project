@@ -1,4 +1,4 @@
-import { sendMessage, receiveMessage, scrollToBottom } from './chat_function.js';
+import { sendMessage, receiveMessage, scrollToBottom } from './chat.js';
 
 let stompClient = null;
 let currentGroupId = new URLSearchParams(window.location.search).get('groupId') || '1';

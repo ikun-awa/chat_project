@@ -8,13 +8,13 @@ export const time = new Date().toLocaleTimeString([], {
 });
 
 //自动换行function
-function scrollToBottom() {
+export function scrollToBottom() {
   const msgDiv = document.getElementById('message');
   msgDiv.scrollTop = msgDiv.scrollHeight;
 }
 
 //自己发消息function
-function sendMessage() {
+export function sendMessage() {
   const msg = $('#ipt').val().trim();
   if (!msg) return;
   times++;
@@ -67,7 +67,7 @@ function sendMessage() {
 }
 
 //接受对方信息function
-function receiveMessage(content, sender = '对方') {
+export function receiveMessage(content, sender = '对方') {
   times++;
 
   // 消息容器（左侧布局）
