@@ -38,3 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') { sendWsMessage(); e.preventDefault(); }
   });
 });
+
+$('#logoutBtn').on('click', () => {
+  localStorage.removeItem('jwtToken');
+  window.location.assign('/');
+});
