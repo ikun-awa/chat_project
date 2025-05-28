@@ -17,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserMessage u = repo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
+                .orElseThrow(() -> new UsernameNotFoundException("This poor person not exists"));
         return User.withUsername(u.getUsername())
                 .password("{noop}" + u.getPassword())  // 明文示例，生产请加密
                 .authorities("USER")

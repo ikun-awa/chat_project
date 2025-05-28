@@ -43,7 +43,7 @@ public class FormController {
                     .status(HttpStatus.CONFLICT)
                     .body(Map.of(
                             "success", false,
-                            "message", "用户名已存在"
+                            "message", "This poor person already exits!"
                     ));
         }
 
@@ -57,7 +57,7 @@ public class FormController {
 
         return ResponseEntity.ok(Map.of(
                 "success", true,
-                "message", "注册成功"
+                "message", "Good person, succesese"
         ));
     }
 
@@ -80,7 +80,7 @@ public class FormController {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(Map.of(
                         "success", false,
-                        "message", "用户名或密码错误"
+                        "message", "Poor user name or password"
                 ));
     }
 }

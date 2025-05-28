@@ -25,7 +25,7 @@ public class AuthController {
         if (userRepo.existsByUsername(dto.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(Map.of("success", false, "message", "用户名已存在"));
+                    .body(Map.of("success", false, "message", "This person already exist!"));
         }
         userRepo.save(dto);
         return ResponseEntity.ok(Map.of("success", true));
@@ -40,7 +40,7 @@ public class AuthController {
                 !optionalUser.get().getPassword().equals(form.getPassword())) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("success", false, "message", "用户名或密码错误"));
+                    .body(Map.of("success", false, "message", "Poor user name or password"));
         }
 
         // TODO: 在此处生成真实 JWT 并返回

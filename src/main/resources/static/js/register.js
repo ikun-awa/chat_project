@@ -24,22 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!resp.ok) {
         // 如果拿到 HTML 而不是 JSON，这里会捕获
-        throw new Error('状态码 ' + resp.status);
+        throw new Error('Poor Code ' + resp.status);
       }
 
       const result = await resp.json();
       spin.style.display = 'none';
 
       if (result.success) {
-        alert('注册成功，3 秒后跳转到登录页面');
-        setTimeout(() => window.location.href = '/login', 3000);
+        alert('Good person, you have successfully registered!');
+        setTimeout(() => window.location.href = '/login', 100);
       } else {
-        alert(result.message || '注册失败，请重试');
+        alert(result.message || 'Poor register, try again');
       }
 
     } catch (err) {
       spin.style.display = 'none';
-      console.error('注册出错：', err);
+      console.error('PoorPoorRegisterException：', err);
       // 如果 err 里有 response，可以尝试拿文本查看 HTML 错误页
       let extra = '';
       if (err.response) {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
           extra = await err.response.text();
         } catch {}
       }
-      alert('注册异常：' + (extra || err.message));
+      alert('PoorPoorRegisterException：' + (extra || err.message));
     } finally {
       form.classList.add('was-validated');
     }

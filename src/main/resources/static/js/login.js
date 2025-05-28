@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (!resp.ok) {
-        throw new Error('状态码 ' + resp.status);
+        throw new Error('Code ' + resp.status);
       }
 
       const data = await resp.json();
@@ -28,12 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 登录成功，跳转到大厅
         window.location.href = '/lobby';
       } else {
-        alert(data.message || '用户名或密码错误');
+        alert(data.message || 'Poor username or password');
       }
 
     } catch (err) {
-      console.error('登录出错：', err);
-      alert('登录异常：' + err.message);
+      console.error('PoorPoorLoginException：', err);
+      alert('PoorPoorLoginException：' + err.message);
     }
   });
 });
