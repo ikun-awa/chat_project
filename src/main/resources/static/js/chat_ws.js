@@ -49,8 +49,6 @@ function receiveMessage(content, sender = '对方') {
 
 
 
-
-
 let stompClient = null;
 let currentGroupId = new URLSearchParams(window.location.search).get('groupId') || '1';
 
