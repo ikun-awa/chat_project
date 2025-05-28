@@ -1,4 +1,4 @@
-import SockJS from 'sockjs-client';
+import SockJS from '../node_modules/sockjs-client/dist/sockjs.js';
 import { Client } from '@stomp/stompjs';
 import { sendMessage, receiveMessage, scrollToBottom } from './chat.js';
 
