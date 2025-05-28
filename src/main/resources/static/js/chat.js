@@ -20,13 +20,13 @@ export function sendMessage() {
   times++;
 
   // 消息容器
-  const msgBox = $(
+  const msgBox = $(`
     <div class="d-flex justify-content-end mb-2"
          id="box${times}"
          style="opacity:0; transform: translateY(20px); transition: all .2s ease-out position: relative;
                 padding-right: 80px;">
     </div>
-  );
+  `);
 
   // 用户名，绝对定位到头像上方
   const nameEl = $('<div>').text('草泥马').addClass('name-tag');
