@@ -112,12 +112,15 @@ $(function(){
 //初始id序列
 let times = 0;
 
+/*
 //初始化时间
-export const time = new Date().toLocaleTimeString([], {
+const time = new Date().toLocaleTimeString([], {
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit'
 });
+
+ */
 
 //自动换行function
 function scrollToBottom() {
