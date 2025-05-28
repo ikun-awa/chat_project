@@ -1,3 +1,5 @@
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
 import { sendMessage, receiveMessage, scrollToBottom } from './chat.js';
 
 let stompClient = null;
