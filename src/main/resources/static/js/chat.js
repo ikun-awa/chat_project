@@ -71,14 +71,14 @@ export function receiveMessage(content, sender = '对方') {
   times++;
 
   // 消息容器（左侧布局）
-  const msgBox = $(
+  const msgBox = $(`
     <div class="d-flex justify-content-start mb-2 receive-message-container"
          id="box${times}"
          class="name_tag"
          style="opacity:0; transform: translateY(20px); transition: all .2s ease-out;
                     position: relative; padding-left: 80px;">
     </div>
-  );
+  `);
 
   // 用户名标签
   const nameEl = $('<div>')
