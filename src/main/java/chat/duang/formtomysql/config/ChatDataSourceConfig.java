@@ -1,40 +1,49 @@
 package chat.duang.formtomysql.config;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.*;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
-// 1⃣️ 指定哪个包下的 Repository 要用这个数据源
-// 2⃣️ 指定实体扫描的位置
 @EnableJpaRepositories(
         basePackages = "chat.duang.formtomysql.repository.chat",
         entityManagerFactoryRef = "chatEntityManagerFactory",
-        transactionManagerRef   = "chatTransactionManager"
+        transactionManagerRef = "chatTransactionManager"
 )
-@EntityScan(basePackages = "chat.duang.formtomysql.model")   // ← 改成 model 包
+@EntityScan(basePackages = "chat.duang.formtomysql.model")
 public class ChatDataSourceConfig {
 
-    // 3⃣️ 把 application.properties 中的 chat.datasource.* 装载到这个 Bean
+    @Value("${chat.jpa.hibernate.ddl-auto:update}")
+    private String ddlAuto;
+
+    @Value("${chat.jpa.database-platform:org.hibernate.dialect.MySQL8Dialect}")
+    private String dialect;
+
+    @Value("${chat.jpa.show-sql:true}")
+    private boolean showSql;
+
     @Bean
-    @Primary  // 如果你想让它成为默认，可以加，否则去掉
     @ConfigurationProperties("chat.datasource")
     public DataSourceProperties chatDataSourceProperties() {
         return new DataSourceProperties();
     }
 
-    // 4⃣️ 根据上面的 properties 构建真正的 DataSource
     @Bean
     public DataSource chatDataSource() {
         return chatDataSourceProperties()
@@ -42,18 +51,22 @@ public class ChatDataSourceConfig {
                 .build();
     }
 
-    // 5⃣️ 创建 EntityManagerFactory
     @Bean
     public LocalContainerEntityManagerFactoryBean chatEntityManagerFactory(
             EntityManagerFactoryBuilder builder) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.hbm2ddl.auto", ddlAuto);
+        properties.put("hibernate.dialect", dialect);
+        properties.put("hibernate.show_sql", showSql);
+
         return builder
                 .dataSource(chatDataSource())
-                .packages("chat.duang.formtomysql.model")        // ← 这里也改
+                .packages("chat.duang.formtomysql.model")
                 .persistenceUnit("chat")
+                .properties(properties)
                 .build();
     }
 
-    // 6⃣️ 创建事务管理器
     @Bean
     public PlatformTransactionManager chatTransactionManager(
             @Qualifier("chatEntityManagerFactory") EntityManagerFactory emf) {

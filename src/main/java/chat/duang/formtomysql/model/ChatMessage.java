@@ -4,12 +4,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chat_room_1")
+@Table(name = "chat_message")
 public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private Long roomId;
 
     // 消息内容
     @Column(nullable = false, columnDefinition = "TEXT")
@@ -23,14 +26,20 @@ public class ChatMessage {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    // ----- 省略构造器、other getters/setters -----
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 
     public String getContent() {
@@ -49,7 +58,6 @@ public class ChatMessage {
         this.sender = sender;
     }
 
-    // 新增的 timestamp getter/setter
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
