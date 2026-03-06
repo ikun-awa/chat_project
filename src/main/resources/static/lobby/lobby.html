@@ -63,9 +63,7 @@
 <script src="../Bootstrap/bootstrap.bundle.min.js"></script>
 <script src="../js/lobby.js"></script>
 <script>
-
   const token = localStorage.getItem('jwtToken');
-  fetch('/api/lobby', { headers:{ 'Authorization':'Bearer '+token }});
 
   const renderGroups = (groups = []) => {
     $('#groupList').empty();
@@ -87,41 +85,55 @@
     });
   };
 
+  async function loadRooms() {
+    const res = await fetch('/api/lobby', {
+      headers: token ? { 'Authorization': 'Bearer ' + token } : {}
+    });
+    if (!res.ok) throw new Error('网络错误 ' + res.status);
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error('后端返回数据异常');
+    renderGroups(data);
+    return data;
+  }
+
+  async function createRoom() {
+    const name = $('#newGroupName').val().trim();
+    if (!name) {
+      alert('Please enter a group name.');
+      return;
+    }
+
+    const resp = await fetch('/api/chat-rooms', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+      },
+      body: JSON.stringify({ name })
+    });
+
+    if (!resp.ok) {
+      const text = await resp.text();
+      throw new Error(text || ('创建失败: ' + resp.status));
+    }
+
+    $('#newGroupName').val('');
+    await loadRooms();
+  }
+
   $(function() {
-    fetch('/api/lobby')
-      .then(res => {
-        if (!res.ok) throw new Error('网络错误 ' + res.status);
-        return res.json();
-      })
-      .then(data => {
-        if (!Array.isArray(data)) {
-          console.error('后端返回的数据不是数组：', data);
-          return;
-        }
-        renderGroups(data);
-      })
-      .catch(err => {
-        console.error('拉取聊天室列表失败', err);
-        $('#groupList').html('<div class="text-danger">加载失败，请稍后重试</div>');
-      });
-  });
+    loadRooms().catch(err => {
+      console.error('拉取聊天室列表失败', err);
+      $('#groupList').html('<div class="text-danger">加载失败，请稍后重试</div>');
+    });
 
-
-  $(function() {
-    renderGroups();
-
-    // 创建新群
     $('#createGroupBtn').on('click', () => {
-      const name = $('#newGroupName').val().trim();
-      if (!name) return alert('Please enter a group name.');
-      // TODO: 调用后端接口创建群组，拿到实际返回的 id
-      const newId = 'g' + (groups.length + 1);
-      groups.push({id: newId, name});
-      renderGroups();
-      $('#newGroupName').val('');
+      createRoom().catch(err => {
+        console.error(err);
+        alert(err.message || '创建聊天室失败');
+      });
     });
   });
-
 </script>
 </body>
 </html>

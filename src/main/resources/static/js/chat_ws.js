@@ -1,64 +1,71 @@
-function receiveMessage(content, sender = '对方') {
-  times++;
-
-  // 消息容器（左侧布局）
-  const msgBox = $(`
-    <div class="d-flex justify-content-start mb-2 receive-message-container"
-         id="box${times}"
-         class="name_tag"
-         style="opacity:0; transform: translateY(20px); transition: all .2s ease-out;
-                    position: relative; padding-left: 80px;">
-    </div>
-  `);
-
-  // 用户名标签
-  const nameEl = $('<div>')
-    .text(sender)
-    .addClass('name-tag-other');
-
-  // 气泡容器（左侧间距）
-  const bubbleContainer = $('<div>').addClass('bubble-container bubble-c-other');
-
-  // 消息气泡（灰色）
-  const bubble = $('<p>')
-    .addClass('d-inline-block p-3 bubble-other')
-    .text(content);
-
-  // 时间戳（左侧对齐）
-  const stamp = $('<small>')
-    .addClass('bubble-time stamp-other')
-    .text(time);
-
-  //组装元素结构
-  bubble.append(stamp);
-  bubbleContainer.append(bubble);
-  msgBox.append(nameEl, bubbleContainer);
-
-  // 插入消息列表
-  $('#message').append(msgBox);
-
-  // 触发动画
-  setTimeout(() => {
-    msgBox.css({
-      opacity: 1,
-      transform: 'translateY(0)'
-    });
-    scrollToBottom();
-  }, 10); // 增加10ms延迟确保渲染
+function formatTimestamp(ts) {
+  if (!ts) {
+    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+  const d = new Date(ts);
+  if (Number.isNaN(d.getTime())) {
+    return String(ts);
+  }
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
 
+function escapeHtml(text) {
+  return $('<div/>').text(text).html();
+}
 
+function receiveMessage(content, sender = '对方', timestamp) {
+  const safeContent = escapeHtml(content || '');
+  const safeSender = escapeHtml(sender || '匿名');
+  const timeText = formatTimestamp(timestamp);
+
+  const msgBox = $(
+    `<div class="d-flex justify-content-start mb-2 receive-message-container"
+         style="opacity:0; transform: translateY(20px); transition: all .2s ease-out; position: relative; padding-left: 80px;">
+      <div class="name-tag-other">${safeSender}</div>
+      <div class="bubble-container bubble-c-other">
+        <p class="d-inline-block p-3 bubble-other">${safeContent}<small class="bubble-time stamp-other">${timeText}</small></p>
+      </div>
+    </div>`
+  );
+
+  $('#message').append(msgBox);
+
+  setTimeout(() => {
+    msgBox.css({ opacity: 1, transform: 'translateY(0)' });
+    scrollToBottom();
+  }, 10);
+}
 
 let stompClient = null;
-let currentGroupId = new URLSearchParams(window.location.search).get('groupId') || '1';
+const token = localStorage.getItem('jwtToken');
+const currentGroupId = Number(new URLSearchParams(window.location.search).get('groupId') || '1');
 
-// 建立连接并订阅
+function scrollToBottom() {
+  const msgDiv = document.getElementById('message');
+  if (msgDiv) {
+    msgDiv.scrollTop = msgDiv.scrollHeight;
+  }
+}
+
+async function loadHistory() {
+  const res = await fetch(`/api/chat/history?roomId=${currentGroupId}`, {
+    headers: token ? { Authorization: 'Bearer ' + token } : {}
+  });
+  if (!res.ok) {
+    throw new Error('加载历史消息失败: ' + res.status);
+  }
+
+  const history = await res.json();
+  $('#message').empty();
+  history.forEach(msg => receiveMessage(msg.content, msg.sender, msg.timestamp));
+}
+
 function connect() {
   const socket = new SockJS('/ws-chat');
   stompClient = Stomp.over(socket);
-  stompClient.connect({}, frame => {
-    console.log('Connected: ' + frame);
-    // 订阅该群组的消息主题
+  stompClient.debug = null;
+
+  stompClient.connect({}, () => {
     stompClient.subscribe('/topic/group.' + currentGroupId, payload => {
       const msg = JSON.parse(payload.body);
       receiveMessage(msg.content, msg.sender, msg.timestamp);
@@ -68,27 +75,38 @@ function connect() {
   });
 }
 
-// 发送消息
 function sendWsMessage() {
-  const content = document.getElementById('ipt').value.trim();
-  if (!content) return;
+  const input = document.getElementById('ipt');
+  const content = input.value.trim();
+  if (!content || !stompClient) return;
+
   const username = localStorage.getItem('username') || '匿名';
-  const chatMsg = { groupId: currentGroupId, sender: username, content };
+  const chatMsg = { roomId: currentGroupId, sender: username, content };
   stompClient.send('/app/chat.sendMessage/' + currentGroupId, {}, JSON.stringify(chatMsg));
-  // 清空并聚焦
-  document.getElementById('ipt').value = '';
+  input.value = '';
+  input.focus();
 }
 
-// 绑定按钮和回车
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await loadHistory();
+  } catch (e) {
+    console.error(e);
+  }
+
   connect();
+
   document.getElementById('sendButton').addEventListener('click', sendWsMessage);
   document.getElementById('ipt').addEventListener('keypress', e => {
-    if (e.key === 'Enter') { sendWsMessage(); e.preventDefault(); }
+    if (e.key === 'Enter') {
+      sendWsMessage();
+      e.preventDefault();
+    }
   });
 });
 
 $('#logoutBtn').on('click', () => {
   localStorage.removeItem('jwtToken');
+  localStorage.removeItem('username');
   window.location.assign('/');
 });
